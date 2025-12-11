@@ -1,0 +1,16 @@
+THIRD PARTY OPEN SOURCE NOTICES
+
+This product includes or makes use of the following open source components, which are licensed separately under their own terms. Tetia LLC makes no claim of ownership over these components.
+
+1. EasyOCR
+   Copyright (c) Jaided AI
+   Licensed under the Apache License, Version 2.0
+
+2. Tesseract OCR
+   Copyright (c) Google Inc. and contributors
+   Licensed under the Apache License, Version 2.0
+
+The full text of the Apache License, Version 2.0 is provided in:
+LICENSES/APACHE-2.0.txt
+
+No portion of the proprietary software developed by Tetia LLC is licensed under the Apache License. Tetia LLC's proprietary code remains subject solely to the LICENSE-PROPRIETARY.txt agreement.

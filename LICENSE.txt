@@ -1,0 +1,45 @@
+PROPRIETARY SOFTWARE LICENSE AGREEMENT
+Copyright (c) Restaurantpilot.AI
+All Rights Reserved.
+
+This software, including all source code, object code, documentation, and associated materials (collectively, the “Software”), is the exclusive property of Restaurantpilot.AI.
+
+This Software is licensed, not sold. By accessing, installing, or using the Software, you agree to the terms of this Proprietary Software License Agreement (“Agreement”).
+
+1. GRANT OF LICENSE
+Restaurantpilot.AI grants you a limited, non-exclusive, non-transferable, revocable license to use the Software solely for your internal business purposes. No other rights are granted.
+
+2. RESTRICTIONS
+You shall not:
+(a) copy, distribute, sublicense, sell, rent, lease, loan, or otherwise transfer the Software or any portion thereof;
+(b) modify, decompile, disassemble, reverse engineer, or otherwise attempt to derive the source code, structure, or algorithms of the Software;
+(c) use the Software to create derivative works or competing products;
+(d) remove, alter, or obscure any proprietary notices or labels on the Software;
+(e) allow any third party to access the Software except as expressly permitted in writing by Restaurantpilot.AI.
+
+3. OWNERSHIP
+All rights, title, and interest in and to the Software remain solely with Restaurantpilot.AI. This Agreement grants no ownership rights to the user.
+
+4. CONFIDENTIALITY
+The Software contains confidential and proprietary information of Restaurantpilot.AI. You agree to maintain strict confidentiality and prevent unauthorized disclosure.
+
+5. NO IMPLIED LICENSES
+Except for the express license granted herein, no rights or licenses are granted to you under any patents, copyrights, trade secrets, trademarks, or other intellectual property of Restaurantpilot.AI.
+
+6. WARRANTY DISCLAIMER
+The Software is provided “AS IS” without any warranties, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
+
+7. LIMITATION OF LIABILITY
+Restaurantpilot.AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from use of the Software.
+
+8. TERMINATION
+Any breach of this Agreement automatically terminates all rights granted herein. Upon termination, you must immediately cease all use of the Software and destroy all copies.
+
+9. THIRD PARTY SOFTWARE
+The Software may include or rely upon third party components that are licensed separately under their own terms. Such components are identified in THIRD_PARTY_NOTICES.txt. Restaurantpilot.AI’s proprietary license does not apply to those components.
+
+10. GOVERNING LAW
+This Agreement shall be governed by the laws of the jurisdiction in which Restaurantpilot.AI is legally organized, without regard to conflict of law principles.
+
+11. ENTIRE AGREEMENT
+This Agreement constitutes the complete and exclusive statement of the agreement between the parties regarding the Software.

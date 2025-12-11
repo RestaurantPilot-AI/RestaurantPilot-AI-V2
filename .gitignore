@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+
+# .env
+.env
+
+# Raw data
+data/raw/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# IDE/project settings
+.vscode/

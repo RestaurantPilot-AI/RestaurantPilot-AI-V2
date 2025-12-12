@@ -22,7 +22,8 @@ def get_structured_data_from_text(
     text_length: int, 
     page_count: int, 
     extraction_timestamp: Any,
-    restaurant_id: str
+    restaurant_id: str,
+    file_path: str
     ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Accept raw invoice text and metadata to return structured DataFrames.
@@ -39,14 +40,42 @@ def get_structured_data_from_text(
         Tuple[pd.DataFrame, pd.DataFrame]: (invoice_df, line_items_df)
     """
 
+    print("Processing file:",filename)
     if not extracted_text.strip():
         raise ValueError("Input text cannot be empty")
 
     try:
-        vendor_context = identify_vendor_and_get_regex(extracted_text)
+        vendor_context = identify_vendor_and_get_regex(extracted_text,file_path)
 
-    except Exception as exc: 
-        raise ValueError(f"Failed to identify or create vendor: {exc}")
+    except Exception as exc:
+        print(f"[WARN] Vendor identification failed: {exc}")
+        print("[INFO] Falling back to default vendor and generic regex patterns")
+        
+        # Create a fallback vendor context with default patterns
+        from bson import ObjectId
+        vendor_context = {
+            "vendor_id": ObjectId(),  # Temporary ID for "Unknown Vendor"
+            "vendor_name": "Unknown Vendor",
+            "regex": {
+                "invoice_level": {
+                    "invoice_number": r"(?:invoice|inv)[\s#:]*([A-Z0-9-]+)",
+                    "invoice_date": r"(?:date|dated)[\s:]*(\d{1,2}[-/]\d{1,2}[-/]\d{2,4})",
+                    "invoice_total_amount": r"(?:total|amount due)[\s:$]*(\d+[.,]\d{2})",
+                    "order_date": ""
+                },
+                "line_item_level": {
+                    "line_item_block_start": r"(?:description|item)",
+                    "line_item_block_end": r"(?:subtotal|total)",
+                    "quantity": r"(\d+\.?\d*)",
+                    "description": r"([A-Za-z0-9\s,.-]+)",
+                    "unit": r"(EA|LB|CS|GAL|BOX|PKG)",
+                    "unit_price": r"\$?(\d+\.\d{2})",
+                    "line_total": r"\$?(\d+\.\d{2})"
+                }
+            }
+        }
+        # Store vendor identification error for later reference
+        vendor_context["identification_error"] = str(exc)
     
     try:
         extracted_inv_data, extracted_li_data = apply_regex_extraction(
@@ -111,6 +140,7 @@ def _build_invoice_record(
         "order_date": order_date
     }
 
+    print(f"\ninvoice {record}")
     # Return as a pandas DataFrame
     return pd.DataFrame([record])
 
@@ -229,6 +259,8 @@ def _build_line_items_records(
             }
             
             line_items.append(line_item)
+    
+    print(f"\nline items  {line_items}")
     
     # If no items were found, return an empty DataFrame with the correct schema columns
     if not line_items:

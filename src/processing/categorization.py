@@ -14,9 +14,20 @@ from src.storage.database import (
 # Setup Gemini
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
-LIGHT_MODEL_NAME = "gemini-2.5-flash"
+LIGHT_MODEL_NAME = "gemini-2.5-flash-lite"
 
-# Patterns to remove quantities / weights / case counts / standalone numbers
+# Explicit size patterns like: 8oz, 8 oz, 8fl oz, 8 fl oz, 12-16oz, 4 - 6 fl oz
+_SIZE_RE = re.compile(r'''
+    (?ix)                           # ignorecase, verbose
+    \b
+    \d+(?:[.,]\d+)?                 # number, maybe decimal
+    (?:\s*(?:-\s*\d+(?:[.,]\d+)?)  # optional range: -N or -N.N
+      )?
+    \s*
+    (?:fl\.?\s*)?                   # optional "fl" (for fluid ounces)
+    (?:oz|ounce|ounces|ml|l|g|kg|lb|lbs)\b
+''', re.VERBOSE)
+
 _QUANTITY_RE = re.compile(r'''
     (?ix)
     (?:\b\d+(?:[.,]\d+)?\s*(?:kg|g|gram|grams|lb|lbs|pounds|oz|ounce|ounces|cs|case|ct|pack|pcs|pc|l|ml)\b)
@@ -29,28 +40,39 @@ _PUNCT_RE = re.compile(r"[^\w\s\+\&']")
 
 def clean_description(raw_description: str) -> str:
     """
-    Clean noisy SKU/description lines and return ONLY the product name.
+    Clean noisy SKU/description lines and return only the product name.
+    - Uses first line only
+    - Strips leading/trailing whitespace and leading/trailing quotes (single/double)
+    - Normalizes common separators
+    - Removes explicit size tokens (8oz, 12-16oz, 8 fl oz, etc.)
+    - Removes other quantity/number noise and unwanted punctuation
+    - Collapses whitespace
     """
     if not raw_description:
         return ""
 
-    # Use first line only (common vendor pattern)
+    # First line, trimmed, lowercased
     s = raw_description.splitlines()[0].strip().lower()
 
-    # Normalize separators
+    # Strip surrounding quotes and whitespace (both ends)
+    s = s.strip(" '\"")
+
+    # Normalize common separators to spaces
     s = re.sub(r'[_\-\–\/\*]', ' ', s)
 
-    # Remove quantities / sizes / numbers
+    # Remove explicit size patterns like "8oz", "8 fl oz", "12-16oz" first
+    s = _SIZE_RE.sub(' ', s)
+
+    # Remove other quantities / sizes / stray numbers
     s = _QUANTITY_RE.sub(' ', s)
 
-    # Remove unwanted punctuation
+    # Remove unwanted punctuation but keep + & and apostrophe
     s = _PUNCT_RE.sub(' ', s)
 
-    # Collapse whitespace
+    # Collapse whitespace and remove empty tokens
     tokens = [t for t in re.split(r'\s+', s) if t]
 
-    # Leave tokens as-is (don't remove 'bag', 'of', etc., because you wanted “bag of ecliptic”)
-    return ' '.join(tokens).strip()
+    return ' '.join(tokens)
 
 
 def build_categorization_prompt(description: str, existing_categories: List[str]) -> str:
@@ -126,5 +148,7 @@ def get_line_item_category(description: str) -> str:
 
     # 4. Save via DB Delegate
     save_category_result(cleaned_description, predicted_category, existing_categories)
+    
+    print(f"Description: {description}, Category: {predicted_category}")
 
     return predicted_category

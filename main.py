@@ -52,7 +52,8 @@ def run_pipeline():
                                             text_length=text_length, 
                                             page_count=page_count, 
                                             extraction_timestamp=extraction_timestamp,
-                                            restaurant_id=temp_restaurant_id)
+                                            restaurant_id=temp_restaurant_id,
+                                            file_path=file_path)
         save_inv_li_to_db(inv_df, li_df)
 
         print(f"Done! file: {file_path}")

@@ -2,13 +2,13 @@ import os
 import re
 import time
 import json
+import mimetypes
 from typing import Optional, Dict, Any, Tuple, List, Union
 from dotenv import load_dotenv
 
 # For real LLM integration
 import google.generativeai as genai
 from google.api_core.exceptions import ResourceExhausted
-# import google.api_core.exceptions
 
 from src.storage import (
     get_vendor_by_email,
@@ -277,50 +277,138 @@ def _safe_extract_json_from_llm(text: str) -> Optional[Dict[str, Any]]:
     except Exception:
         return None
 
-def call_llm_api(prompt: str) -> Dict[str, Any]:
+def call_llm_api(prompt: str, file_path: Optional[str] = None) -> Dict[str, Any]:
     """
-    Calls Gemini API with automatic retry on Rate Limit (429) errors.
+    Calls Gemini API with multimodal support (file_path) by using genai.upload_file.
+    
+    The uploaded file is deleted after the attempt to generate content to conserve resources.
+
+    Args:
+        prompt (str): The textual prompt/instructions for the LLM.
+        file_path (Optional[str]): Path to the file (image/PDF) to include 
+                                    for visual multimodal input.
+                                    
     Returns parsed JSON dictionary.
+    
+    Raises:
+        RuntimeError: If API retries fail.
+        ValueError: If Gemini output is not valid JSON.
+        FileNotFoundError: If the provided file_path does not exist.
     """
     _setup_environment()
     model = genai.GenerativeModel(MODEL_NAME)
 
     max_retries = 3
     base_wait = 30  # Start waiting 30 seconds
+    
+    file_obj = None # Initialize file object outside the loop
+    
+    try:
+        # 1. Prepare Content (Prompt + File Part)
+        content_parts: List[Union[str, Any]] = [prompt] # Start with the prompt
 
-    for attempt in range(max_retries):
-        try:
-            # --- Call Gemini model ---
-            response = model.generate_content(prompt)
+        if file_path:
+            if not os.path.exists(file_path):
+                 raise FileNotFoundError(f"Multimodal file not found at: {file_path}")
             
-            # --- Clean & parse JSON ---
-            # Return immediately if successful
-            return parse_llm_json(response.text)
+            # Use mimetypes to guess the file type for robust uploading
+            mime_type, _ = mimetypes.guess_type(file_path)
+            if mime_type is None:
+                # Fallback for unknown file types
+                mime_type = "image/jpeg" 
+            
+            try:
+                # Use the built-in SDK upload feature for files (required for PDFs/large files)
+                print(f"[INFO] Uploading file: {file_path} with MIME type: {mime_type}")
+                file_obj = genai.upload_file(file_path, mime_type=mime_type)
+                
+                # Add the uploaded file object (Part) to the beginning of the content list
+                content_parts.insert(0, file_obj)
+                
+            except Exception as e:
+                # If file upload fails, raise error, but ensure cleanup occurs
+                raise RuntimeError(f"Failed to upload file to Gemini API: {e}")
+            
+        # 2. API Call with Retry Logic
+        for attempt in range(max_retries):
+            try:
+                # --- Call Gemini multimodal model ---
+                response = model.generate_content(content_parts)
+                
+                # --- Clean & parse JSON ---
+                raw_text = response.text.strip() if response and response.text else ""
+                
+                # Clean Markdown fences (```json or ```) and parse
+                cleaned = re.sub(r"^```(?:json)?|```$", "", raw_text.strip(), flags=re.MULTILINE).strip()
+                
+                try:
+                    corrected_json = json.loads(cleaned)
+                    return corrected_json
+                except json.JSONDecodeError as e:
+                     raise ValueError(
+                         f"Gemini did not return valid JSON. Error: {e}\nRaw output:\n{raw_text}"
+                     )
+                
+            except ResourceExhausted as e:
+                # This catches the 429 Quota Exceeded error
+                wait_time = base_wait * (attempt + 1)
+                print(f"\n[WARN] Gemini Quota Exceeded. Waiting {wait_time}s before retry ({attempt + 1}/{max_retries})...")
+                time.sleep(wait_time)
+            
+            except ValueError as e:
+                # Re-raise JSON errors immediately 
+                raise e 
+    
+            except Exception as e:
+                # Other errors (auth, network) should crash immediately
+                print(f"[ERROR] Gemini API Failed: {e}")
+                raise e
 
-        except ResourceExhausted as e:
-            # This catches the 429 Quota Exceeded error
-            wait_time = base_wait * (attempt + 1)
-            print(f"\n[WARN] Gemini Quota Exceeded. Waiting {wait_time}s before retry ({attempt + 1}/{max_retries})...")
-            time.sleep(wait_time)
-        
-        except Exception as e:
-            # Other errors (auth, network) should crash immediately
-            print(f"[ERROR] Gemini API Failed: {e}")
-            raise e
+        # If we run out of retries
+        raise RuntimeError("Gemini API Quota Exceeded after multiple retries. Please check your billing/limits.")
 
-    # If we run out of retries
-    raise RuntimeError("Gemini API Quota Exceeded after multiple retries. Please check your billing/limits.")
+    finally:
+        # --- CRITICAL: Delete the uploaded file object ---
+        if file_obj:
+            try:
+                genai.delete_file(name=file_obj.name)
+                print(f"[INFO] Deleted uploaded file: {file_obj.name}")
+            except Exception as e:
+                print(f"[WARN] Failed to delete uploaded file {file_obj.name}: {e}")
 
-def make_phase1_prompt(text: str) -> str:
-    """Construct phase-1 prompt (extract structured JSON matching DB Schema)."""
+def make_phase1_prompt() -> str:
+    """
+    Construct phase-1 prompt for the visual model. 
+    It instructs the LLM to extract data solely from the provided image/PDF content.
+    """
+    # Define the mandatory fields at the top of the prompt for emphasis
+    mandatory_fields = [
+        "invoice_number", 
+        "invoice_date", 
+        "invoice_total_amount", 
+        "vendor_name", 
+        "description (in line_items)", 
+        "line_total (in line_items)"
+    ]
+
     return f"""
-Extract structured data from the following invoice text.
+You are a strict data extraction engine. Your task is to extract structured data solely from the **VISUAL INVOICE IMAGE** provided. You must use the layout, font size, and visual position to determine the correct fields.
 
 Rules:
-- Use ONLY the information explicitly present.
-- If a value is missing or not found, return null (not the string "None").
-- Output ONLY the JSON object. No explanations.
-- Field names MUST match exactly.
+- Output ONLY the JSON object. No explanations or code fences (e.g., ```json).
+- Field names MUST match the required JSON structure exactly.
+- If a value is genuinely missing, return 'null'.
+- Only refer null if a field is missing, check thoroughly using the visual evidence.
+- For all currency/numeric fields, ensure the value is a string formatted as "0.00".
+
+==========================
+HIGH PRIORITY MANDATORY FIELDS
+==========================
+The following fields CANNOT be null. If they are not explicitly labeled, you must use **visual contextual cues** (e.g., location, size, format, bolding) to find them:
+- {', '.join(mandatory_fields)}
+
+VENDOR NAME STRATEGY:
+The 'vendor_name' is the name of the company that issued the invoice. It is the single most critical field. You MUST identify the single largest or most prominent business name/logo text located in the header/top section of the invoice and use that value.
 
 Required JSON structure:
 
@@ -352,12 +440,6 @@ Required JSON structure:
 Context Definitions:
 - "unit": The unit of measure (e.g., "lb", "case", "oz", "each").
 - "order_date": The date the order was placed (distinct from invoice date), if available.
-- "vendor_name": The official name of the vendor/supplier.
-
--------------------------
-RAW INVOICE TEXT BELOW:
--------------------------
-{text}
 """.strip()
 
 def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
@@ -456,9 +538,13 @@ def _coerce_none_values(obj: Any) -> Any:
     return obj
 
 
-def llm_phase1_extract(text: str) -> Dict[str, Any]:
+def llm_phase1_extract(file_path: str) -> Dict[str, Any]:
     """
-    Phase 1: ask LLM to extract key fields as JSON.
+    Phase 1: ask the MULTIMODAL LLM to extract key fields as JSON, 
+    using the visual content of the file.
+
+    Args:
+        file_path (str): Path to the invoice file (image or PDF).
 
     Returns parsed JSON dict on success.
 
@@ -466,12 +552,14 @@ def llm_phase1_extract(text: str) -> Dict[str, Any]:
         Phase1ParseError: when LLM output is not valid JSON / not extractable.
         Phase1ValidationError: when JSON is missing required keys or has wrong types.
     """
-    print("\n[INFO] Starting Phase 1: Extract Vendor Details and Patterns...")
+    print("\n[INFO] Starting Phase 1: Extract Vendor Details and Patterns (Multimodal)...")
     
-    prompt = make_phase1_prompt(text)
+    # 1. Generate the visual-focused prompt (takes no arguments now)
+    prompt = make_phase1_prompt()
     
-    # FIX: call_llm_api now returns the parsed JSON dict directly
-    parsed = call_llm_api(prompt)
+    # 2. Call the LLM API, passing the prompt and the file_path for multimodal processing
+    # The OCR text step is now bypassed entirely.
+    parsed = call_llm_api(prompt, file_path=file_path)
 
     # 1) Try to extract JSON (Validation)
     # Note: We skip _safe_extract_json_from_llm because 'parsed' is already a dict
@@ -580,7 +668,7 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
     parsed = call_llm_api(prompt)
 
     # DEBUG: Print the raw output to see what the LLM actually gave us
-    print(f"[DEBUG] Phase 2 Raw LLM Output:\n{json.dumps(parsed, indent=2)}")
+    # print(f"[DEBUG] Phase 2 Raw LLM Output:\n{json.dumps(parsed, indent=2)}")
 
     # 1) Try to extract JSON (Validation)
     if not isinstance(parsed, dict):
@@ -620,7 +708,7 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
 
         # If it's a strict field, it cannot be empty.
         if k in strict_invoice_fields and v.strip() == "":
-            print(f"[WARN] Field '{k}' is empty in LLM output!")
+            print(f"[WARN] Field '{k}' is empty in LLM output! in Phase 1")
             empty_invoice_keys.append(f"invoice_level.{k}")
         
         # If we have a regex (non-empty), validate capture groups
@@ -734,9 +822,40 @@ def parse_llm_json(output: str) -> dict:
             return json.loads(possible_json)
         except json.JSONDecodeError:
             pass
+    
+    # 4. Try to extract JSON between specific markers
+    json_markers = [
+        (r"```json\s*(.*?)\s*```", re.DOTALL),
+        (r"```\s*(.*?)\s*```", re.DOTALL),
+        (r"JSON:\s*(\{.*?\})", re.DOTALL),
+        (r"Output:\s*(\{.*?\})", re.DOTALL)
+    ]
+    
+    for pattern, flags in json_markers:
+        match = re.search(pattern, output, flags)
+        if match:
+            try:
+                return json.loads(match.group(1).strip())
+            except json.JSONDecodeError:
+                continue
+    
+    # 5. Last attempt: clean common issues and try again
+    cleaned_output = output.strip()
+    # Remove trailing commas before closing braces/brackets
+    cleaned_output = re.sub(r',(\s*[}\]])', r'\1', cleaned_output)
+    # Remove comments
+    cleaned_output = re.sub(r'//.*?$', '', cleaned_output, flags=re.MULTILINE)
+    cleaned_output = re.sub(r'/\*.*?\*/', '', cleaned_output, flags=re.DOTALL)
+    
+    try:
+        return json.loads(cleaned_output)
+    except json.JSONDecodeError:
+        pass
 
-    # 4. If everything fails → explicit error
-    raise ValueError("Could not extract valid JSON from LLM output.")
+    # 6. If everything fails → explicit error with sample output
+    sample = output[:200] + "..." if len(output) > 200 else output
+    print(f"[ERROR] Could not parse LLM JSON. Sample output: {sample}")
+    raise ValueError(f"Could not extract valid JSON from LLM output. First 200 chars: {sample}")
 
 # ----------------------------
 # Public API functions
@@ -890,7 +1009,6 @@ def apply_regex_extraction(text: str, regex_patterns: Union[List[str], Dict[str,
     10: line_total           (Line Item Level)
     """
 
-    print("regex:",regex_patterns)
     # ---------------------------------------------------
     # 0. ADAPTER: Convert Dict to List if needed
     # ---------------------------------------------------
@@ -1026,7 +1144,7 @@ def apply_regex_extraction(text: str, regex_patterns: Union[List[str], Dict[str,
 
     return inv_data, line_items
 
-def identify_vendor_and_get_regex(text: str) -> Dict[str, Any]:
+def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     """
     Main orchestration function used by pipeline.
 
@@ -1062,6 +1180,7 @@ def identify_vendor_and_get_regex(text: str) -> Dict[str, Any]:
         vendor_name = find_vendor_name_by_id(vendor_id)
         # A1. Existing Regex
         regex_list = get_regex_for_vendor(vendor_id)
+        print("fetched existing vendor regex")
         
         if regex_list:
             return {
@@ -1093,6 +1212,7 @@ def identify_vendor_and_get_regex(text: str) -> Dict[str, Any]:
                 
                 if new_regexes:
                     save_regex_for_vendor(new_vendor_id, new_regexes)
+                    print("Generated new vendor regex")
                     return {
                         "vendor_id": new_vendor_id,
                         "vendor_name": vendor_name,

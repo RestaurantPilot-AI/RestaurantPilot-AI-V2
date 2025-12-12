@@ -1,297 +1,202 @@
 import os
+import csv
 import datetime
+import uuid
 from pathlib import Path
 from dotenv import load_dotenv
-from pymongo import MongoClient, ASCENDING, DESCENDING
-from pymongo.errors import CollectionInvalid
 
 # 1. Load .env from the Root Directory
-env_path = Path(__file__).resolve().parent.parent.parent / '.env'
+# Path: src/storage/db_init.py -> src/storage -> src -> root
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+env_path = ROOT_DIR / '.env'
 load_dotenv(dotenv_path=env_path)
 
-# Get variables
-URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/")
-DB_NAME = os.getenv("DB_NAME", "invoice_processing_db")
+# 2. Setup Database Path
+# We explicitly point to 'data/database' to match your file tree
+DB_PATH = ROOT_DIR / "data" / "database"
 
 def start_connection(create_dummy=False):
     """
-    Connects to MongoDB.
-    Returns: (db_object, restaurant_id)
-    If create_dummy is True, it ensures a dummy restaurant exists and returns its ID.
+    Connects to the CSV 'Database' (Folder).
+    Returns: restaurant_id (if create_dummy=True), else None.
+    If create_dummy is True, it ensures a dummy restaurant exists in restaurants.csv.
     """
     try:
-        client = MongoClient(URI)
-        client.admin.command('ping') # Check connection
-        
-        existing_dbs = client.list_database_names()
-        if DB_NAME in existing_dbs:
-            print(f"[INFO] Database '{DB_NAME}' exists. Connected.")
+        # Check if "Database" (Folder) exists
+        if DB_PATH.exists():
+            print(f"[INFO] Database Folder '{DB_PATH}' exists. Connected.")
         else:
-            print(f"[INFO] Database '{DB_NAME}' created (virtual). Connected.")
+            DB_PATH.mkdir(parents=True, exist_ok=True)
+            print(f"[INFO] Database Folder '{DB_PATH}' created. Connected.")
 
-        db = client[DB_NAME]
         restaurant_id = None
 
         if create_dummy:
-            # Create dummy data that satisfies all schema constraints
+            # Define headers for restaurants to ensure file structure exists
+            headers = ["_id", "name", "location_name", "phone_number", "restaurant_type", "address", "created_at", "is_active"]
+            file_path = DB_PATH / "restaurants.csv"
+            
+            # Create file if it doesn't exist
+            if not file_path.exists():
+                with open(file_path, 'w', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(headers)
+
+            # Create dummy data dictionary
             dummy_data = {
                 "name": "Westman's Bagel & Coffee - Capitol Hill",
                 "phone_number": "(206) 000-0000",
                 "restaurant_type": "Bagel shop",
                 "address": "1509 E Madison St, Seattle, WA 98122",
-                "created_at": datetime.datetime.now(),
-                "is_active": True
+                "created_at": datetime.datetime.now().isoformat(),
+                "is_active": "True"
             }
 
             # Check if it already exists to prevent duplicates
-            existing_rest = db.restaurants.find_one({"name": dummy_data["name"]})
+            found = False
+            existing_id = None
             
-            if existing_rest:
-                restaurant_id = existing_rest["_id"]
+            with open(file_path, 'r', newline='', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    if row["name"] == dummy_data["name"]:
+                        found = True
+                        existing_id = row["_id"]
+                        break
+            
+            if found:
+                restaurant_id = existing_id
                 print(f"[INFO] Found existing dummy restaurant ID: {restaurant_id}")
             else:
-                result = db.restaurants.insert_one(dummy_data)
-                restaurant_id = result.inserted_id
+                # Generate a new ID (UUID to mimic ObjectId)
+                new_id = 1 # str(uuid.uuid4())
+                row_to_write = [
+                    new_id,
+                    dummy_data["name"],
+                    "Capitol Hill", # location_name default
+                    dummy_data["phone_number"],
+                    dummy_data["restaurant_type"],
+                    dummy_data["address"],
+                    dummy_data["created_at"],
+                    dummy_data["is_active"]
+                ]
+                
+                with open(file_path, 'a', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(row_to_write)
+                
+                restaurant_id = new_id
                 print(f"[INFO] Created new dummy restaurant ID: {restaurant_id}")
             
             return restaurant_id
 
         else:
-            return None# return nothing if create_dummy=False 
+            return None # return nothing if create_dummy=False 
 
     except Exception as e:
-        print(f"[ERROR] Could not connect to MongoDB: {e}")
+        print(f"[ERROR] Could not connect to CSV Database: {e}")
         return None
 
 def create_validation_rules(db):
-    """Creates collections with JSON Schema Validation based on the new schema."""
+    """
+    Creates CSV files with correct Headers (Schema) if they don't exist.
+    'db' argument is expected to be the Path object to the folder.
+    """
     
-    # 1. RESTAURANTS
-    restaurant_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": ["name", "created_at", "is_active"],
-            "properties": {
-                "name": {"bsonType": "string"},
-                "location_name": {"bsonType": "string"},
-                "phone_number": {"bsonType": "string"},
-                "restaurant_type": {"bsonType": "string"},
-                "address": {"bsonType": "string"},
-                "created_at": {"bsonType": "date"},
-                "is_active": {"bsonType": "bool"}
-            }
-        }
+    # Schema Definition (Matching the SQL columns exactly)
+    schemas = {
+        "restaurants.csv": [
+            "_id", "name", "location_name", "phone_number", "restaurant_type", "address", "created_at", "is_active"
+        ],
+        "vendors.csv": [
+            "_id", "name", "contact_email", "phone_number", "address", "website"
+        ],
+        "vendor_regex_templates.csv": [
+            "vendor_id", "regex_patterns"
+        ],
+        "invoices.csv": [
+            "_id", "filename", "restaurant_id", "vendor_id", "invoice_number", "invoice_date", 
+            "invoice_total_amount", "text_length", "page_count", "extraction_timestamp", "order_date"
+        ],
+        "line_items.csv": [
+            "_id", "invoice_id", "vendor_name", "category", "quantity", "unit", 
+            "description", "unit_price", "line_total", "line_number"
+        ],
+        "item_lookup_map.csv": [
+            "_id", "category"
+        ],
+        "categories.csv": [
+            "_id"
+        ],
+        "temp_uploads.csv": [
+            "session_id", "created_at", "updated_at", "data"
+        ],
+        "sales.csv": [
+            "_id", "date", "restaurant_id", "revenue", "covers", "created_at"
+        ]
     }
 
-    # 2. VENDORS
-    vendor_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": ["name"],
-            "properties": {
-                "name": {"bsonType": "string"},
-                "contact_email": {"bsonType": "string"},
-                "phone_number": {"bsonType": "string"},
-                "address": {"bsonType": "string"},
-                "website": {"bsonType": "string"}
-            }
-        }
-    }
-
-    # 3. VENDOR REGEX TEMPLATES
-    regex_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": ["vendor_id", "regex_patterns"],
-            "properties": {
-                "vendor_id": {"bsonType": "objectId"},
-                "regex_patterns": {
-                    "bsonType": "array",
-                    "items": {"bsonType": "string"} # Strict list of strings
-                }
-            }
-        }
-    }
-
-    # 4. INVOICES (Updated Fields & Removed embedded line_items)
-    invoice_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": [
-                "filename", "restaurant_id", "vendor_id", "invoice_number", 
-                "invoice_date", "invoice_total_amount", "extraction_timestamp", "order_date"
-            ],
-            "properties": {
-                "filename": {"bsonType": "string"},
-                "restaurant_id": {"bsonType": "objectId"},
-                "vendor_id": {"bsonType": "objectId"},
-                "invoice_number": {"bsonType": "string"},
-                "invoice_date": {"bsonType": "date"},
-                "invoice_total_amount": {"bsonType": "decimal"},
-                "text_length": {"bsonType": "int"},
-                "page_count": {"bsonType": "int"},
-                "extraction_timestamp": {"bsonType": "date"},
-                "order_date": {"bsonType": "date"}
-            }
-        }
-    }
-
-    # 5. LINE ITEMS (New Collection)
-    # Note: invoice_id is set to 'int' to match your spec, though typically this links to invoices._id (ObjectId)
-    line_item_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": [
-                "invoice_id", "vendor_name", "category", "quantity", 
-                "unit", "description", "unit_price", "line_total", "line_number"
-            ],
-            "properties": {
-                "invoice_id": {"bsonType": "objectId"}, 
-                "vendor_name": {"bsonType": "string"},
-                "category": {"bsonType": "string"},
-                "quantity": {"bsonType": "double"},
-                "unit": {"bsonType": "string"},
-                "description": {"bsonType": "string"},
-                "unit_price": {"bsonType": "decimal"},
-                "line_total": {"bsonType": "decimal"},
-                "line_number": {"bsonType": "decimal"}
-            }
-        }
-    }
-
-    # 6. ITEM LOOKUP MAP (New Collection)
-    # _id is the "Normalized description" (string)
-    lookup_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": ["category"],
-            "properties": {
-                "_id": {"bsonType": "string"}, 
-                "category": {"bsonType": "string"}
-            }
-        }
-    }
-
-    # 7. CATEGORIES (New Collection)
-    # _id is the "Category Name" (string)
-    category_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "properties": {
-                "_id": {"bsonType": "string"} 
-            }
-        }
-    }
-
-    # 8. TEMP_UPLOADS (Session Persistence)
-    temp_upload_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": ["session_id", "created_at"],
-            "properties": {
-                "session_id": {"bsonType": "string"},
-                "created_at": {"bsonType": "date"},
-                "updated_at": {"bsonType": "date"}
-            }
-        }
-    }
-
-    # 9. SALES (Daily Sales Tracking)
-    sales_validator = {
-        "$jsonSchema": {
-            "bsonType": "object",
-            "required": ["date", "restaurant_id", "revenue", "covers", "created_at"],
-            "properties": {
-                "date": {"bsonType": "date"},
-                "restaurant_id": {"bsonType": "objectId"},
-                "revenue": {"bsonType": "double"},
-                "covers": {"bsonType": "int"},
-                "created_at": {"bsonType": "date"}
-            }
-        }
-    }
-
-    collections = {
-        "restaurants": restaurant_validator,
-        "vendors": vendor_validator,
-        "vendor_regex_templates": regex_validator,
-        "invoices": invoice_validator,
-        "line_items": line_item_validator,
-        "item_lookup_map": lookup_validator,
-        "categories": category_validator,
-        "temp_uploads": temp_upload_validator,
-        "sales": sales_validator
-    }
-
-    for name, validator in collections.items():
+    for filename, headers in schemas.items():
+        file_path = db / filename
         try:
-            db.create_collection(name, validator=validator)
-            print(f"[CREATED] Collection: {name}")
-        except CollectionInvalid:
-            try:
-                db.command("collMod", name, validator=validator)
-                print(f"[UPDATED] Validator: {name}")
-            except Exception as e:
-                print(f"[ERROR] Update failed for {name}: {e}")
+            if not file_path.exists():
+                with open(file_path, 'w', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(headers)
+                print(f"[CREATED] Table (File): {filename}")
+            else:
+                # Optional: Validate existing headers
+                with open(file_path, 'r', newline='', encoding='utf-8') as f:
+                    reader = csv.reader(f)
+                    try:
+                        existing_headers = next(reader)
+                        if existing_headers == headers:
+                            print(f"[UPDATED] Validator (Headers OK): {filename}")
+                        else:
+                            print(f"[WARNING] Header Mismatch in {filename}. Expected {headers}")
+                    except StopIteration:
+                        # File is empty, write headers
+                        pass
+        except Exception as e:
+             print(f"[ERROR] Update failed for {filename}: {e}")
 
 def create_indexes(db):
-    """Applies unique constraints and performance indexes."""
-    print("[INFO] Checking Indexes...")
+    """
+    Simulates applying unique constraints and performance indexes.
+    For CSVs, this is mostly a placeholder or a check for file integrity.
+    """
+    print("[INFO] Checking Indexes (File Integrity)...")
     
-    # 1. Restaurants
-    # No unique constraints specified other than _id, but we index commonly queried fields
-    db.restaurants.create_index([("name", ASCENDING)])
-
-    # 2. Vendors (Unique constraints as per description)
-    db.vendors.create_index([("name", ASCENDING)], unique=True)
-    # Sparse indexes allow multiple "null" values but enforce uniqueness if the value exists
-    db.vendors.create_index([("contact_email", ASCENDING)], unique=True, sparse=True)
-    db.vendors.create_index([("phone_number", ASCENDING)], unique=True, sparse=True)
-    db.vendors.create_index([("address", ASCENDING)], unique=True, sparse=True)
-    db.vendors.create_index([("website", ASCENDING)], unique=True, sparse=True)
-
-    # 3. Vendor Regex Templates
-    db.vendor_regex_templates.create_index([("vendor_id", ASCENDING)])
-
-    # 4. Invoices
-    # Compound unique index to prevent duplicate invoice uploads for the same vendor
-    db.invoices.create_index([("vendor_id", ASCENDING), ("invoice_number", ASCENDING)], unique=True)
-
-    # 8. Sales (Daily Sales Tracking)
-    # Compound unique index to prevent duplicate sales entries per restaurant per day
-    db.sales.create_index([("restaurant_id", ASCENDING), ("date", ASCENDING)], unique=True)
-    # Compound index for dashboard date range queries
-    db.sales.create_index([("restaurant_id", ASCENDING), ("date", DESCENDING)])
-
-    # Sorting index for UI
-    db.invoices.create_index([("restaurant_id", ASCENDING), ("invoice_date", DESCENDING)])
-
-    # 5. Line Items
-    db.line_items.create_index([("invoice_id", ASCENDING)])
-    db.line_items.create_index([("category", ASCENDING)])
-
-    # 6. Item Lookup Map
-    # _id is already indexed by default, but we might want to query by category
-    db.item_lookup_map.create_index([("category", ASCENDING)])
-
-    # 7. Temp Uploads (Session Persistence)
-    db.temp_uploads.create_index([("session_id", ASCENDING)], unique=True)
-    # TTL index: auto-delete temp uploads after 7 days
-    db.temp_uploads.create_index([("created_at", ASCENDING)], expireAfterSeconds=604800)
-
-    print("[SUCCESS] Indexes verified.")
+    # In a CSV system, "Indexes" don't exist physically.
+    # We verify that we can access the files that would represent these collections.
+    
+    required_files = [
+        "restaurants.csv", "vendors.csv", "vendor_regex_templates.csv",
+        "invoices.csv", "sales.csv", "line_items.csv", 
+        "item_lookup_map.csv", "temp_uploads.csv"
+    ]
+    
+    missing_files = []
+    for fname in required_files:
+        if not (db / fname).exists():
+            missing_files.append(fname)
+            
+    if not missing_files:
+        print("[SUCCESS] Indexes verified (All required files present).")
+    else:
+        print(f"[FAIL] Missing files for indexing: {missing_files}")
 
 if __name__ == "__main__":
     # We unpack the tuple here since we updated the return signature
-    result = start_connection()
+    # (Keeping comments from original file for structure)
+    result = start_connection(True)
     
     if result is not None:
-        # When create_dummy=False, start_connection returns None, not a db object
-        # Let's connect directly here
+        # When create_dummy=False, start_connection returns None.
+        # Logic adapted to connect to "File DB" directly.
         try:
-            from pymongo import MongoClient
-            client = MongoClient(URI)
-            db = client[DB_NAME]
+            # Mimic the "client = MongoClient(URI)" step by setting the DB path
+            db = DB_PATH
             
             create_validation_rules(db)
             create_indexes(db)

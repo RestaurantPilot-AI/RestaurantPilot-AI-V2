@@ -1,4 +1,4 @@
-# RestaurantPilot
+# Stealth AI — Invoice Processing
 
 This repository contains an invoice ingestion and OCR pipeline (Streamlit UI, extraction, processing, and MongoDB storage). The project uses Tesseract / EasyOCR models and expects a running MongoDB instance and a `.env` file with configuration.
 
@@ -97,7 +97,11 @@ python src\storage\db_init.py
 - Create & activate venv:
 
 ```powershell
-python -m venv .venv; .\.venv\Scripts\Activate.ps1
+python -m venv .venv; 
+```
+
+```powershell
+.\.venv\Scripts\Activate.ps1
 ```
 
 - Install deps:

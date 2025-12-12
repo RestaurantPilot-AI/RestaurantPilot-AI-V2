@@ -40,12 +40,12 @@ def get_structured_data_from_text(
         Tuple[pd.DataFrame, pd.DataFrame]: (invoice_df, line_items_df)
     """
 
-    print("Processing file:",filename)
     if not extracted_text.strip():
         raise ValueError("Input text cannot be empty")
 
     try:
         vendor_context = identify_vendor_and_get_regex(extracted_text,file_path)
+        print("[INFO] Vendor Identified [build_dataframe.py]")
 
     except Exception as exc:
         print(f"[WARN] Vendor identification failed: {exc}")
@@ -58,7 +58,7 @@ def get_structured_data_from_text(
             "vendor_name": "Unknown Vendor",
             "regex": {
                 "invoice_level": {
-                    "invoice_number": r"(?:invoice|inv)[\s#:]*([A-Z0-9-]+)",
+                    "invoice_number": r"(?:invoice|inv)[\s#:]*([0-9]+)",
                     "invoice_date": r"(?:date|dated)[\s:]*(\d{1,2}[-/]\d{1,2}[-/]\d{2,4})",
                     "invoice_total_amount": r"(?:total|amount due)[\s:$]*(\d+[.,]\d{2})",
                     "order_date": ""
@@ -96,6 +96,7 @@ def get_structured_data_from_text(
         extraction_timestamp=extraction_timestamp
     )
 
+    print(f"\n INV df: {inv_df} [vendor_identifier.py]")
     # Build the Line Items DataFrame matching the 'line_items' collection schema
     # We retrieve the invoice number here to link items to the invoice record
     # (Note: The actual database linking via _id will happen in storage part)    
@@ -103,6 +104,8 @@ def get_structured_data_from_text(
         extracted_li_data=extracted_li_data,
         vendor_context=vendor_context,
     )
+
+    print(f"\n LI df: {li_df} [vendor_identifier.py]")
 
     return inv_df, li_df
 
@@ -140,7 +143,6 @@ def _build_invoice_record(
         "order_date": order_date
     }
 
-    print(f"\ninvoice {record}")
     # Return as a pandas DataFrame
     return pd.DataFrame([record])
 
@@ -244,6 +246,8 @@ def _build_line_items_records(
         if description:
             # Call the new method to determine category
             category = _determine_category(description)
+            if category is None:
+                raise ValueError(f"Could not determine category for: {description}")
 
             line_item = {
                 # --- Schema Fields Only ---

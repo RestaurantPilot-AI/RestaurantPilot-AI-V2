@@ -103,13 +103,13 @@ def process_single_file(uploaded_file, temp_dir: Path) -> Dict[str, Any]:
             f.write(uploaded_file.getbuffer())
         
         # Step 1: Extract text using process_invoice
-        extraction_result = process_invoice(str(file_path))
+        extracted_text, filename, text_length, page_count, extraction_timestamp  = process_invoice(str(file_path))
         
         # Handle tuple return (text, filename, text_length, page_count, timestamp)
-        if isinstance(extraction_result, tuple):
-            extracted_text = extraction_result[0] if extraction_result else None
-        else:
-            extracted_text = extraction_result
+        # if isinstance(extraction_result, tuple):
+        #     extracted_text = extraction_result[0] if extraction_result else None
+        # else:
+        #     extracted_text = extraction_result
         
         if not extracted_text or not extracted_text.strip():
             result["status"] = "failed"
@@ -123,30 +123,33 @@ def process_single_file(uploaded_file, temp_dir: Path) -> Dict[str, Any]:
         # Get default restaurant_id from database
         restaurant = db["restaurants"].find_one({}, {"_id": 1})
         restaurant_id = str(restaurant["_id"]) if restaurant else "000000000000000000000000"
-        
+        print(f"\n[INFO] Page on file: {file_path}")
         inv_df, li_df = get_structured_data_from_text(
             extracted_text=extracted_text,
-            filename=uploaded_file.name,
-            text_length=len(extracted_text),
-            page_count=1,  # Single file processing
-            extraction_timestamp=datetime.now(),
+            filename=filename,
+            text_length=text_length,
+            page_count=page_count,  
+            extraction_timestamp=extraction_timestamp,
             restaurant_id=restaurant_id,
             file_path=file_path
         )
         
+        print(f"\n[INFO] Invoice DF (Upload_invoices.py) {inv_df}")
+        print(f"\n[INFO] Line item DF (Upload_invoices.py) {li_df}")
+
         if inv_df is None or inv_df.empty:
             result["status"] = "partial"
             result["message"] = "Data extraction incomplete - manual review required"
             result["extraction_failed"] = True
             result["invoice_df"] = pd.DataFrame({
-                "filename": [uploaded_file.name],
+                "filename": filename,
                 "invoice_number": [""],
                 "invoice_date": [datetime.now()],
-                "invoice_total_amount": [0.0],
+                "invoice_total_amount": inv_df["invoice_total_amount"],
                 "vendor_id": [""],
                 "vendor_name": ["Unknown"],
-                "text_length": [len(extracted_text)],
-                "page_count": [1]
+                "text_length": text_length,
+                "page_count": page_count
             })
             result["line_items_df"] = pd.DataFrame(columns=[
                 "description", "quantity", "unit", "unit_price", "line_total"

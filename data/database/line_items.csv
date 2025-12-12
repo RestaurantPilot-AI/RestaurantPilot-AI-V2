@@ -1,1 +1,15 @@
 _id,invoice_id,vendor_name,category,quantity,unit,description,unit_price,line_total,line_number
+340ecabf-ee24-43ed-8d45-f5f11aa9fcb8,770f2d83-e3b7-49ca-827a-306427c92fa5,Pacific Food Importers,Baking Ingredients,8.0,CS,FLOUR POWER  50 LB,24.06,192.5,1.0
+441efdfb-3977-462b-abf5-7ea5fe58e405,770f2d83-e3b7-49ca-827a-306427c92fa5,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,2.0
+1e1ed369-ee3b-4aa0-bb59-49485cf0fcb7,770f2d83-e3b7-49ca-827a-306427c92fa5,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.32,51.33,3.0
+0bf8c370-74cb-4743-9d03-a2d34209b375,770f2d83-e3b7-49ca-827a-306427c92fa5,Pacific Food Importers,Dry Goods,1.0,EA,CURRANTS  5 LB,29.2,29.2,4.0
+91e0d86a-0277-401b-8274-3db1f9623293,770f2d83-e3b7-49ca-827a-306427c92fa5,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.94,119.84,5.0
+04c3744f-cb3b-4c40-991f-117c2f4c73a0,770f2d83-e3b7-49ca-827a-306427c92fa5,Pacific Food Importers,Baking Ingredients,1.0,CS,SUGAR GRANULATED CANE  25 LB,28.58,28.59,6.0
+524cb4e4-f633-44fd-a19b-f9a2f04ff0eb,770f2d83-e3b7-49ca-827a-306427c92fa5,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.22,95.23,7.0
+b6e09742-f787-403f-9f70-02ae2dd8a7f8,ba0d86e7-27f0-4dc9-bb42-b8c402a3819c,Pacific Food Importers,Baking Ingredients,8.0,CS,FLOUR POWER  50 LB,24.06,192.5,1.0
+9c7a95d8-2b80-42cf-8aef-2ec2d24b5fbc,ba0d86e7-27f0-4dc9-bb42-b8c402a3819c,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,2.0
+d4b8c06e-54d0-4cc8-90aa-356a72075bc9,ba0d86e7-27f0-4dc9-bb42-b8c402a3819c,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.32,51.33,3.0
+7cf4b3cf-440c-435e-9b67-8e6050f1ce1e,ba0d86e7-27f0-4dc9-bb42-b8c402a3819c,Pacific Food Importers,Dry Goods,1.0,EA,CURRANTS  5 LB,29.2,29.2,4.0
+fef992c8-d88d-44be-b0bf-82bbfd9ad9d6,ba0d86e7-27f0-4dc9-bb42-b8c402a3819c,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.94,119.84,5.0
+8bb6fbbc-c7f4-4d41-a99f-d6bc434d92ed,ba0d86e7-27f0-4dc9-bb42-b8c402a3819c,Pacific Food Importers,Baking Ingredients,1.0,CS,SUGAR GRANULATED CANE  25 LB,28.58,28.59,6.0
+819055a7-3ab1-4caf-9cf3-c96c0b7cb468,ba0d86e7-27f0-4dc9-bb42-b8c402a3819c,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.22,95.23,7.0

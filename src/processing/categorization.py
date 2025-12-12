@@ -41,12 +41,6 @@ _PUNCT_RE = re.compile(r"[^\w\s\+\&']")
 def clean_description(raw_description: str) -> str:
     """
     Clean noisy SKU/description lines and return only the product name.
-    - Uses first line only
-    - Strips leading/trailing whitespace and leading/trailing quotes (single/double)
-    - Normalizes common separators
-    - Removes explicit size tokens (8oz, 12-16oz, 8 fl oz, etc.)
-    - Removes other quantity/number noise and unwanted punctuation
-    - Collapses whitespace
     """
     if not raw_description:
         return ""
@@ -54,25 +48,29 @@ def clean_description(raw_description: str) -> str:
     # First line, trimmed, lowercased
     s = raw_description.splitlines()[0].strip().lower()
 
-    # Strip surrounding quotes and whitespace (both ends)
+    # Strip surrounding quotes and whitespace
     s = s.strip(" '\"")
 
+    # NEW: remove all commas
+    s = s.replace(",", "")
+
     # Normalize common separators to spaces
-    s = re.sub(r'[_\-\–\/\*]', ' ', s)
+    s = re.sub(r'[_\-\–\/\*]', " ", s)
 
-    # Remove explicit size patterns like "8oz", "8 fl oz", "12-16oz" first
-    s = _SIZE_RE.sub(' ', s)
+    # Remove explicit size patterns like "8oz", "8 fl oz", "12-16oz"
+    s = _SIZE_RE.sub(" ", s)
 
-    # Remove other quantities / sizes / stray numbers
-    s = _QUANTITY_RE.sub(' ', s)
+    # Remove other quantity/number noise
+    s = _QUANTITY_RE.sub(" ", s)
 
-    # Remove unwanted punctuation but keep + & and apostrophe
-    s = _PUNCT_RE.sub(' ', s)
+    # Remove unwanted punctuation but keep + & '
+    s = _PUNCT_RE.sub(" ", s)
 
-    # Collapse whitespace and remove empty tokens
-    tokens = [t for t in re.split(r'\s+', s) if t]
+    # Collapse whitespace
+    tokens = [t for t in re.split(r"\s+", s) if t]
 
-    return ' '.join(tokens)
+    return " ".join(tokens)
+
 
 
 def build_categorization_prompt(description: str, existing_categories: List[str]) -> str:
@@ -137,10 +135,11 @@ def get_line_item_category(description: str) -> str:
     # 1. Fetch from DB
     stored_category = get_stored_category(cleaned_description)
     if stored_category:
+        print(f"[INFO] Found decryption-category pair in DB: Description: {description}, Category: {stored_category}")
         return stored_category
 
     # 2. Fetch Context from DB
-    print(f"[INFO] Categorizing via LLM: '{cleaned_description}'")
+    # print(f"[INFO] Categorizing via LLM: '{cleaned_description}'")
     existing_categories = get_all_category_names()
 
     # 3. Predict via LLM
@@ -149,6 +148,6 @@ def get_line_item_category(description: str) -> str:
     # 4. Save via DB Delegate
     save_category_result(cleaned_description, predicted_category, existing_categories)
     
-    print(f"Description: {description}, Category: {predicted_category}")
+    print(f"[INFO] Used LLM to get decryption-category pair: Description: {description}, Category: {predicted_category}")
 
     return predicted_category

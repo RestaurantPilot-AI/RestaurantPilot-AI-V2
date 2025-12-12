@@ -1,1 +1,3 @@
 _id,filename,restaurant_id,vendor_id,invoice_number,invoice_date,invoice_total_amount,text_length,page_count,extraction_timestamp,order_date
+770f2d83-e3b7-49ca-827a-306427c92fa5,ARPFIINVOEBTCHLASER (1).pdf,1,a8ef44b0-daaf-4220-ae1d-d71eabb158e8,379183,2025-08-05T00:00:00,0.00,1416,1,2025-12-12T21:06:40,2025-08-04T00:00:00
+ba0d86e7-27f0-4dc9-bb42-b8c402a3819c,ARPFIINVOEBTCHLASER (1).pdf,1,a8ef44b0-daaf-4220-ae1d-d71eabb158e8,379183,2025-08-05T00:00:00,0.00,1416,1,2025-12-12T21:06:40,2025-08-04T00:00:00

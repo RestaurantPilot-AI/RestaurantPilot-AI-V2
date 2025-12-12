@@ -10,15 +10,15 @@ ONION MINCED,Produce
 SALT KOSHER COARSE,Spices
 GLOVE NITRILE,Paper Goods
 YEAST INSTANT RED LBL SAF,Baking Ingredients
-TOMATO, ROMA,Produce
-ONION, GREEN,Produce
-HERBS, DILL BABY,Spices
-ONION, WHITE,Produce
-ONION, ITALIAN RED,Produce
+TOMATO ROMA,Produce
+ONION GREEN,Produce
+HERBS DILL BABY,Spices
+ONION WHITE,Produce
+ONION ITALIAN RED,Produce
 AVOCADO,Produce
 FUEL SURCHARGE,Operating Expense
-CUCUMBER, XFANCY LG EA,Produce
-HERBS, PARSLEY, ITALIAN BN,Spices
+CUCUMBER XFANCY LG EA,Produce
+HERBS PARSLEY ITALIAN BN,Spices
 Moonshadow,Dry Goods
 Ecliptic,Dry Goods
 Super Champ All Temp Machine Warewashing Detergent,Cleaning Supplies
@@ -39,7 +39,7 @@ BAGCRAFT DELI WRAP,Paper Goods
 PHILADELPHIA CREAM CHEESE,Dairy
 KIRKLAND SIGNATURE WHOLE MILK,Dairy
 KIRKLAND SIGNATURE ORANGE JUICE,Beverage
-DAILY'S 3/8"" FULLY-COOKED DICED BACON BITS,Meat
+"DAILY'S 3/8"""" FULLY-COOKED DICED BACON BITS",Meat
 RED ONIONS,Produce
 CUCUMBERS,Produce
 WORLD CENTRIC COMPOSTABLE PLASTIC COLD CUP LIDS,Paper Goods
@@ -54,3 +54,10 @@ LAUNDRY BAG,Paper Goods
 LAUNDRY BAG RACK,Paper Goods
 MOP HANDLE WET,Cleaning Supplies
 MOP WET,Cleaning Supplies
+flour power,Baking Ingredients
+sesame seeds white+ x,Dry Goods
+jalapeno sliced,Produce
+currants,Dry Goods
+milk oat x,Dairy
+sugar granulated cane,Baking Ingredients
+eggs liquid x,Dairy

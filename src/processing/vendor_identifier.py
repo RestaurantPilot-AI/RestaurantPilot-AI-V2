@@ -319,7 +319,7 @@ def call_llm_api(prompt: str, file_path: Optional[str] = None) -> Dict[str, Any]
             
             try:
                 # Use the built-in SDK upload feature for files (required for PDFs/large files)
-                print(f"[INFO] Uploading file: {file_path} with MIME type: {mime_type}")
+                print(f"[INFO] Uploading file: {file_path} with MIME type: {mime_type} [vendor_identifier.py]")
                 file_obj = genai.upload_file(file_path, mime_type=mime_type)
                 
                 # Add the uploaded file object (Part) to the beginning of the content list
@@ -560,6 +560,8 @@ def llm_phase1_extract(file_path: str) -> Dict[str, Any]:
     # 2. Call the LLM API, passing the prompt and the file_path for multimodal processing
     # The OCR text step is now bypassed entirely.
     parsed = call_llm_api(prompt, file_path=file_path)
+    
+    print(f"\nPhase 1 Output: {parsed}")
 
     # 1) Try to extract JSON (Validation)
     # Note: We skip _safe_extract_json_from_llm because 'parsed' is already a dict
@@ -712,13 +714,13 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
             empty_invoice_keys.append(f"invoice_level.{k}")
         
         # If we have a regex (non-empty), validate capture groups
-        if v.strip() != "":
-            groups = _count_capture_groups(v)
-            # FIX: RELAXED VALIDATION. Allow > 1 group.
-            if groups < 1:
-                bad_group_keys.append(f"invoice_level.{k} (capture groups={groups})")
-            elif groups > 1:
-                print(f"[WARN] invoice_level.{k} has {groups} capture groups. System will default to group(1).")
+        # if v.strip() != "":
+        #     groups = _count_capture_groups(v)
+        #     # FIX: RELAXED VALIDATION. Allow > 1 group.
+        #     if groups < 1:
+        #         bad_group_keys.append(f"invoice_level.{k} (capture groups={groups})")
+        #     elif groups > 1:
+        #         print(f"[WARN] invoice_level.{k} has {groups} capture groups. System will default to group(1).")
 
     if empty_invoice_keys:
         raise Phase2ValidationError(f"Empty/Invalid strictly required invoice_level regex values: {empty_invoice_keys}")
@@ -775,13 +777,13 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
 
         # If we have a regex (non-empty), validate capture groups
         # FIX: Skip check for marker fields
-        if v.strip() != "" and k not in marker_fields:
-            groups = _count_capture_groups(v)
-            # FIX: RELAXED VALIDATION. Allow > 1 group.
-            if groups < 1:
-                bad_line_item_group_keys.append(f"line_item_level.{k} (capture groups={groups})")
-            elif groups > 1:
-                 print(f"[WARN] line_item_level.{k} has {groups} capture groups. System will default to group(1).")
+        # if v.strip() != "" and k not in marker_fields:
+        #     groups = _count_capture_groups(v)
+        #     # FIX: RELAXED VALIDATION. Allow > 1 group.
+        #     if groups < 1:
+        #         bad_line_item_group_keys.append(f"line_item_level.{k} (capture groups={groups})")
+        #     elif groups > 1:
+        #          print(f"[WARN] line_item_level.{k} has {groups} capture groups. System will default to group(1).")
 
     if empty_line_item_keys:
         raise Phase2ValidationError(f"Empty/Invalid strictly required line_item_level regex values: {empty_line_item_keys}")
@@ -991,158 +993,160 @@ def find_vendor_name_by_id(id: str) -> Optional[str]:
     
     return vendor_name if vendor_name else None
 
-def apply_regex_extraction(text: str, regex_patterns: Union[List[str], Dict[str, Any]]) -> Tuple[Dict[str, str], List[Dict[str, Any]]]:
+# Helper to safely apply regex and handle multiple capture groups
+def extract_val(pattern: str, text: str, field_name: str) -> Optional[str]:
+    """
+    Applies regex, captures the first group (if > 1 group exists),
+    and handles warnings for multiple groups.
+    """
+    if pattern and pattern.strip():
+        try:
+            match = re.search(pattern, text)
+            if match:
+                groups = len(match.groups())
+
+                if groups == 0:
+                    # No capture group, cannot extract a value
+                    return None
+
+                elif groups > 1:
+                    print(f"[WARN] {field_name} has {groups} capture groups. Defaulting to group(1) [vendor_identifier.py].")
+
+                # Return group(1)
+                return match.group(1).strip()
+
+        except re.error as e:
+            print(f"[ERROR] Regex error in [vendor_identifier.py] for {field_name}: {e}")
+            return None
+
+    return None
+
+
+def apply_regex_extraction(
+    text: str,
+    regex_patterns: Union[List[str], Dict[str, Any]]
+) -> Tuple[Dict[str, str], List[Dict[str, Any]]]:
     """
     Applies the strict 0-10 positional regex array to the raw invoice text.
-    
-    Index Mapping:
-    0: invoice_number        (Invoice Level)
-    1: invoice_date          (Invoice Level)
-    2: invoice_total_amount  (Invoice Level)
-    3: order_date            (Invoice Level)
-    4: line_item_block_start (Start Marker)
-    5: line_item_block_end   (End Marker)
-    6: quantity              (Line Item Level)
-    7: description           (Line Item Level)
-    8: unit                  (Line Item Level)
-    9: unit_price            (Line Item Level)
-    10: line_total           (Line Item Level)
     """
 
-    # ---------------------------------------------------
-    # 0. ADAPTER: Convert Dict to List if needed
-    # ---------------------------------------------------
+    # Allow dictionary-based definitions
     if isinstance(regex_patterns, dict):
-        # We need to flatten the dictionary to match the strict index mapping
         inv = regex_patterns.get("invoice_level", {})
         li = regex_patterns.get("line_item_level", {})
-        
+
         regex_patterns = [
-            inv.get("invoice_number", ""),       # 0
-            inv.get("invoice_date", ""),         # 1
-            inv.get("invoice_total_amount", ""), # 2
-            inv.get("order_date", ""),           # 3
-            li.get("line_item_block_start", ""), # 4
-            li.get("line_item_block_end", ""),   # 5
-            li.get("quantity", ""),              # 6
-            li.get("description", ""),           # 7
-            li.get("unit", ""),                  # 8
-            li.get("unit_price", ""),            # 9
-            li.get("line_total", "")             # 10
+            inv.get("invoice_number", ""),        # 0
+            inv.get("invoice_date", ""),          # 1
+            inv.get("invoice_total_amount", ""),  # 2
+            inv.get("order_date", ""),            # 3
+
+            li.get("line_item_block_start", ""),  # 4
+            li.get("line_item_block_end", ""),    # 5
+
+            li.get("quantity", ""),               # 6
+            li.get("description", ""),            # 7
+            li.get("unit", ""),                   # 8
+            li.get("unit_price", ""),             # 9
+            li.get("line_total", "")              # 10
         ]
 
     # ---------------------------------------------------
-    # 1. UNPACK PATTERNS (Indices 0-10)
+    # 1. UNPACK PATTERNS
     # ---------------------------------------------------
-    # We unpack them into named variables for absolute clarity
-    p_inv_num      = regex_patterns[0]
-    p_inv_date     = regex_patterns[1]
-    p_inv_total    = regex_patterns[2]
-    p_order_date   = regex_patterns[3]
-    
-    p_block_start  = regex_patterns[4]
-    p_block_end    = regex_patterns[5]
-    
-    p_li_qty       = regex_patterns[6]
-    p_li_desc      = regex_patterns[7]
-    p_li_unit      = regex_patterns[8]
-    p_li_price     = regex_patterns[9]
-    p_li_total     = regex_patterns[10]
+    p_inv_num     = regex_patterns[0]
+    p_inv_date    = regex_patterns[1]
+    p_inv_total   = regex_patterns[2]
+    p_order_date  = regex_patterns[3]
+
+    p_block_start = regex_patterns[4]
+    p_block_end   = regex_patterns[5]
+
+    p_li_qty      = regex_patterns[6]
+    p_li_desc     = regex_patterns[7]
+    p_li_unit     = regex_patterns[8]
+    p_li_price    = regex_patterns[9]
+    p_li_total    = regex_patterns[10]
 
     # ---------------------------------------------------
-    # 2. INVOICE LEVEL EXTRACTION (Indices 0, 1, 2, 3)
+    # 2. INVOICE LEVEL EXTRACTION
     # ---------------------------------------------------
     inv_data = {
-        "invoice_number": None,
-        "invoice_date": None,
-        "invoice_total_amount": None,
-        "order_date": None
+        "invoice_number": extract_val(p_inv_num, text, "Invoice Number"),
+        "invoice_date": extract_val(p_inv_date, text, "Invoice Date"),
+        "invoice_total_amount": extract_val(p_inv_total, text, "Invoice Total"),
+        "order_date": extract_val(p_order_date, text, "Order Date")
     }
 
-    # Helper to apply regex safely
-    def extract_val(pattern, text):
-        if pattern and pattern.strip():
-            match = re.search(pattern, text)
-            if match:
-                return match.group(1).strip()
-        return None
-
-    inv_data["invoice_number"]       = extract_val(p_inv_num, text)
-    inv_data["invoice_date"]         = extract_val(p_inv_date, text)
-    inv_data["invoice_total_amount"] = extract_val(p_inv_total, text)
-    inv_data["order_date"]           = extract_val(p_order_date, text)
-
     # ---------------------------------------------------
-    # 3. DEFINE SEARCH BLOCK (Indices 4, 5)
+    # 3. DEFINE SEARCH BLOCK
     # ---------------------------------------------------
     start_index = 0
     end_index = len(text)
 
-    # Index 4: Block Start
     if p_block_start and p_block_start.strip():
         s_match = re.search(p_block_start, text)
         if s_match:
-            start_index = s_match.end() # Start reading AFTER the header
+            start_index = s_match.end()
 
-    # Index 5: Block End
     if p_block_end and p_block_end.strip():
-        # Search only in the remaining text
         e_match = re.search(p_block_end, text[start_index:])
         if e_match:
-            end_index = start_index + e_match.start() # Stop reading BEFORE the footer
+            end_index = start_index + e_match.start()
 
-    # Slice the text to isolate the table
     block_text = text[start_index:end_index]
     lines = block_text.split('\n')
 
     # ---------------------------------------------------
-    # 4. LINE ITEM EXTRACTION (Indices 6, 7, 8, 9, 10)
+    # 4. LINE ITEM EXTRACTION
     # ---------------------------------------------------
     line_items = []
+
+    li_map = [
+        (p_li_qty, "quantity"),
+        (p_li_desc, "description"),
+        (p_li_unit, "unit"),
+        (p_li_price, "unit_price"),
+        (p_li_total, "line_total")
+    ]
 
     for line in lines:
         line = line.strip()
         if not line:
             continue
 
-        # We will try to match ALL line item regexes (6-10).
-        # If a regex pattern exists (is not empty) but fails to match, 
-        # then this line is likely NOT a valid line item (or is garbage text).
-        
         current_item = {}
-        is_valid_line = True
+        successful_matches = 0
 
-        # Mapping for Line Items
-        # (Pattern, Key Name)
-        li_map = [
-            (p_li_qty,   "quantity"),    # Index 6
-            (p_li_desc,  "description"), # Index 7
-            (p_li_unit,  "unit"),        # Index 8
-            (p_li_price, "unit_price"),  # Index 9
-            (p_li_total, "line_total")   # Index 10
-        ]
-
+        # Run all patterns
         for pattern, key in li_map:
             if pattern and pattern.strip():
-                match = re.search(pattern, line)
-                if match:
-                    current_item[key] = match.group(1).strip()
+                extracted_value = extract_val(pattern, line, f"Line Item {key}")
+                if extracted_value is not None:
+                    current_item[key] = extracted_value
+                    successful_matches += 1
                 else:
-                    # STRICT MODE: If a pattern was provided but didn't match, 
-                    # we assume this line is not a valid line item.
-                    is_valid_line = False
-                    break
+                    current_item[key] = None
             else:
-                # If pattern is empty string "", we just set the value to None
                 current_item[key] = None
 
-        if is_valid_line:
-            # Only add if we actually extracted something useful (e.g. at least a description)
-            if current_item.get("description") or current_item.get("line_total"):
-                current_item["raw_line"] = line # Helpful for debugging
-                line_items.append(current_item)
+        # Validation: require line_total + (description or quantity)
+        if current_item.get("line_total") and (
+            current_item.get("description") or current_item.get("quantity")
+        ):
+            current_item["raw_line"] = line
+            line_items.append(current_item)
 
+        elif successful_matches > 0:
+            # Soft fallback
+            current_item["raw_line"] = line
+            line_items.append(current_item)
+
+    print("[INFO] Values extracted using Regex [vendor_identifier.py]")
+    # print(f"\n INV extracted: {inv_data} [vendor_identifier.py]")
+    # print(f"\n LI extracted: {line_items} [vendor_identifier.py]")
     return inv_data, line_items
+
 
 def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     """
@@ -1180,7 +1184,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
         vendor_name = find_vendor_name_by_id(vendor_id)
         # A1. Existing Regex
         regex_list = get_regex_for_vendor(vendor_id)
-        print("fetched existing vendor regex")
+        print("[INFO] Fetched existing vendor regex [vendor_identifier.py]")
         
         if regex_list:
             return {
@@ -1198,7 +1202,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     # --- CASE B: Vendor NOT Found (Create New) ---
     else:
         # Phase 1: Extract clean master data
-        phase1 = llm_phase1_extract(text)
+        phase1 = llm_phase1_extract(file_path)
         if phase1:
                 # Merge new LLM data with existing signals
                 vendor = phase1["vendor_master_data"]
@@ -1212,7 +1216,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
                 
                 if new_regexes:
                     save_regex_for_vendor(new_vendor_id, new_regexes)
-                    print("Generated new vendor regex")
+                    print("[INFO] Generated new vendor regex [vendor_identifier.py]")
                     return {
                         "vendor_id": new_vendor_id,
                         "vendor_name": vendor_name,

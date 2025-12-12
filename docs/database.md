@@ -50,8 +50,8 @@
 The `regex_patterns` array uses strict positional indexing.
 Empty strings (`""`) indicate missing values but **preserve array order**.
 
-| Index | Field Name                | Context                        |
-| ----- | ------------------------- | ------------------------------ |
+| Index | Field Name              | Context                        |
+| ----- | ----------------------- | ------------------------------ |
 | 0     | `invoice_number`        | Invoice Level                  |
 | 1     | `invoice_date`          | Invoice Level                  |
 | 2     | `invoice_total_amount`  | Invoice Level                  |

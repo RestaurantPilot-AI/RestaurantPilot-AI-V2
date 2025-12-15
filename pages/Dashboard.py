@@ -7,6 +7,7 @@ import altair as alt
 from datetime import datetime, timedelta
 import sys
 from pathlib import Path
+import traceback
 
 # Add src to path for imports
 sys.path.append(str(Path(__file__).parent.parent))
@@ -74,8 +75,11 @@ def load_data_from_db(start_date, end_date, restaurant_ids=None, vendor_ids=None
     """
     try:
         # Convert string IDs to ObjectId
-        restaurant_oids = [ObjectId(rid) for rid in restaurant_ids] if restaurant_ids else None
-        vendor_oids = [ObjectId(vid) for vid in vendor_ids] if vendor_ids else None
+        # restaurant_oids = [ObjectId(rid) for rid in restaurant_ids] if restaurant_ids else None
+        # vendor_oids = [ObjectId(vid) for vid in vendor_ids] if vendor_ids else None
+        
+        restaurant_oids = restaurant_ids  # keep as strings for debugging
+        vendor_oids = vendor_ids  # keep as strings for debugging
         
         # Load invoice data with line items
         invoices_df = get_invoice_line_items_joined(
@@ -95,11 +99,14 @@ def load_data_from_db(start_date, end_date, restaurant_ids=None, vendor_ids=None
         return invoices_df, sales_df
         
     except Exception as e:
+        print("Failed to load data from database:")
+        traceback.print_exc()  # full traceback with file & line numbers
+
         st.error(f"Failed to load data from database: {e}")
-        # Return empty DataFrames with expected columns
+
         empty_invoices = pd.DataFrame(columns=[
-            "invoice_id", "invoice_number", "invoice_date", "location", 
-            "vendor", "category", "item_name", "quantity", "unit", 
+            "invoice_id", "invoice_number", "invoice_date", "location",
+            "vendor", "category", "item_name", "quantity", "unit",
             "unit_price", "line_total"
         ])
         empty_sales = pd.DataFrame(columns=["date", "location", "revenue", "covers"])

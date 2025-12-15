@@ -5,6 +5,7 @@ import json
 import uuid
 import datetime
 import pandas as pd
+import numpy as np
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Tuple
 from dotenv import load_dotenv
@@ -658,6 +659,98 @@ def get_price_variations(item_name, start_date=None, end_date=None):
     if df.empty: return pd.DataFrame(columns=["date", "vendor", "unit_price", "quantity"])
     df = df[df["item_name"] == item_name]
     return df[["invoice_date", "vendor", "unit_price", "quantity"]].rename(columns={"invoice_date": "date"}).sort_values("date")
+
+def get_price_variations_overview(restaurant_id: str, start_date=None, end_date=None, vendor_ids=None, min_occurrences: int = 1):
+    """
+    Returns an overview DataFrame for all items in a given restaurant showing min/max unit price,
+    absolute and percent change, vendors involved, and occurrence counts. Sorted by absolute change desc.
+    """
+    df = get_invoice_line_items_joined(start_date, end_date, restaurant_ids=[restaurant_id], vendor_ids=vendor_ids)
+    if df.empty:
+        return pd.DataFrame(columns=["item_name", "category", "min_price", "max_price", "abs_change", "pct_change", "vendor_min", "vendor_max", "occurrences", "vendors"])
+
+    # Drop rows missing critical values
+    df = df.dropna(subset=["item_name", "unit_price"]).copy()
+    if df.empty:
+        return pd.DataFrame(columns=["item_name", "category", "min_price", "max_price", "abs_change", "pct_change", "vendor_min", "vendor_max", "occurrences", "vendors"])
+
+    agg = df.groupby("item_name").agg(
+        category=("category", "first"),
+        min_price=("unit_price", "min"),
+        max_price=("unit_price", "max"),
+        mean_price=("unit_price", "mean"),
+        occurrences=("invoice_id", "nunique"),
+        vendor_count=("vendor", "nunique")
+    ).reset_index()
+
+    # vendor with min and max price
+    try:
+        idx_min = df.groupby("item_name")["unit_price"].idxmin()
+        idx_max = df.groupby("item_name")["unit_price"].idxmax()
+        vendor_min = df.loc[idx_min, ["item_name", "vendor"]].set_index("item_name")["vendor"]
+        vendor_max = df.loc[idx_max, ["item_name", "vendor"]].set_index("item_name")["vendor"]
+    except Exception:
+        vendor_min = pd.Series()
+        vendor_max = pd.Series()
+
+    agg["vendor_min"] = agg["item_name"].map(lambda x: str(vendor_min.get(x, "")))
+    agg["vendor_max"] = agg["item_name"].map(lambda x: str(vendor_max.get(x, "")))
+
+    agg["abs_change"] = agg["max_price"] - agg["min_price"]
+    # percent change relative to min_price where applicable
+    def _pct(row):
+        if row["min_price"] and row["min_price"] > 0:
+            return (row["abs_change"] / row["min_price"]) * 100
+        return float("nan")
+
+    agg["pct_change"] = agg.apply(_pct, axis=1)
+
+    # Compute signed change (latest - earliest) and percent relative to earliest
+    # We need first and last prices by invoice_date
+    df_sorted = df.sort_values("invoice_date")
+    first_price = df_sorted.groupby("item_name")["unit_price"].first()
+    last_price = df_sorted.groupby("item_name")["unit_price"].last()
+    agg["first_price"] = agg["item_name"].map(lambda x: float(first_price.get(x, np.nan)))
+    agg["last_price"] = agg["item_name"].map(lambda x: float(last_price.get(x, np.nan)))
+    agg["signed_change"] = agg["last_price"] - agg["first_price"]
+    def _signed_pct(row):
+        if pd.notna(row["first_price"]) and row["first_price"] and row["first_price"] > 0:
+            return (row["signed_change"] / row["first_price"]) * 100
+        return float("nan")
+    agg["signed_pct_change"] = agg.apply(_signed_pct, axis=1)
+
+    # vendors list
+    vendors_series = df.groupby("item_name")["vendor"].unique().apply(lambda x: ", ".join([str(i) for i in x]))
+    agg["vendors"] = agg["item_name"].map(lambda x: vendors_series.get(x, ""))
+
+    # Filter by occurrence threshold
+    agg = agg[agg["occurrences"] >= min_occurrences]
+    # Sorting
+    agg = agg.sort_values("abs_change", ascending=False).reset_index(drop=True)
+    # Clean columns - include signed change and first/last prices for callers
+    return agg[["item_name", "category", "min_price", "max_price", "first_price", "last_price", "abs_change", "pct_change", "signed_change", "signed_pct_change", "vendor_min", "vendor_max", "vendors", "occurrences"]]
+
+def get_item_price_timeseries(restaurant_id: str, item_name: str, start_date=None, end_date=None, vendor_ids=None):
+    """Return price history rows for a specific item name at a restaurant."""
+    df = get_invoice_line_items_joined(start_date, end_date, restaurant_ids=[restaurant_id], vendor_ids=vendor_ids)
+    if df.empty: return pd.DataFrame(columns=["date", "invoice_id", "invoice_number", "vendor", "unit_price", "quantity", "category"])
+    sub = df[df["item_name"] == item_name].copy()
+    if sub.empty: return pd.DataFrame(columns=["date", "invoice_id", "invoice_number", "vendor", "unit_price", "quantity", "category"])
+    sub = sub.sort_values("invoice_date")
+    out = pd.DataFrame()
+    out["date"] = sub["invoice_date"]
+    out["invoice_id"] = sub["invoice_id"]
+    out["invoice_number"] = sub.get("invoice_number", "")
+    out["vendor"] = sub["vendor"]
+    out["unit_price"] = sub["unit_price"]
+    out["quantity"] = sub["quantity"]
+    out["category"] = sub["category"]
+    return out.reset_index(drop=True)
+
+def get_descriptions_for_restaurant(restaurant_id: str, start_date=None, end_date=None):
+    df = get_invoice_line_items_joined(start_date, end_date, restaurant_ids=[restaurant_id])
+    if df.empty: return []
+    return sorted(df["item_name"].dropna().unique().tolist())
 
 def get_recent_invoices(limit=10, restaurant_ids=None):
     inv = _read_table("invoices")

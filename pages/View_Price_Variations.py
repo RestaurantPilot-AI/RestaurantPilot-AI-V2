@@ -1,507 +1,307 @@
-## Author : Nithisha
+"""
+Price Variations Dashboard
+
+Shows unit-price variation for menu / supply items for Westman's Bagel & Coffee
+(Capitol Hill). The page provides:
+- an item-level variation chart (items on the vertical axis, signed unit-price
+    change on the horizontal axis),
+- a summary table with min/max/absolute/signed changes, and
+- item-level price history and invoice listings.
+
+All data is read through the project's `src.storage.database` helpers.
+"""
+
+from datetime import datetime
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
-import seaborn as sns
 import numpy as np
-from src.storage.database import db, get_vendor_name_by_id
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from src.storage.database import (
+    get_price_variations_overview,
+    get_item_price_timeseries,
+    get_descriptions_for_restaurant,
+    get_invoice_line_items_joined,
+)
 
 sns.set_theme(style="whitegrid")
 
-# ---------------------------
-# Load & Prepare Data
-# ---------------------------
+# ----- Configuration -----
+RESTAURANT_ID = "507f1f77bcf86cd799439011"  # Westman's Bagel & Coffee - Capitol Hill
+
+
 @st.cache_data
-def load_data():
-    """Load invoice and line item data from MongoDB."""
-    try:
-        # Fetch all invoices from database
-        invoices_cursor = db["invoices"].find({})
-        invoices_list = list(invoices_cursor)
-        
-        if not invoices_list:
-            st.error("No invoices found in database.")
-            return None
-        
-        # Extract line items from invoices (embedded structure)
-        line_items_list = []
-        for invoice in invoices_list:
-            invoice_id = invoice["_id"]
-            embedded_items = invoice.get("line_items", [])
-            for item in embedded_items:
-                item["invoice_id"] = invoice_id
-                line_items_list.append(item)
-        
-        if not line_items_list:
-            st.error("No line items found.")
-            return None
-        
-        # Convert to DataFrames
-        invoices = pd.DataFrame(invoices_list)
-        line_items = pd.DataFrame(line_items_list)
-        
-    except Exception as e:
-        st.error(f"Could not load data from database: {e}")
-        return None
+def _load_joined(start_date=None, end_date=None):
+    return get_invoice_line_items_joined(start_date, end_date, restaurant_ids=[RESTAURANT_ID])
 
-    # Ensure invoice date conversion early
-    if "date" in invoices.columns:
-        invoices["date"] = pd.to_datetime(invoices["date"], errors="coerce")
 
-    # Merge - handle both ObjectId and string IDs
-    # Convert ObjectId to string for merging
-    invoices["_id_str"] = invoices["_id"].astype(str)
-    line_items["invoice_id_str"] = line_items["invoice_id"].astype(str)
-    
-    df = pd.merge(
-        line_items,
-        invoices[["_id_str", "vendor_id", "restaurant_id", "date", "total_amount"]],
-        left_on="invoice_id_str",
-        right_on="_id_str",
-        how="left",
-        suffixes=("_line", "_invoice")
-    )
+@st.cache_data
+def _load_overview(start_date=None, end_date=None, vendor_ids=None, min_occurrences=1):
+    return get_price_variations_overview(RESTAURANT_ID, start_date, end_date, vendor_ids, min_occurrences)
 
-    if df.empty:
-        st.warning("Merged dataset is empty.")
-        return None
 
-    # Ensure numeric columns - handle Decimal128 from MongoDB
-    def safe_numeric(val):
-        if pd.isna(val):
-            return np.nan
-        if hasattr(val, 'to_decimal'):  # Decimal128
-            return float(val.to_decimal())
-        try:
-            return float(val)
-        except:
-            return np.nan
-    
-    df["line_total"] = df["line_total"].apply(safe_numeric)
-    df["unit_price"] = df["unit_price"].apply(safe_numeric)
-    df["quantity"] = df["quantity"].apply(safe_numeric)
+@st.cache_data
+def _get_descriptions(start_date=None, end_date=None):
+    return get_descriptions_for_restaurant(RESTAURANT_ID, start_date, end_date)
 
-    # Ensure date column and month period
-    if "date" in df.columns:
-        df["date"] = pd.to_datetime(df["date"], errors="coerce")
-        # Drop rows without dates for time-based charts but keep for non-time charts
-        df["month"] = df["date"].dt.to_period("M").astype(str)
-    else:
-        df["date"] = pd.NaT
-        df["month"] = "Unknown"
 
-    # vendor name lookup (robust)
-    def safe_vendor(v):
-        try:
-            if pd.isna(v):
-                return "Unknown"
-            name = get_vendor_name_by_id(str(v))
-            return name if name else "Unknown"
-        except Exception:
-            return "Unknown"
+st.title("Price Variations")
 
-    df["vendor_name"] = df["vendor_id"].apply(safe_vendor)
-
-    # Ensure category & description
-    if "category" not in df.columns or df["category"].isnull().all():
-        # create category column frinvoice_id_stription as fallback
-        df["category"] = df.get("category", pd.Series(["Uncategorized"] * len(df)))
-        # If category missing entirely, set 'Uncategorized' and we'll fallback in charts
-        df["category"].fillna("Uncategorized", inplace=True)
-
-    if "description" not in df.columns:
-        df["description"] = "Unknown"
-
-    # Ensure invoice id column exists
-    if "invoice_id" not in df.columns:
-        df["invoice_id"] = df.get("_id_line", np.nan)
-
-    return df
-
-df = load_data()
-if df is None:
+# Initial joined DF for date range / vendor discovery
+base_df = _load_joined()
+if base_df is None or base_df.empty:
+    st.warning("No invoice/line-item data available for this restaurant.")
     st.stop()
 
-# ---------------------------
-# Sidebar Filters
-# ---------------------------
-st.title("Invoice Analysis Dashboard — Graph-focused")
-
+# Sidebar filters
 st.sidebar.header("Filters")
-min_date, max_date = df["date"].min(), df["date"].max()
-if pd.isna(min_date) or pd.isna(max_date):
-    # If time data is very sparse, allow user to proceed but warn
-    st.sidebar.warning("Date range could not be fully determined; some time charts may be empty.")
-    # Provide reasonable defaults
-    min_date = df["date"].dropna().min() if not df["date"].dropna().empty else pd.to_datetime("2000-01-01")
-    max_date = df["date"].dropna().max() if not df["date"].dropna().empty else pd.to_datetime("2000-01-01")
+valid_dates = base_df["invoice_date"].dropna()
+min_date = valid_dates.min().to_pydatetime() if not valid_dates.empty else datetime(2024, 1, 1)
+max_date = valid_dates.max().to_pydatetime() if not valid_dates.empty else datetime.now()
 
-date_range = st.sidebar.slider(
-    "Date range",
-    min_value=min_date.to_pydatetime(),
-    max_value=max_date.to_pydatetime(),
-    value=(min_date.to_pydatetime(), max_date.to_pydatetime()),
-    format="YYYY-MM-DD"
-)
+date_range = st.sidebar.date_input("Date range", value=(min_date.date(), max_date.date()))
+start_dt = datetime.combine(date_range[0], datetime.min.time())
+end_dt = datetime.combine(date_range[1], datetime.max.time())
 
-df = df[(df["date"] >= date_range[0]) & (df["date"] <= date_range[1])]
+vendors = sorted(base_df["vendor"].fillna("Unknown").unique().tolist())
+selected_vendor = st.sidebar.selectbox("Vendor", ["All"] + vendors)
+vendor_ids = None
+if selected_vendor != "All":
+    vendor_ids = [selected_vendor]
 
-vendors = sorted(df["vendor_name"].dropna().unique().tolist())
-selected_vendor = st.sidebar.selectbox("Select Vendor", ["All"] + vendors)
-df_view = df if selected_vendor == "All" else df[df["vendor_name"] == selected_vendor]
+categories = sorted(base_df["category"].fillna("Uncategorized").unique().tolist())
+selected_category = st.sidebar.selectbox("Category (optional)", ["All"] + categories)
 
-if df_view.empty:
-    st.warning("No data for chosen filters.")
+min_occ = st.sidebar.slider("Min distinct invoices per item", 1, 10, 1)
+top_n = st.sidebar.slider("Top N items to show", 5, 100, 30)
+
+# Load overview dataframe
+overview = _load_overview(start_dt, end_dt, vendor_ids, min_occurrences=min_occ)
+if overview is None or overview.empty:
+    st.warning("No items with price data for selected filters.")
     st.stop()
 
-# ---------------------------
-# Utility helpers
-# ---------------------------
-def safe_group_sum(df_in, by, value="line_total"):
-    if df_in.empty:
-        return pd.Series(dtype=float)
-    g = df_in.groupby(by)[value].sum()
-    return g.sort_values(ascending=False)
+# Apply category filter
+if selected_category != "All":
+    overview = overview[overview["category"] == selected_category]
 
-def sort_month_index(series_or_df):
-    out = series_or_df.copy()
-    try:
-        out.index = pd.to_datetime(out.index)
-        out = out.sort_index()
-    except Exception:
-        pass
-    return out
+if overview.empty:
+    st.warning("No items match the selected filters.")
+    st.stop()
 
-# ---------------------------
-# ALL-VENDORS Graphs (expanded to many)
-# ---------------------------
-
-# A: Total Spend Trend (All vendors combined)
-def plot_total_spend_trend_all(df_all):
-    s = df_all.groupby("month")["line_total"].sum()
-    if s.empty or s.dropna().empty:
-        st.warning("Not enough time-series spend data to plot Total Spend Trend.")
-        return
-    s = sort_month_index(s)
-    plt.figure(figsize=(10,4))
-    plt.plot(s.index, s.values, marker="o")
-    plt.title("Total Spend Trend (All Vendors)")
-    plt.xlabel("Month")
-    plt.ylabel("Total Spend")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-
-# B: Vendor Contribution Pie / Donut
-def plot_vendor_contribution_pie(df_all):
-    grouped = df_all.groupby("vendor_name")["line_total"].sum().sort_values(ascending=False)
-    if grouped.empty:
-        st.warning("No vendor spend to show vendor contribution.")
-        return
-    top = grouped.head(10)
-    others = grouped.iloc[10:].sum()
-    if others > 0:
-        top["Other"] = others
-    
-    plt.figure(figsize=(6,6))
-    wedges, texts, autotexts = plt.pie(top.values, labels=top.index, autopct="%1.1f%%", startangle=140)
-    plt.title("Vendor Contribution Share (Top 10 + Other)")
-    # Donut
-    centre = Circle((0,0),0.70,fc='white')
-    fig = plt.gcf()
-    fig.gca().add_artist(centre)
-    st.pyplot(fig)
-
-# C: Top 20 Items Costing the Most (All Vendors)
-def plot_top_items_all(df_all, top_n=20):
-    grouped = df_all.groupby("description")["line_total"].sum().sort_values(ascending=False).head(top_n)
-    if grouped.empty:
-        st.warning("No item-level spend data available.")
-        return
-    plt.figure(figsize=(10,6))
-    sns.barplot(x=grouped.values, y=grouped.index, palette="viridis")
-    plt.title(f"Top {top_n} Items by Spend (All Vendors)")
-    plt.xlabel("Total Spend")
-    plt.ylabel("Item Description")
-    st.pyplot(plt.gcf())
-
-# D: Category Share Over Time (Stacked Area Chart)
-def plot_category_share_over_time(df_all, top_n=8):
-    pivot = df_all.groupby(["month","category"])["line_total"].sum().unstack(fill_value=0)
-    if pivot.empty:
-        st.warning("Not enough data for category share over time.")
-        return
-    # Keep top categories by total spend across period, group rest into 'Other'
-    totals = pivot.sum().sort_values(ascending=False)
-    top_cats = totals.head(top_n).index
-    small_cats = [c for c in pivot.columns if c not in top_cats]
-    pivot_reduced = pivot[top_cats].copy()
-    if small_cats:
-        pivot_reduced["Other"] = pivot[small_cats].sum(axis=1)
-    pivot_reduced = sort_month_index(pivot_reduced)
-    plt.figure(figsize=(12,6))
-    pivot_reduced.plot(kind="area", stacked=True, alpha=0.85, figsize=(12,6))
-    plt.title("Category Share Over Time (Stacked Area)")
-    plt.xlabel("Month")
-    plt.ylabel("Spend")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-
-# E: Restaurant Spend Ranking (All Vendors)
-def plot_restaurant_ranking_all(df_all, top_n=15):
-    grouped = df_all.groupby("restaurant_id")["line_total"].sum().sort_values(ascending=False).head(top_n)
-    if grouped.empty:
-        st.warning("No restaurant spend data.")
-        return
-    plt.figure(figsize=(8,6))
-    sns.barplot(x=grouped.values, y=[str(x) for x in grouped.index], palette="coolwarm")
-    plt.title(f"Top {top_n} Restaurants by Spend (All Vendors)")
-    plt.xlabel("Total Spend")
-    plt.ylabel("Restaurant ID")
-    st.pyplot(plt.gcf())
-
-# F: Price Inflation Trend (Average Unit Price Over Time)
-def plot_price_inflation_trend(df_all):
-    if df_all["unit_price"].dropna().empty:
-        st.warning("No unit_price data available to show inflation trend.")
-        return
-    avg_price = df_all.groupby("month")["unit_price"].mean()
-    if avg_price.empty:
-        st.warning("Not enough unit_price time-series data.")
-        return
-    avg_price = sort_month_index(avg_price)
-    plt.figure(figsize=(10,4))
-    plt.plot(avg_price.index, avg_price.values, marker="o")
-    plt.title("Average Unit Price Over Time (All Vendors)")
-    plt.xlabel("Month")
-    plt.ylabel("Avg Unit Price")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-
-# G: Boxplot: Item Price Distribution (All Vendors)
-def plot_price_distribution_box(df_all):
-    if df_all["unit_price"].dropna().shape[0] < 10:
-        st.warning("Too few unit_price points for a meaningful boxplot.")
-        return
-    # Use categories if available, else fall back to top descriptions
-    if df_all["category"].nunique() > 1 and df_all["category"].notna().sum() > 10:
-        data = df_all[["category", "unit_price"]].dropna()
-        top_cats = data["category"].value_counts().head(8).index
-        data = data[data["category"].isin(top_cats)]
-        plt.figure(figsize=(10,6))
-        sns.boxplot(data=data, x="category", y="unit_price")
-        plt.title("Unit Price Distribution by Category (Top categories)")
-        plt.xlabel("Category")
-        plt.ylabel("Unit Price")
-        plt.xticks(rotation=45)
-        st.pyplot(plt.gcf())
+# Backwards-compatibility: ensure signed_change columns exist
+if "signed_change" not in overview.columns:
+    if "first_price" in overview.columns and "last_price" in overview.columns:
+        overview["signed_change"] = overview["last_price"] - overview["first_price"]
+        def _signed_pct_row(r):
+            try:
+                if pd.notna(r["first_price"]) and r["first_price"] > 0:
+                    return (r["signed_change"] / r["first_price"]) * 100
+            except Exception:
+                pass
+            return float("nan")
+        overview["signed_pct_change"] = overview.apply(_signed_pct_row, axis=1)
     else:
-        # fallback to top item descriptions
-        data = df_all[["description", "unit_price"]].dropna()
-        top_items = data["description"].value_counts().head(8).index
-        data = data[data["description"].isin(top_items)]
-        plt.figure(figsize=(10,6))
-        sns.boxplot(data=data, x="description", y="unit_price")
-        plt.title("Unit Price Distribution by Item (Top items)")
-        plt.xlabel("Item")
-        plt.ylabel("Unit Price")
-        plt.xticks(rotation=45)
-        st.pyplot(plt.gcf())
+        overview["signed_change"] = np.nan
+        overview["signed_pct_change"] = np.nan
 
-# H: Invoice Count Per Vendor Over Time
-def plot_invoice_count_per_vendor(df_all):
-    if "invoice_id" not in df_all.columns:
-        st.warning("No invoice_id available for invoice-count chart.")
-        return
-    pivot = df_all.groupby(["month", "vendor_name"])["invoice_id"].nunique().unstack(fill_value=0)
-    if pivot.empty:
-        st.warning("Not enough invoice-count time-series data.")
-        return
-    pivot = sort_month_index(pivot)
-    plt.figure(figsize=(12,6))
-    # Show top vendors by total invoice count
-    vendor_totals = pivot.sum().sort_values(ascending=False).head(10).index
-    pivot_top = pivot[vendor_totals]
-    pivot_top.plot(kind="line", marker="o", figsize=(12,6))
-    plt.title("Invoice Count Over Time (Top Vendors)")
-    plt.xlabel("Month")
-    plt.ylabel("Invoice Count")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-
-# ---------------------------
-# Vendor-specific (V2) graphs (kept focused)
-# ---------------------------
-
-def plot_vendor_monthly(dfv):
-    s = dfv.groupby("month")["line_total"].sum()
-    if s.empty:
-        st.warning("Not enough monthly spend data for vendor.")
-        return
-    s = sort_month_index(s)
-    plt.figure(figsize=(10,4))
-    plt.plot(s.index, s.values, marker="o")
-    plt.title("Monthly Spend Trend (Vendor)")
-    plt.xlabel("Month")
-    plt.ylabel("Total Spend")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-
-def plot_vendor_category_costdriver(dfv):
-    grouped = dfv.groupby("category")["line_total"].sum().sort_values(ascending=False)
-    # If category is missing or unhelpful, fallback to description
-    if grouped.empty or (grouped.index == "Uncategorized").all():
-        grouped = dfv.groupby("description")["line_total"].sum().sort_values(ascending=False).head(12)
-        title = "Cost Driver — Items (category missing)"
-    else:
-        title = "Cost Driver — Category (Vendor)"
-    if grouped.empty:
-        st.warning("No cost-driver data for vendor.")
-        return
-    plt.figure(figsize=(8,5))
-    sns.barplot(x=grouped.values, y=grouped.index, palette="magma")
-    plt.title(title)
-    plt.xlabel("Total Spend")
-    plt.ylabel("Category / Item")
-    st.pyplot(plt.gcf())
-
-def plot_vendor_item_costdriver(dfv):
-    grouped = dfv.groupby("description")["line_total"].sum().sort_values(ascending=False).head(12)
-    if grouped.empty:
-        st.warning("No item-level data for vendor.")
-        return
-    plt.figure(figsize=(10,6))
-    sns.barplot(x=grouped.values, y=grouped.index, palette="cubehelix")
-    plt.title("Top Items by Spend (Vendor)")
-    plt.xlabel("Spend")
-    plt.ylabel("Item Description")
-    st.pyplot(plt.gcf())
-
-def plot_vendor_category_trend(dfv):
-    pivot = dfv.groupby(["month","category"])["line_total"].sum().unstack(fill_value=0)
-    if pivot.empty:
-        st.warning("Not enough category time data for vendor.")
-        return
-    pivot = sort_month_index(pivot)
-    plt.figure(figsize=(12,6))
-    pivot.plot(marker="o", figsize=(12,6))
-    plt.title("Category Spend Over Time (Vendor)")
-    plt.xlabel("Month")
-    plt.ylabel("Spend")
-    plt.xticks(rotation=45)
-    st.pyplot(plt.gcf())
-
-def plot_top_restaurants_vendor(dfv, top_n=10):
-    grouped = dfv.groupby("restaurant_id")["line_total"].sum().sort_values(ascending=False).head(top_n)
-    if grouped.empty:
-        st.warning("No restaurant-level spend for vendor.")
-        return
-    plt.figure(figsize=(8,5))
-    sns.barplot(x=grouped.values, y=[str(x) for x in grouped.index], palette="coolwarm")
-    plt.title("Top Restaurants by Spend (Vendor)")
-    plt.xlabel("Total Spend")
-    plt.ylabel("Restaurant ID")
-    st.pyplot(plt.gcf())
-
-# ---------------------------
-# Layout: Show graphs
-# ---------------------------
-if selected_vendor == "All":
-    st.header("All Vendors — Expanded Graphs")
-
-    # Row 1
-    st.markdown("### Total Spend Trend")
-    plot_total_spend_trend_all(df_view)
-
-    st.markdown("### Vendor Contribution (Top Vendors)")
-    plot_vendor_contribution_pie(df_view)
-
-    # Row 2
-    st.markdown("### Top Items by Spend (Global)")
-    plot_top_items_all(df_view, top_n=20)
-
-    st.markdown("### Category Share Over Time (Stacked Area)")
-    plot_category_share_over_time(df_view, top_n=8)
-
-    # Row 3
-    st.markdown("### Restaurant Spend Ranking (All Vendors)")
-    plot_restaurant_ranking_all(df_view, top_n=15)
-
-    st.markdown("### Average Unit Price Trend (Price Inflation)")
-    plot_price_inflation_trend(df_view)
-
-    # Row 4
-    st.markdown("### Unit Price Distribution (Boxplot)")
-    plot_price_distribution_box(df_view)
-
-    st.markdown("### Invoice Count per Vendor Over Time")
-    plot_invoice_count_per_vendor(df_view)
-
-    # Keep category trend as well if desired (now extra)
-    st.markdown("### Category Trend (Line, per-category)")
+# Format numbers for display
+def _fmt_money(x):
     try:
-        pivot = df_view.groupby(["month","category"])["line_total"].sum().unstack(fill_value=0)
-        if not pivot.empty:
-            pivot = sort_month_index(pivot)
-            plt.figure(figsize=(12,6))
-            pivot.plot(marker="o", figsize=(12,6))
-            plt.title("Category Spend Over Time (All Vendors)")
-            plt.xlabel("Month")
-            plt.ylabel("Spend")
-            plt.xticks(rotation=45)
-            st.pyplot(plt.gcf())
-        else:
-            st.warning("Not enough category trend data.")
+        f = float(x)
+        if np.isnan(f) or np.isinf(f):
+            return ""
+        return f"${f:,.2f}"
     except Exception:
-        st.warning("Unable to render category trend.")
+        return ""
 
+def _fmt_pct(x):
+    try:
+        f = float(x)
+        if np.isnan(f) or np.isinf(f):
+            return ""
+        return f"{f:.1f}%"
+    except Exception:
+        return ""
+
+# Main layout: bar chart then table
+st.subheader("Top items by unit-price change")
+
+# Build main chart from the raw joined data (same approach as Category view but
+# without applying category filter). This ensures first/last prices are taken
+# from actual invoice time order and zeros are included by default.
+base_filtered = base_df.copy()
+# Apply date filter
+base_filtered = base_filtered[(base_filtered["invoice_date"] >= start_dt) & (base_filtered["invoice_date"] <= end_dt)]
+# Apply vendor filter if selected
+if selected_vendor != "All":
+    base_filtered = base_filtered[base_filtered["vendor"] == selected_vendor]
+
+if base_filtered.empty:
+    st.info("No line-item data for selected date/vendor filters to build chart.")
 else:
-    st.header(f"Vendor-specific Graphs — {selected_vendor}")
-
-    st.markdown("### Monthly Spend Trend")
-    plot_vendor_monthly(df_view)
-
-    st.markdown("### Cost Driver — Category (or item fallback)")
-    plot_vendor_category_costdriver(df_view)
-
-    st.markdown("### Top Items (Vendor)")
-    plot_vendor_item_costdriver(df_view)
-
-    st.markdown("### Category Trend (Vendor)")
-    plot_vendor_category_trend(df_view)
-
-    st.markdown("### Top Restaurants (Vendor)")
-    plot_top_restaurants_vendor(df_view)
-
-    # Add two additional vendor-specific supportive graphs (kept focused)
-    st.markdown("### Unit Price Distribution (Vendor)")
-    # reuse boxplot function but scoped to vendor
-    if df_view["unit_price"].dropna().shape[0] >= 5:
-        if df_view["category"].nunique() > 1:
-            plt.figure(figsize=(10,6))
-            top_cats = df_view["category"].value_counts().head(6).index
-            sns.boxplot(data=df_view[df_view["category"].isin(top_cats)], x="category", y="unit_price")
-            plt.title("Unit Price Distribution by Category (Vendor)")
-            plt.xticks(rotation=45)
-            st.pyplot(plt.gcf())
-        else:
-            top_items = df_view["description"].value_counts().head(8).index
-            plt.figure(figsize=(10,6))
-            sns.boxplot(data=df_view[df_view["description"].isin(top_items)], x="description", y="unit_price")
-            plt.title("Unit Price Distribution by Item (Vendor)")
-            plt.xticks(rotation=45)
-            st.pyplot(plt.gcf())
+    grp_main = base_filtered.sort_values("invoice_date").groupby("item_name").agg(
+        first_price=("unit_price", "first"),
+        last_price=("unit_price", "last"),
+        min_price=("unit_price", "min"),
+        max_price=("unit_price", "max"),
+        occurrences=("invoice_id", "nunique"),
+        vendors=("vendor", lambda s: ", ".join(sorted(s.dropna().unique())))
+    ).reset_index()
+    grp_main["signed_change"] = grp_main["last_price"] - grp_main["first_price"]
+    
+    # Filter out items with 0 price change 
+    grp_main = grp_main[grp_main["signed_change"] != 0]
+    
+    # Apply min occurrences threshold
+    grp_main = grp_main[grp_main["occurrences"] >= min_occ]
+    grp_main = grp_main.assign(sort_key=grp_main["signed_change"].abs()).sort_values("sort_key", ascending=False)
+    plot_n = min(top_n, len(grp_main))
+    if plot_n == 0:
+        st.info("No items meet the occurrence threshold for these filters.")
     else:
-        st.warning("Not enough unit_price points for vendor unit-price distribution.")
-
-    st.markdown("### Invoice Size Distribution (Vendor)")
-    invoices = df_view.groupby("invoice_id")["line_total"].sum().dropna()
-    if invoices.shape[0] >= 3:
-        plt.figure(figsize=(8,4))
-        plt.hist(invoices.values, bins=20)
-        plt.title("Distribution of Spend per Invoice (Vendor)")
-        plt.xlabel("Invoice Total")
-        plt.ylabel("Count")
+        plot_df = grp_main.head(plot_n).copy()
+        plt.figure(figsize=(10, max(3, 0.3 * len(plot_df))))
+        colors = ["#d62728" if v < 0 else "#2ca02c" for v in plot_df["signed_change"]]
+        x = plot_df["signed_change"].values
+        y_pos = np.arange(len(plot_df))
+        bars = plt.barh(y_pos, x, color=colors)
+        plt.yticks(y_pos, plot_df["item_name"], fontsize=8)
+        plt.xlabel("Unit Price Change ($)")
+        plt.ylabel("Item description")
+        plt.gca().xaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"${v:,.2f}"))
+        plt.title("Items by Signed Unit Price Change")
+        plt.gca().invert_yaxis()
+        for bar, val in zip(bars, plot_df["signed_change"]):
+            w = bar.get_width()
+            offset = 0.02 * (abs(w) if abs(w) > 1 else 1)
+            xpos = w + (offset if w >= 0 else -offset)
+            ha = "left" if w >= 0 else "right"
+            plt.text(xpos, bar.get_y() + bar.get_height() / 2, f"{_fmt_money(val)}", va="center", ha=ha, color="black", fontsize=8)
+        import matplotlib.patches as mpatches
+        inc = mpatches.Patch(color="#2ca02c", label="Price increase")
+        dec = mpatches.Patch(color="#d62728", label="Price decrease")
+        plt.legend(handles=[inc, dec], loc="lower right")
+        plt.tight_layout()
         st.pyplot(plt.gcf())
+
+        # Summary table sourced from the same grouped dataframe (no category filter)
+        display_out = plot_df.copy()
+        # Compute percent change where possible
+        def _safe_pct(row):
+            try:
+                if pd.notna(row["first_price"]) and row["first_price"] and row["first_price"] > 0:
+                    return (row["signed_change"] / row["first_price"]) * 100
+            except Exception:
+                pass
+            return float("nan")
+        display_out["signed_pct_change"] = display_out.apply(_safe_pct, axis=1)
+        display_out["Min Price"] = display_out["min_price"].apply(_fmt_money)
+        display_out["Max Price"] = display_out["max_price"].apply(_fmt_money)
+        # Format Signed fields
+        display_out["Price Change"] = display_out["signed_change"].apply(_fmt_money)
+        display_out["Price Change%"] = display_out["signed_pct_change"].apply(_fmt_pct)
+        display_out = display_out.rename(columns={
+            "item_name": "Item",
+            "vendors": "Vendors",
+            "occurrences": "Occurrences",
+        }, errors="ignore")
+        display_cols = ["Item", "Min Price", "Max Price", "Price Change", "Price Change%", "Occurrences", "Vendors"]
+        display_cols = [c for c in display_cols if c in display_out.columns]
+        st.subheader("Summary Table")
+        st.dataframe(display_out[display_cols].reset_index(drop=True), use_container_width=True, hide_index=True)
+
+# Item selection for timeseries
+st.markdown("---")
+st.subheader("Item price history")
+descriptions = _get_descriptions(start_dt, end_dt)
+selected_item = st.selectbox("Choose item (pick from restaurant items)", ["-- Select an item --"] + descriptions)
+
+if selected_item and selected_item != "-- Select an item --":
+    ts = get_item_price_timeseries(RESTAURANT_ID, selected_item, start_dt, end_dt, vendor_ids=vendor_ids)
+    if ts.empty:
+        st.warning("No price history found for this item in the selected range/filters.")
     else:
-        st.warning("Not enough invoice-level data for distribution plot.")
+        # Plot time-series colored by vendor (smaller figure)
+        plt.figure(figsize=(8, 3))
+        sns.lineplot(data=ts, x="date", y="unit_price", hue="vendor", marker="o")
+        plt.ylabel("Unit Price")
+        plt.xlabel("Date")
+        # Adjust y-limits with padding
+        ymin = ts["unit_price"].min()
+        ymax = ts["unit_price"].max()
+        if pd.notna(ymin) and pd.notna(ymax):
+            if ymin == ymax:
+                pad = max(0.1, abs(ymax) * 0.05)
+                plt.ylim(ymin - pad, ymax + pad)
+            else:
+                pad_low = abs(ymin) * 0.05 if ymin != 0 else 0.05
+                pad_high = abs(ymax) * 0.05 if ymax != 0 else 0.05
+                plt.ylim(ymin - pad_low, ymax + pad_high)
+        plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"${v:,.2f}"))
+        plt.title(f"Price history for: {selected_item}")
+        plt.xticks(rotation=45)
+        st.pyplot(plt.gcf())
+
+        st.markdown("**Invoices containing this item**")
+        display_ts = ts.copy()
+        # Deduplicate by invoice id + invoice number + date + unit_price to remove exact duplicates
+        display_ts = display_ts.drop_duplicates(subset=["invoice_id", "invoice_number", "date", "unit_price", "vendor"])
+        # Format Date and columns, hide invoice_id, remove index
+        display_ts = display_ts.rename(columns={"invoice_number": "Invoice Number", "vendor": "Vendor", "unit_price": "Unit Price", "quantity": "Quantity", "category": "Category"})
+        display_ts["Date"] = display_ts["date"].dt.strftime("%Y-%m-%d %H:%M:%S")
+        display_ts["Unit Price"] = display_ts["Unit Price"].apply(_fmt_money)
+        display_ts = display_ts[["Date", "Invoice Number", "Vendor", "Unit Price", "Quantity", "Category"]].reset_index(drop=True)
+        # Hide the dataframe index for clarity and display
+        try:
+            st.dataframe(display_ts.style.hide_index(), use_container_width=True, hide_index=True)
+        except Exception:
+            st.dataframe(display_ts, use_container_width=True, hide_index=True)
+
+# Category-specific variation view
+st.markdown("---")
+st.subheader("Category view: items and their signed variations")
+cat_choice = st.selectbox("Pick category for deeper view", ["All"] + categories, index=0)
+if cat_choice and cat_choice != "All":
+    cat_df = overview[overview["category"] == cat_choice]
+else:
+    cat_df = overview.copy()
+
+if cat_df.empty:
+    st.info("No items to show in this category with current filters.")
+else:
+    # Build category-level overview directly from raw joined data so zeros are included
+    if cat_choice != "All":
+        raw = base_df[base_df["category"] == cat_choice].copy()
+    else:
+        raw = base_df.copy()
+
+    if raw.empty:
+        st.info("No items in this category for the selected filters.")
+    else:
+        grp = raw.sort_values("invoice_date").groupby("item_name").agg(
+            first_price=("unit_price", "first"),
+            last_price=("unit_price", "last"),
+            min_price=("unit_price", "min"),
+            max_price=("unit_price", "max"),
+            occurrences=("invoice_id", "nunique"),
+            vendors=("vendor", lambda s: ", ".join(sorted(s.dropna().unique())))
+        ).reset_index()
+        grp["signed_change"] = grp["last_price"] - grp["first_price"]
+        grp = grp.assign(sort_key=grp["signed_change"].abs()).sort_values("sort_key", ascending=False)
+        plot_n = min(50, len(grp))
+        plt.figure(figsize=(10, max(3, 0.25 * plot_n)))
+        colors = ["#d62728" if v < 0 else "#2ca02c" for v in grp["signed_change"].head(plot_n)]
+        bars = plt.barh(grp["item_name"].head(plot_n), grp["signed_change"].head(plot_n), color=colors)
+        plt.xlabel("Signed Unit Price Change ($)")
+        plt.ylabel("Item")
+        plt.gca().xaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"${v:,.2f}"))
+        plt.title(f"Category — Items by Signed Price Change ({cat_choice})")
+        plt.gca().invert_yaxis()
+        for bar, val in zip(bars, grp["signed_change"].head(plot_n)):
+            w = bar.get_width()
+            xpos = w + (0.02 * (1 if w >= 0 else -1) * (abs(w) if abs(w) > 1 else 1))
+            ha = "left" if w >= 0 else "right"
+            plt.text(xpos, bar.get_y() + bar.get_height()/2, f"{_fmt_money(val)}", va="center", ha=ha, color="black", fontsize=8)
+        st.pyplot(plt.gcf())

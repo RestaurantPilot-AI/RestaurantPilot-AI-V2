@@ -16,58 +16,83 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
 LIGHT_MODEL_NAME = "gemini-2.5-flash-lite"
 
-# Explicit size patterns like: 8oz, 8 oz, 8fl oz, 8 fl oz, 12-16oz, 4 - 6 fl oz
-_SIZE_RE = re.compile(r'''
-    (?ix)                           # ignorecase, verbose
-    \b
-    \d+(?:[.,]\d+)?                 # number, maybe decimal
-    (?:\s*(?:-\s*\d+(?:[.,]\d+)?)  # optional range: -N or -N.N
-      )?
-    \s*
-    (?:fl\.?\s*)?                   # optional "fl" (for fluid ounces)
-    (?:oz|ounce|ounces|ml|l|g|kg|lb|lbs)\b
-''', re.VERBOSE)
+# Units, packaging, and size indicators
+_UNITS = r"(?:lb|lbs|oz|fl\s*oz|ml|l|g|kg|ea|ct|pcs?|pack|case|cs|bn|bag)"
+_NUM = r"\d+(?:[.,]\d+)?"
 
-_QUANTITY_RE = re.compile(r'''
+# Matches size / quantity / packaging blocks
+_SIZE_BLOCK_RE = re.compile(
+    rf"""
     (?ix)
-    (?:\b\d+(?:[.,]\d+)?\s*(?:kg|g|gram|grams|lb|lbs|pounds|oz|ounce|ounces|cs|case|ct|pack|pcs|pc|l|ml)\b)
-    |(?:\b\d+\s*(?:x|×)\s*\d+(?:[.,]\d+)?\s*(?:kg|lb|oz|ml|l)?\b)
-    |(?:\b\d+(?:[.,]\d+)?\b)
-''', re.VERBOSE)
+    \b(
+        {_NUM}\s*(?:x|×)\s*{_NUM}\s*(?:{_UNITS})?   # 4 x 5 lb
+        |
+        {_NUM}\s*(?:-\s*{_NUM})?\s*(?:{_UNITS})    # 50 lb, 12-16 oz
+        |
+        \#\d+                                      # #10
+        |
+        \b{_UNITS}\b
+    )\b
+    """,
+    re.VERBOSE,
+)
 
-# Keep + & ' in product names
-_PUNCT_RE = re.compile(r"[^\w\s\+\&']")
+# Words that indicate non-product financial/system lines
+_SPECIAL_LINES = {
+    "tax",
+    "sales tax",
+    "fuel surcharge",
+}
+
+# Remove parenthetical codes like ( SC4 )
+_PAREN_RE = re.compile(r"\([^)]*\)")
+
+# Keep letters, spaces, +, &
+_CLEAN_RE = re.compile(r"[^\w\s\+\&]")
 
 def clean_description(raw_description: str) -> str:
     """
-    Clean noisy SKU/description lines and return only the product name.
+    Extracts the core product name from noisy invoice descriptions.
     """
     if not raw_description:
         return ""
 
-    # First line, trimmed, lowercased
-    s = raw_description.splitlines()[0].strip().lower()
+    # Normalize and take first non-empty line
+    lines = [l.strip() for l in raw_description.splitlines() if l.strip()]
+    s = lines[0].lower()
 
-    # Strip surrounding quotes and whitespace
-    s = s.strip(" '\"")
+    # Remove parenthetical codes early
+    s = _PAREN_RE.sub(" ", s)
 
-    # NEW: remove all commas
-    s = s.replace(",", "")
+    # Normalize separators
+    s = s.replace(",", " ")
+    s = re.sub(r"[_\-/]", " ", s)
 
-    # Normalize common separators to spaces
-    s = re.sub(r'[_\-\–\/\*]', " ", s)
+    # Fast path for known system lines
+    s_clean = s.strip()
+    if s_clean in _SPECIAL_LINES:
+        return s_clean
 
-    # Remove explicit size patterns like "8oz", "8 fl oz", "12-16oz"
-    s = _SIZE_RE.sub(" ", s)
+    # Truncate at first size / quantity block
+    match = _SIZE_BLOCK_RE.search(s)
+    if match:
+        s = s[:match.start()]
 
-    # Remove other quantity/number noise
-    s = _QUANTITY_RE.sub(" ", s)
+    # Remove residual numbers
+    s = re.sub(r"\b\d+\b", " ", s)
 
-    # Remove unwanted punctuation but keep + & '
-    s = _PUNCT_RE.sub(" ", s)
+    # Remove unwanted punctuation
+    s = _CLEAN_RE.sub(" ", s)
 
-    # Collapse whitespace
-    tokens = [t for t in re.split(r"\s+", s) if t]
+    # Token cleanup
+    tokens = [t for t in s.split() if t]
+
+    # Produce logic: keep only first semantic noun
+    # Example: "onion italian red" -> "onion"
+    if tokens and tokens[0] in {
+        "onion", "tomato", "cucumber", "herbs"
+    }:
+        return tokens[0]
 
     return " ".join(tokens)
 

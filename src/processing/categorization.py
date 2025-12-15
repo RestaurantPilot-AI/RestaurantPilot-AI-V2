@@ -160,7 +160,7 @@ def get_line_item_category(description: str) -> str:
     # 1. Fetch from DB
     stored_category = get_stored_category(cleaned_description)
     if stored_category:
-        print(f"[INFO] Found decryption-category pair in DB: Description: {description}, Category: {stored_category}")
+        # print(f"[INFO] Found decryption-category pair in DB: Description: {cleaned_description}, Category: {stored_category}")
         return stored_category
 
     # 2. Fetch Context from DB
@@ -173,6 +173,6 @@ def get_line_item_category(description: str) -> str:
     # 4. Save via DB Delegate
     save_category_result(cleaned_description, predicted_category, existing_categories)
     
-    print(f"[INFO] Used LLM to get decryption-category pair: Description: {description}, Category: {predicted_category}")
+    print(f"[INFO] Used LLM to get decryption-category pair: Description: {cleaned_description}, Category: {predicted_category}")
 
     return predicted_category

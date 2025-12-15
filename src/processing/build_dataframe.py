@@ -8,6 +8,7 @@ for storage and further processing.
 from typing import Tuple, Dict, Any, Optional, List
 import pandas as pd
 import re
+import traceback
 
 from .vendor_identifier import identify_vendor_and_get_regex, apply_regex_extraction
 from .categorization import get_line_item_category
@@ -96,16 +97,22 @@ def get_structured_data_from_text(
         extraction_timestamp=extraction_timestamp
     )
 
-    print(f"\n INV df: {inv_df} [vendor_identifier.py]")
+    print(f"\n INV df: {inv_df} [build_dataframe.py]")
     # Build the Line Items DataFrame matching the 'line_items' collection schema
     # We retrieve the invoice number here to link items to the invoice record
     # (Note: The actual database linking via _id will happen in storage part)    
-    li_df = _build_line_items_records(
-        extracted_li_data=extracted_li_data,
-        vendor_context=vendor_context,
-    )
 
-    print(f"\n LI df: {li_df} [vendor_identifier.py]")
+    try:
+        li_df = _build_line_items_records(
+            extracted_li_data=extracted_li_data,
+            vendor_context=vendor_context,
+        )
+    except Exception as e:
+        print("Error in _build_line_items_records:")
+        traceback.print_exc()  # prints stack trace with file + line number
+        raise  # re-raise so upper-level logic remains unchanged
+
+    print(f"\n LI df: {li_df} [build_dataframe.py]")
 
     return inv_df, li_df
 
@@ -236,7 +243,13 @@ def _build_line_items_records(
             continue
         
         # Parse and clean fields
-        description = item.get("description", "").strip()
+        description = item.get("description")
+        if not isinstance(description, str):
+            continue  # skip this item entirely
+        description = description.strip()
+        if not description:
+            continue 
+        
         quantity = _clean_quantity(item.get("quantity"))
         unit_val = item.get("unit")
         unit_price = _parse_currency_amount(item.get("unit_price"))

@@ -7,9 +7,10 @@ milk oat,Dairy
 sugar granulated cane,Dry Goods
 eggs liquid,Dairy
 onion minced,Produce
+onion,Produce
 salt kosher coarse,Spices
 glove nitrile,Paper Goods
-yeast instant red lbl saf,Baking Ingredients
+yeast instant red lbl saf x,Baking Ingredients
 tomato roma,Produce
 onion green,Produce
 herbs dill baby,Produce
@@ -19,8 +20,8 @@ avocado,Produce
 fuel surcharge,Operating Expense
 cucumber xfancy lg ea,Produce
 herbs parsley italian bn,Produce
-bag of moonshadow,Dry Goods
-bag of ecliptic,Dry Goods
+bag of moonshadow,Coffee & Tea
+bag of ecliptic,Coffee & Tea
 super champ all temp machine warewashing detergent,Cleaning Supplies
 chlorine rinse super chlor,Cleaning Supplies
 super dry concentrated rinse aid for low temperature machines,Cleaning Supplies
@@ -29,7 +30,7 @@ ca select farms mild cheddar cheese,Dairy
 schreiber american cheese,Dairy
 foodservice green onions,Produce
 rodelle gourmet baking cocoa powder,Baking Ingredients
-ghirardelli premium sauce,Baking Ingredients
+ghirardelli premium sauce,Condiments
 califia farms cafe almond milk,Dairy
 s pellegrino sparkling natural mineral water,Beverage
 sanpellegrino italian sparkling drink,Beverage
@@ -48,9 +49,29 @@ hot cup lids cpla,Paper Goods
 hot cups compostable,Paper Goods
 derma2 nitrile gloves,Paper Goods
 taxes,Operating Expense
-apron bib navy,Paper Goods
-towel bar blue,Paper Goods
-laundry bag,Paper Goods
-laundry bag rack,Paper Goods
+apron bib navy,Uniforms & Linens
+towel bar blue,Uniforms & Linens
+laundry bag,Uniforms & Linens
+laundry bag rack,Equipment & Tools
 mop handle wet,Cleaning Supplies
 mop wet,Cleaning Supplies
+glove nitrile xl,Paper Goods
+glove nitrile medium,Paper Goods
+tahini extra,Condiments
+pan spray premium,Cooking Aids
+garlic minced,Produce
+half & half qt,Dairy
+poppy seed,Spices
+malt powder diastatic+,Baking Ingredients
+cornmeal yellow fine,Dry Goods
+flour a/p unbleached,Dry Goods
+flour a p unbleached,Dry Goods
+flour medium rye,Dry Goods
+cornmeal yellow fine,Dry Goods
+yeast fresh +,Baking Ingredients
+glove nitrile large,Paper Goods
+sugar brown,Dry Goods
+milk whole gallon red cap,Dairy
+limonata cans,Beverage
+milk almond,Dairy
+almond barista blend,Dairy

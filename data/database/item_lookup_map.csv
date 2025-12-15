@@ -1,63 +1,56 @@
 _id,category
-FLOUR POWER,Dry Goods
-SESAME SEEDS WHITE,Dry Goods
-JALAPENO SLICED,Produce
-CURRANTS,Dry Goods
-MILK OAT,Dairy
-SUGAR GRANULATED CANE,Dry Goods
-EGGS LIQUID,Dairy
-ONION MINCED,Produce
-SALT KOSHER COARSE,Spices
-GLOVE NITRILE,Paper Goods
-YEAST INSTANT RED LBL SAF,Baking Ingredients
-TOMATO ROMA,Produce
-ONION GREEN,Produce
-HERBS DILL BABY,Spices
-ONION WHITE,Produce
-ONION ITALIAN RED,Produce
-AVOCADO,Produce
-FUEL SURCHARGE,Operating Expense
-CUCUMBER XFANCY LG EA,Produce
-HERBS PARSLEY ITALIAN BN,Spices
-Moonshadow,Dry Goods
-Ecliptic,Dry Goods
-Super Champ All Temp Machine Warewashing Detergent,Cleaning Supplies
-Chlorine Rinse ( Super Chlor ),Cleaning Supplies
-Super Dry Concentrated Rinse Aid for Low Temperature Machines,Cleaning Supplies
-FS,Operating Expense
-CA SELECT FARMS MILD CHEDDAR CHEESE,Dairy
-SCHREIBER AMERICAN CHEESE,Dairy
-FOODSERVICE GREEN ONIONS,Produce
-RODELLE GOURMET BAKING COCOA POWDER,Baking Ingredients
-GHIRARDELLI PREMIUM SAUCE,Baking Ingredients
-CALIFIA FARMS CAFE ALMOND MILK,Dairy
-S.PELLEGRINO SPARKLING NATURAL MINERAL WATER,Beverage
-SANPELLEGRINO ITALIAN SPARKLING DRINK,Beverage
-WINDSOFT BATH TISSUE,Paper Goods
-WORLD CENTRIC COMPOSTABLE PLASTIC HOT CUP LIDS,Paper Goods
-BAGCRAFT DELI WRAP,Paper Goods
-PHILADELPHIA CREAM CHEESE,Dairy
-KIRKLAND SIGNATURE WHOLE MILK,Dairy
-KIRKLAND SIGNATURE ORANGE JUICE,Beverage
-"DAILY'S 3/8"""" FULLY-COOKED DICED BACON BITS",Meat
-RED ONIONS,Produce
-CUCUMBERS,Produce
-WORLD CENTRIC COMPOSTABLE PLASTIC COLD CUP LIDS,Paper Goods
-#8 Kraft - Husky FSC Paper Bags Duro,Paper Goods
-Hot Cup Lids - CPLA,Paper Goods
-Hot Cups Compostable,Paper Goods
-Derma2 Nitrile Gloves,Paper Goods
-Taxes,Operating Expense
-APRON BIB NAVY,Paper Goods
-TOWEL BAR BLUE,Paper Goods
-LAUNDRY BAG,Paper Goods
-LAUNDRY BAG RACK,Paper Goods
-MOP HANDLE WET,Cleaning Supplies
-MOP WET,Cleaning Supplies
-flour power,Baking Ingredients
-sesame seeds white+ x,Dry Goods
+flour power,Dry Goods
+sesame seeds white+,Dry Goods
 jalapeno sliced,Produce
 currants,Dry Goods
-milk oat x,Dairy
-sugar granulated cane,Baking Ingredients
-eggs liquid x,Dairy
+milk oat,Dairy
+sugar granulated cane,Dry Goods
+eggs liquid,Dairy
+onion minced,Produce
+salt kosher coarse,Spices
+glove nitrile,Paper Goods
+yeast instant red lbl saf,Baking Ingredients
+tomato roma,Produce
+onion green,Produce
+herbs dill baby,Produce
+onion white,Produce
+onion italian red,Produce
+avocado,Produce
+fuel surcharge,Operating Expense
+cucumber xfancy lg ea,Produce
+herbs parsley italian bn,Produce
+bag of moonshadow,Dry Goods
+bag of ecliptic,Dry Goods
+super champ all temp machine warewashing detergent,Cleaning Supplies
+chlorine rinse super chlor,Cleaning Supplies
+super dry concentrated rinse aid for low temperature machines,Cleaning Supplies
+fs,Operating Expense
+ca select farms mild cheddar cheese,Dairy
+schreiber american cheese,Dairy
+foodservice green onions,Produce
+rodelle gourmet baking cocoa powder,Baking Ingredients
+ghirardelli premium sauce,Baking Ingredients
+califia farms cafe almond milk,Dairy
+s pellegrino sparkling natural mineral water,Beverage
+sanpellegrino italian sparkling drink,Beverage
+windsoft bath tissue,Paper Goods
+world centric compostable plastic hot cup lids,Paper Goods
+bagcraft deli wrap,Paper Goods
+philadelphia cream cheese,Dairy
+kirkland signature whole milk,Dairy
+kirkland signature orange juice,Beverage
+dailys fully cooked diced bacon bits,Meat
+red onions,Produce
+cucumbers,Produce
+world centric compostable plastic cold cup lids,Paper Goods
+kraft husky fsc paper bags duro,Paper Goods
+hot cup lids cpla,Paper Goods
+hot cups compostable,Paper Goods
+derma2 nitrile gloves,Paper Goods
+taxes,Operating Expense
+apron bib navy,Paper Goods
+towel bar blue,Paper Goods
+laundry bag,Paper Goods
+laundry bag rack,Paper Goods
+mop handle wet,Cleaning Supplies
+mop wet,Cleaning Supplies

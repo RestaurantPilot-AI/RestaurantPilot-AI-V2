@@ -527,7 +527,7 @@ FIELD GUIDANCE:
 [Line Item Level]
 - line_item_block_start: Regex that matches the first line or header (e.g., "Description   Qty   Price"). (No capture group needed here).
 - line_item_block_end: Regex that matches the line AFTER the last item (e.g., "Subtotal" or footer text). (No capture group needed here).
-- description, quantity, unit_price, line_total: Regexes that extract fields from a SINGLE line item row.
+- description(product name here is called description), quantity, unit_price, line_total: Regexes that extract fields from a SINGLE line item row.
 - unit: Regex that captures the unit (e.g., "CS", "EA") if present on the line.
 
 REQUIRED JSON STRUCTURE:

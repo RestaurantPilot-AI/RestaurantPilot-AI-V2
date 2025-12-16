@@ -156,23 +156,26 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
 
     # --- 3. Website (New Logic) ---
     # Strategy: Find URL patterns, excluding the email domain we just found.
-    url_pattern = r'(?:https?://)?(?:www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:/[^\s]*)?'
-    
+    url_pattern = re.compile(
+        r'(?:https?://)?(?:www\.)?(?:[a-zA-Z0-9]'
+        r'(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+'
+        r'[a-zA-Z]{2,}(?:/[^\s]*)?',
+        re.IGNORECASE
+    )
+
     potential_urls = []
-    for line in lines[:40]: # Websites usually in header or footer
-        # Skip lines that look like emails
-        if "@" in line: 
+
+    for line in lines[:40]:
+        if "@" in line:
             continue
-            
-        found_urls = re.findall(url_pattern, line)
-        for url in found_urls:
-            # Clean validation
-            clean_url = url.lower()
-            if any(ext in clean_url for ext in ['.com', '.net', '.org', '.io', '.co', '.us', '.eu', '.de']):
-                potential_urls.append(url)
+
+        for m in url_pattern.finditer(line):
+            url = m.group(0).lower()
+            potential_urls.append(url)
 
     if potential_urls:
         signals["website"] = potential_urls[0]
+
 
     # --- 4. Vendor Name (Hierarchical Logic) ---
     # Strategy: Explicit Header -> Legal Suffix -> UpperCase Header
@@ -447,6 +450,10 @@ def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
     Construct a single-shot prompt that asks the model to return strict,
     reusable regex patterns for this invoice layout.
 
+    IMPORTANT:
+    All regexes MUST be returned as PYTHON STRING LITERALS.
+    This means every backslash required by the regex engine MUST be DOUBLE-ESCAPED (\\).
+    
     The model will receive:
       - RAW INVOICE TEXT (the full invoice as plain text)
       - VERIFIED JSON (the ground-truth extraction for that invoice)
@@ -476,20 +483,41 @@ def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
     return f"""
 You are given two inputs below: 1) RAW INVOICE TEXT and 2) VERIFIED JSON that contains the correct extracted values for that invoice.
 
-Task: Produce reusable, strict regex patterns for this invoice layout so that future invoices with the same layout can be parsed without calling an LLM.
+Task: Produce reusable, strict regex patterns for this invoice layout so that future invoices with the same layout can be parsed to get values in VERIFIED JSON using only regex. 
+Assume that only the values like description, quantity price etc will change not the format.
+
+CRITICAL OUTPUT REQUIREMENT (NON-NEGOTIABLE):
+
+All regex values MUST be VALID PYTHON STRING LITERALS.
+
+This means:
+- Every backslash required by the REGEX ENGINE must be written as a DOUBLE backslash (\\)
+- Examples:
+  - Regex meaning \s → output must contain \\s
+  - Regex meaning \d+ → output must contain \\d+
+  - Regex meaning \. → output must contain \\.
+  - Regex meaning (\d+) → output must contain (\\d+)
+
+Failure to double-escape backslashes is considered INCORRECT output.
 
 OUTPUT RULES:
-- Return ONLY one JSON object and nothing else (no prose, no markdown, no code fences).
-- The JSON MUST match this exact structure (keys and nesting).
-- Do NOT include delimiters or flags (no /.../, no (?i), etc.).
-- Regexes must be as STRICT as reasonable: use surrounding labels, punctuation, and layout.
+- Return ONLY one JSON object and nothing else.
+- No explanations, no markdown, no code fences.
+- JSON MUST match the exact structure provided.
+- Do NOT include regex delimiters or flags (no /.../, no (?i), etc.).
 
 CRITICAL REGEX RULES (STRICT ENFORCEMENT):
-1. **EXACTLY ONE CAPTURING GROUP**: Every regex that extracts a value MUST contain exactly one capturing group `(...)` that isolates the target data.
-2. **USE NON-CAPTURING GROUPS**: If you need to group tokens for logic (e.g., matching "CS" or "EA"), you MUST use non-capturing groups `(?:...)`.
-   - BAD: `(CS|EA)` -> This captures the unit, creating a second group.
-   - GOOD: `(?:CS|EA)` -> This matches but does not capture.
-3. **MANDATORY FIELDS**: 'invoice_number', 'invoice_date', and 'invoice_total_amount' MUST HAVE A REGEX. Do not return empty strings for these.
+1. EXACTLY ONE CAPTURING GROUP:
+   Every regex that extracts a value MUST contain exactly ONE capturing group `(…)`.
+2. NON-CAPTURING GROUPS ONLY FOR LOGIC:
+   If grouping is needed for alternation or structure, use `(?:…)`.
+   - BAD: `(CS|EA)`  ← creates an extra capture
+   - GOOD: `(?:CS|EA)` ← allowed
+3. MANDATORY FIELDS:
+   - invoice_number
+   - invoice_date
+   - invoice_total_amount
+   MUST NOT be empty.
 
 FIELD GUIDANCE:
 [Invoice Level]

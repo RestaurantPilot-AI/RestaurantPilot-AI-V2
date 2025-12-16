@@ -73,12 +73,21 @@ def clean_description(raw_description: str) -> str:
     if s_clean in _SPECIAL_LINES:
         return s_clean
 
-    # Truncate at first size / quantity block
-    match = _SIZE_BLOCK_RE.search(s)
-    if match:
-        s = s[:match.start()]
+    # REMOVE size / quantity / unit blocks (do NOT truncate)
+    s = _SIZE_BLOCK_RE.sub(" ", s)
 
-    # Remove residual numbers
+    # REMOVE packaging connector phrases like "bag of", "pack of", etc.
+    s = re.sub(
+        r"\b(?:bag|pack|case|box|carton|bundle)\s+of\b",
+        " ",
+        s,
+        flags=re.IGNORECASE,
+    )
+
+    # REMOVE standalone "of" left behind
+    s = re.sub(r"\bof\b", " ", s)
+
+    # Remove residual standalone numbers
     s = re.sub(r"\b\d+\b", " ", s)
 
     # Remove unwanted punctuation
@@ -88,14 +97,12 @@ def clean_description(raw_description: str) -> str:
     tokens = [t for t in s.split() if t]
 
     # Produce logic: keep only first semantic noun
-    # Example: "onion italian red" -> "onion"
     if tokens and tokens[0] in {
         "onion", "tomato", "cucumber", "herbs"
     }:
         return tokens[0]
 
     return " ".join(tokens)
-
 
 
 def build_categorization_prompt(description: str, existing_categories: List[str]) -> str:
@@ -154,13 +161,14 @@ def save_category_result(description: str, predicted_category: str, existing_cat
 
 def get_line_item_category(description: str) -> str:
     if not description:
+        print("[INFO] Description empty.")
         return "Uncategorized"
 
     cleaned_description = clean_description(description)
     # 1. Fetch from DB
     stored_category = get_stored_category(cleaned_description)
     if stored_category:
-        # print(f"[INFO] Found decryption-category pair in DB: Description: {cleaned_description}, Category: {stored_category}")
+        print(f"[INFO] Found decryption-category pair in DB: Description before: {description}, Cleaned Description: {cleaned_description}, Stored Category: {stored_category}.")
         return stored_category
 
     # 2. Fetch Context from DB
@@ -173,6 +181,6 @@ def get_line_item_category(description: str) -> str:
     # 4. Save via DB Delegate
     save_category_result(cleaned_description, predicted_category, existing_categories)
     
-    print(f"[INFO] Used LLM to get decryption-category pair: Description: {cleaned_description}, Category: {predicted_category}")
+    print(f"[INFO] Used LLM to get decryption-category pair: Description before: {description}, Cleaned Description: {cleaned_description}, LLM Category: {predicted_category}.")
 
     return predicted_category

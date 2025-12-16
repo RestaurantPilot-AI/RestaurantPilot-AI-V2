@@ -46,7 +46,7 @@ def get_structured_data_from_text(
 
     try:
         vendor_context = identify_vendor_and_get_regex(extracted_text,file_path)
-        print("[INFO] Vendor Identified [build_dataframe.py]")
+        # print("[INFO] Vendor Identified [build_dataframe.py]")
 
     except Exception as exc:
         print(f"[WARN] Vendor identification failed: {exc}")
@@ -97,7 +97,7 @@ def get_structured_data_from_text(
         extraction_timestamp=extraction_timestamp
     )
 
-    print(f"\n INV df: {inv_df} [build_dataframe.py]")
+    # print(f"\n INV df: {inv_df} [build_dataframe.py]")
     # Build the Line Items DataFrame matching the 'line_items' collection schema
     # We retrieve the invoice number here to link items to the invoice record
     # (Note: The actual database linking via _id will happen in storage part)    
@@ -112,7 +112,7 @@ def get_structured_data_from_text(
         traceback.print_exc()  # prints stack trace with file + line number
         raise  # re-raise so upper-level logic remains unchanged
 
-    print(f"\n LI df: {li_df} [build_dataframe.py]")
+    # print(f"\n LI df: {li_df} [build_dataframe.py]")
 
     return inv_df, li_df
 

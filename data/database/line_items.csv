@@ -1,313 +1,157 @@
 _id,invoice_id,vendor_name,category,quantity,unit,description,unit_price,line_total,line_number
-e2e354e3-d442-4a3c-8c03-bac0d6e970ff,3827c4cf-f240-459d-83c0-f6eb8fe72b20,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-3deaa75e-5f50-497f-a1ee-93a666fb4b1d,3827c4cf-f240-459d-83c0-f6eb8fe72b20,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,2.0
-5a2a9413-48c5-4f83-8d2b-1c8edbab81af,3827c4cf-f240-459d-83c0-f6eb8fe72b20,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
-5b074d48-ae90-42cb-8c9f-f4de096c71c7,3827c4cf-f240-459d-83c0-f6eb8fe72b20,Pacific Food Importers,Dry Goods,1.0,EA,CURRANTS  5 LB,29.203,29.2,4.0
-a631dc51-c070-467a-9eef-5ba7e54efc70,3827c4cf-f240-459d-83c0-f6eb8fe72b20,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,5.0
-d23aa912-b600-41c9-9f3a-8bddbf1712a7,3827c4cf-f240-459d-83c0-f6eb8fe72b20,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,28.587,28.59,6.0
-6cf4479f-71e6-491b-9fef-ab9c3a313873,3827c4cf-f240-459d-83c0-f6eb8fe72b20,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,7.0
-c82d7073-e1ba-4a7b-b4dc-e750c4f9e79a,893da82b-4ae2-49cc-bda9-16a075a8685c,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-80d5de90-25cc-4625-a379-a59f14d4e509,893da82b-4ae2-49cc-bda9-16a075a8685c,Pacific Food Importers,Produce,1.0,CS,ONION MINCED  4 X 4.5 LB,113.333,113.33,2.0
-3ac33701-e321-4067-b8fb-801c7ec90a8a,893da82b-4ae2-49cc-bda9-16a075a8685c,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,3.0
-5055db56-8317-4dbe-8ad1-55e60f7119cd,893da82b-4ae2-49cc-bda9-16a075a8685c,Pacific Food Importers,Spices,2.0,CS,SALT KOSHER COARSE  9 X 3 LB,75.076,150.15,4.0
-df113e5d-d47c-4049-befc-9a4178086fe5,893da82b-4ae2-49cc-bda9-16a075a8685c,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,36.25,36.25,5.0
-6a10bc5a-bf4d-4f64-9b98-67afc032cea2,893da82b-4ae2-49cc-bda9-16a075a8685c,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST INSTANT RED LBL SAF  20 X,130.797,130.8,6.0
-50778ea0-19a9-42b6-90dc-917d030a31d1,f6822a8b-0ac9-460a-ba47-7f553895eb69,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-d05210dd-a036-4851-b34b-65dae4451399,f6822a8b-0ac9-460a-ba47-7f553895eb69,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,116.848,116.85,2.0
-a3d7fbac-d4d6-4c4e-b1b2-355ffcd84fcd,f6822a8b-0ac9-460a-ba47-7f553895eb69,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
-17218e59-58d3-4d03-a3ff-5321c47cff4e,f6822a8b-0ac9-460a-ba47-7f553895eb69,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.78,29.78,4.0
-86d4f646-674e-415f-b4ca-dfeb8677d30e,f6822a8b-0ac9-460a-ba47-7f553895eb69,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,5.0
-d720f3bd-8b3d-4be8-bddb-366e6d7b590b,f6822a8b-0ac9-460a-ba47-7f553895eb69,Pacific Food Importers,Dairy,1.0,CS,MILK OAT  12 X 32 OZ,39.948,39.95,6.0
-233391f0-f3a6-4b89-a7ca-4ac1a17c869b,8807524d-ed01-48b7-a8b0-e17880ac17f7,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
-d8ca6f4e-1812-4cd4-b973-ccc1392de36e,8807524d-ed01-48b7-a8b0-e17880ac17f7,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE  25 LB,25.101,25.1,2.0
-fce3adcc-1af8-49a3-ad7f-cbe2f844f230,8807524d-ed01-48b7-a8b0-e17880ac17f7,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.783,29.78,3.0
-4b2b6d74-68db-4a6a-89ad-dfc67b244cd3,8807524d-ed01-48b7-a8b0-e17880ac17f7,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,4.0
-b386f2b3-be9e-46e6-9da0-bf164c3ded6e,8807524d-ed01-48b7-a8b0-e17880ac17f7,Pacific Food Importers,Spices,1.0,CS,POPPY SEED  4 X 5.5 LB,96.0,96.0,5.0
-d5a3375b-b4dc-4635-91b1-66a95aaf251c,4c359607-8320-436f-b7e7-78f528165a76,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-5354e2a2-221a-4b0e-a7a4-fcd9ea518627,4c359607-8320-436f-b7e7-78f528165a76,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,35.383,35.38,2.0
-5fd7cc1d-0bef-48d4-b3a6-7564ff75fd2d,4c359607-8320-436f-b7e7-78f528165a76,Pacific Food Importers,Condiments,1.0,CS,TAHINI EXTRA  12 X 454 GRM,57.776,57.78,3.0
-9c053bcb-7755-42ec-bd0a-58617a0241da,4c359607-8320-436f-b7e7-78f528165a76,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
-6e4def2c-97d3-42db-8182-4f9d896628fe,4c359607-8320-436f-b7e7-78f528165a76,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,5.0
-54e5ff3c-bd88-42e2-9a60-160e78b53ddc,6570829e-337e-4ccc-8b45-7047a0977694,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-821363ef-b2b0-436e-89ca-b693865d8540,6570829e-337e-4ccc-8b45-7047a0977694,Pacific Food Importers,Cooking Aids,1.0,CS,PAN SPRAY PREMIUM  6 X 14 OZ,34.038,34.04,2.0
-5fafbe6c-244f-4ee6-b09a-c8bb71cac5f7,6570829e-337e-4ccc-8b45-7047a0977694,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,75.076,75.08,3.0
-7a60c58b-7913-4ae9-8ac4-be0f6e79460b,6570829e-337e-4ccc-8b45-7047a0977694,Pacific Food Importers,Produce,1.0,CS,ONION MINCED  4 X 4.5 LB,104.0,104.0,4.0
-4ca0fbb8-8985-424f-8e19-f7ed2eabc294,6570829e-337e-4ccc-8b45-7047a0977694,Pacific Food Importers,Produce,1.0,CS,GARLIC MINCED  4 X 6 LB,112.0,112.0,5.0
-00887c74-1fed-4902-a0c6-baf13c073e98,6570829e-337e-4ccc-8b45-7047a0977694,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,6.0
-624e553a-e64b-4b47-9022-9a9df4390ce7,6570829e-337e-4ccc-8b45-7047a0977694,Pacific Food Importers,Dairy,1.0,CS,MILK OAT  12 X 32 OZ,39.948,39.95,8.0
-0f134653-7a35-4349-be9c-4ee192a74bd9,6570829e-337e-4ccc-8b45-7047a0977694,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,9.0
-67140ddf-fdb1-4bf9-81bd-052d310455c9,83e91c3c-4f6d-4dfa-a4c1-f39b104c1422,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-34ce94e7-1bca-40b9-9219-c5ec9be888eb,83e91c3c-4f6d-4dfa-a4c1-f39b104c1422,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,2.0
-f0f6638c-b8b9-4f65-8c79-4a010372ffd7,83e91c3c-4f6d-4dfa-a4c1-f39b104c1422,Pacific Food Importers,Dairy,2.0,EA,HALF & HALF  QT,2.665,5.33,3.0
-9ae13885-125e-44d6-a272-8c1b3b8491c5,83e91c3c-4f6d-4dfa-a4c1-f39b104c1422,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,35.361,35.36,4.0
-d5e6a4fd-966b-4dd6-9ca0-23960672ee5d,c8c5fbbe-026f-4535-86c1-54b1ad1e6357,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
-44d1ae8a-bfda-4fed-9138-90ac3e41f908,c8c5fbbe-026f-4535-86c1-54b1ad1e6357,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,119.177,119.18,2.0
-c8cd22fd-404f-4aeb-99f0-506a0d4715d6,c8c5fbbe-026f-4535-86c1-54b1ad1e6357,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
-42670cf8-1783-4536-b303-e2fc22891bfe,c8c5fbbe-026f-4535-86c1-54b1ad1e6357,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
-bd35f22b-e83b-4ae2-b25b-a39a014e4571,c8c5fbbe-026f-4535-86c1-54b1ad1e6357,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,5.0
-617de06b-0264-43f6-9378-a5aa1ff4c4c7,c8c5fbbe-026f-4535-86c1-54b1ad1e6357,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,6.0
-08387009-67fa-4722-b9b3-8b6f20efb4b2,e727ec12-6eb9-4aec-8940-3f4a4951f012,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
-7ffff8c0-7ce3-42c0-af60-f1e08bc85d96,e727ec12-6eb9-4aec-8940-3f4a4951f012,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,119.177,119.18,2.0
-762219e7-cc50-4bf2-925a-7a414369b43f,e727ec12-6eb9-4aec-8940-3f4a4951f012,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
-229bbb9d-f4f3-4385-8091-2389b0c44be6,e727ec12-6eb9-4aec-8940-3f4a4951f012,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
-53a6f618-fb2f-4003-9a68-6a50c7681e61,e727ec12-6eb9-4aec-8940-3f4a4951f012,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,5.0
-fcfd1a04-7d72-445c-93e0-00c4cf87015d,e727ec12-6eb9-4aec-8940-3f4a4951f012,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,6.0
-9d8da2b3-18f5-4fb7-9723-dab197f7c032,404b8003-c8b6-4811-930e-50d1877d2886,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-bfe8ac76-c6b8-42d9-adea-d75394072e50,404b8003-c8b6-4811-930e-50d1877d2886,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR A/P UNBLEACHED  50 LB,21.582,21.58,2.0
-986ae941-0652-4080-a1f6-41f1f79c8ffa,404b8003-c8b6-4811-930e-50d1877d2886,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR MEDIUM RYE  50 LB,42.8,42.8,3.0
-5d35798b-c541-4e22-ab68-705f70885863,404b8003-c8b6-4811-930e-50d1877d2886,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE***  25 LB,25.861,25.86,4.0
-5f507c56-fff7-4693-adec-de89211d43f1,404b8003-c8b6-4811-930e-50d1877d2886,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST FRESH +  20 X 16 OZ,54.62,54.62,5.0
-d98cfca6-ff3d-4773-9d96-493fcd2b542e,404b8003-c8b6-4811-930e-50d1877d2886,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,71.658,71.66,6.0
-199709ad-c35d-4268-8a30-33cb6154335d,404b8003-c8b6-4811-930e-50d1877d2886,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,7.0
-de0d2d28-e871-40ff-a78b-d64824f85a49,404b8003-c8b6-4811-930e-50d1877d2886,Pacific Food Importers,Dairy,0.5,CS,EGGS LIQUID  2 X 20 LB,100.35,50.18,8.0
-8b83e579-6937-4252-a321-4d8d883525be,65f4b23b-7d8a-4a46-83e0-cd0f498bdea9,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-9a4aa073-27c1-43ee-b7d4-78e0d2bc568c,65f4b23b-7d8a-4a46-83e0-cd0f498bdea9,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR A/P UNBLEACHED  50 LB,21.582,21.58,2.0
-0fd222c0-95f8-4470-996a-df75ab1c89ac,65f4b23b-7d8a-4a46-83e0-cd0f498bdea9,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR MEDIUM RYE  50 LB,42.8,42.8,3.0
-7a0b4c1e-73d3-4b29-b9d7-06a861ee7e55,65f4b23b-7d8a-4a46-83e0-cd0f498bdea9,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE***  25 LB,25.861,25.86,4.0
-a015a61b-7265-4f8d-afe5-d2480420af10,65f4b23b-7d8a-4a46-83e0-cd0f498bdea9,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST FRESH +  20 X 16 OZ,54.62,54.62,5.0
-25e4ff2e-8e50-4156-9e8d-bb5696975276,65f4b23b-7d8a-4a46-83e0-cd0f498bdea9,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,71.658,71.66,6.0
-d76f1078-5d24-41fa-b0a5-e583389d44cb,65f4b23b-7d8a-4a46-83e0-cd0f498bdea9,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,7.0
-0b880f63-d05f-499b-b914-3c60b42e586a,65f4b23b-7d8a-4a46-83e0-cd0f498bdea9,Pacific Food Importers,Dairy,0.5,CS,EGGS LIQUID  2 X 20 LB,100.35,50.18,8.0
-e0f2ed74-da6d-46de-bfdc-2aca5f4169d8,7a442fcf-9a3d-471f-9adf-8406f86f50e4,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-bae34820-70ee-4ce7-8137-8751287ab8bf,7a442fcf-9a3d-471f-9adf-8406f86f50e4,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,2.0
-36d4a310-8f40-4fe8-93b9-158cdf5cc5e1,7a442fcf-9a3d-471f-9adf-8406f86f50e4,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR BROWN  25 LB,26.778,26.78,3.0
-78a3f1a5-8027-41aa-b225-1920955be8f4,7a442fcf-9a3d-471f-9adf-8406f86f50e4,Pacific Food Importers,Dairy,2.0,CS,MILK OAT  12 X 32 OZ,39.948,79.9,4.0
-d9bb258c-0373-4421-abac-32b217d437cb,7a442fcf-9a3d-471f-9adf-8406f86f50e4,Pacific Food Importers,Dairy,2.0,CS,EGGS LIQUID  2 X 20 LB,100.35,200.7,5.0
-07951071-f333-41af-90d1-d6b757ee165a,8dbfb7f5-72d1-4df3-b7b7-84c55cf05087,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-f1c24a26-8a36-4489-81a6-148c1406d64e,8dbfb7f5-72d1-4df3-b7b7-84c55cf05087,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,2.0
-5032e43d-dbea-4eab-9807-efdf27e8be80,8dbfb7f5-72d1-4df3-b7b7-84c55cf05087,Pacific Food Importers,Dairy,1.0,CS,MILK WHOLE GALLON RED CAP  4,17.999,18.0,3.0
-e9c3ec4a-a2cc-4ba6-8e23-b60cd3f1bc51,8dbfb7f5-72d1-4df3-b7b7-84c55cf05087,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,4.0
-e7db5003-8097-4427-899d-d9524cab8a30,8dbfb7f5-72d1-4df3-b7b7-84c55cf05087,Pacific Food Importers,Dairy,2.0,EA,HALF & HALF  QT,2.637,5.27,5.0
-adfb6583-4795-4f12-85e0-18371f49e0eb,8dbfb7f5-72d1-4df3-b7b7-84c55cf05087,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.771,29.77,6.0
-8fa5a05b-3c5a-4aaf-a401-09c75d33f359,fa0e7ee1-b3c2-4f8d-aa4d-105df352b05f,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-beafddcf-b265-430c-b383-11bd80be7bb3,fa0e7ee1-b3c2-4f8d-aa4d-105df352b05f,Pacific Food Importers,Dry Goods,1.0,EA,CURRANTS  5 LB,16.588,16.59,2.0
-70060216-be52-45ca-92a7-df49dc590376,fa0e7ee1-b3c2-4f8d-aa4d-105df352b05f,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,3.0
-46b9b5c4-4290-47d8-9248-bfbe1ef31f19,9fb6c0df-37c5-45e0-bd16-5316bd698999,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-c1319a18-4008-476b-841f-2e4f951e1809,9fb6c0df-37c5-45e0-bd16-5316bd698999,Pacific Food Importers,Dairy,1.0,CS,ALMOND BARISTA BLEND  12 X 32,41.139,41.14,2.0
-2a5c313b-1ce0-4e1d-b020-e7c8b304e91f,9fb6c0df-37c5-45e0-bd16-5316bd698999,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,3.0
-042dc4ea-6146-4a8a-b9a8-b12d6abb3949,9fb6c0df-37c5-45e0-bd16-5316bd698999,Pacific Food Importers,Beverage,2.0,CS,LIMONATA CANS  24 X 11 OZ,27.81,55.62,4.0
-9a9debb6-3a92-4d80-ab4d-7c3e98b5a4db,942c3957-b93f-4b47-9041-88456003647a,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-d3722567-1748-4953-8686-da3d1ab36c5d,942c3957-b93f-4b47-9041-88456003647a,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,2.0
-fba978b1-aaf8-4aa3-925a-d31948742be1,942c3957-b93f-4b47-9041-88456003647a,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
-ef1b7a7e-709a-44c5-8ccb-d8348af6774e,942c3957-b93f-4b47-9041-88456003647a,Pacific Food Importers,Dry Goods,1.0,EA,CURRANTS  5 LB,29.203,29.2,4.0
-7e98d0e6-5bed-4182-8b87-b58b1b00095b,942c3957-b93f-4b47-9041-88456003647a,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,5.0
-8ca368cf-f518-466d-9f91-5e5c9cd50209,942c3957-b93f-4b47-9041-88456003647a,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,28.587,28.59,6.0
-ce0faa84-267a-4987-80e0-b170bc1a48d9,942c3957-b93f-4b47-9041-88456003647a,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,7.0
-bb1a9ca4-2eba-40e5-a896-0281d33c3443,c4b1637f-e305-4ad8-9968-d8e170827437,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-2a80efd8-48a0-440c-9f87-aaea295302a8,c4b1637f-e305-4ad8-9968-d8e170827437,Pacific Food Importers,Produce,1.0,CS,ONION MINCED  4 X 4.5 LB,113.333,113.33,2.0
-9b8512ee-681f-4f18-835a-b8adc6487be8,c4b1637f-e305-4ad8-9968-d8e170827437,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,3.0
-253b4281-0a00-45b6-b794-12e2a19240d3,c4b1637f-e305-4ad8-9968-d8e170827437,Pacific Food Importers,Spices,2.0,CS,SALT KOSHER COARSE  9 X 3 LB,75.076,150.15,4.0
-f5948fce-0043-4d60-b79a-7b62cdeb7ec5,c4b1637f-e305-4ad8-9968-d8e170827437,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,36.25,36.25,5.0
-01c54275-9a16-4423-af84-b62f28758478,c4b1637f-e305-4ad8-9968-d8e170827437,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST INSTANT RED LBL SAF  20 X,130.797,130.8,6.0
-034d668b-1027-4d39-b06f-e947f5e4524d,3ce4135a-93f7-4906-81d3-fe341a2b0c32,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-566aed10-890f-4fb9-a8fc-5831b9bcba2f,3ce4135a-93f7-4906-81d3-fe341a2b0c32,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,116.848,116.85,2.0
-05a085c9-624c-44c0-b940-8ef97ca862b9,3ce4135a-93f7-4906-81d3-fe341a2b0c32,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
-3dc190d0-6d3c-437d-8cae-dcfc9cf9f0bd,3ce4135a-93f7-4906-81d3-fe341a2b0c32,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.78,29.78,4.0
-27c3a4b1-bd41-4b0a-8ca5-d727a9d7a43c,3ce4135a-93f7-4906-81d3-fe341a2b0c32,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,5.0
-716ffcbd-8a13-4f18-96ba-494418bd9a20,3ce4135a-93f7-4906-81d3-fe341a2b0c32,Pacific Food Importers,Dairy,1.0,CS,MILK OAT  12 X 32 OZ,39.948,39.95,6.0
-5450022e-5a05-4cc4-8790-a0d09c2f0bc6,e23b71c4-16ec-47dc-bf5a-1312e314f85c,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
-0aabf7ff-724e-43fb-a582-302a952cbd0f,e23b71c4-16ec-47dc-bf5a-1312e314f85c,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE  25 LB,25.101,25.1,2.0
-8b0a81c6-2409-4400-8e4b-6f1adf221c54,e23b71c4-16ec-47dc-bf5a-1312e314f85c,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.783,29.78,3.0
-82cfe1b8-64a7-4588-87bf-0d29a6f5fe1e,e23b71c4-16ec-47dc-bf5a-1312e314f85c,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,4.0
-b6fcc22b-4490-4757-98ad-b3b810cdc09c,e23b71c4-16ec-47dc-bf5a-1312e314f85c,Pacific Food Importers,Spices,1.0,CS,POPPY SEED  4 X 5.5 LB,96.0,96.0,5.0
-4ef171cc-2e66-4871-be88-d7bb2f600db3,7ee6438b-9b27-4ee9-9640-e016a85a792a,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-7f1e7b9e-7f3d-43cd-9cd6-0e5c2925fc5d,7ee6438b-9b27-4ee9-9640-e016a85a792a,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,35.383,35.38,2.0
-2562b2c9-e0a6-447f-9a74-6fd5cee451cf,7ee6438b-9b27-4ee9-9640-e016a85a792a,Pacific Food Importers,Condiments,1.0,CS,TAHINI EXTRA  12 X 454 GRM,57.776,57.78,3.0
-7a438499-33c4-4954-8eed-b0babb515594,7ee6438b-9b27-4ee9-9640-e016a85a792a,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
-e1121c31-282f-4f6c-8d8f-60510e85ef86,7ee6438b-9b27-4ee9-9640-e016a85a792a,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,5.0
-9ef73783-8267-40e9-8ad7-953e4983b65f,d94c2cdd-d2e1-4abe-882b-d509dbd2477c,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-a5c821c8-6faf-4521-8ac4-2dcc9ec78a77,d94c2cdd-d2e1-4abe-882b-d509dbd2477c,Pacific Food Importers,Cooking Aids,1.0,CS,PAN SPRAY PREMIUM  6 X 14 OZ,34.038,34.04,2.0
-6dc6e2fe-aebf-4e66-8800-7d1abf93a245,d94c2cdd-d2e1-4abe-882b-d509dbd2477c,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,75.076,75.08,3.0
-674fec32-5b20-43f3-9dfd-f7b2e187b2b9,d94c2cdd-d2e1-4abe-882b-d509dbd2477c,Pacific Food Importers,Produce,1.0,CS,ONION MINCED  4 X 4.5 LB,104.0,104.0,4.0
-f470bc56-28a8-4521-8c2e-1eda418ce0d8,d94c2cdd-d2e1-4abe-882b-d509dbd2477c,Pacific Food Importers,Produce,1.0,CS,GARLIC MINCED  4 X 6 LB,112.0,112.0,5.0
-2feab469-e898-4227-807e-6017e910aed8,d94c2cdd-d2e1-4abe-882b-d509dbd2477c,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,6.0
-a1bc2221-076a-43d2-8ef4-bf84f5b0a97c,d94c2cdd-d2e1-4abe-882b-d509dbd2477c,Pacific Food Importers,Dairy,1.0,CS,MILK OAT  12 X 32 OZ,39.948,39.95,8.0
-eb9796cb-4213-4242-a2db-9d59b50cf87d,d94c2cdd-d2e1-4abe-882b-d509dbd2477c,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,9.0
-7399c0f8-e7e3-482b-ba67-06b00a794c72,63590d2a-0f6c-4bbd-8743-63ef816a6f1d,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-fdb93016-24af-4d71-94e6-c9e430dea233,63590d2a-0f6c-4bbd-8743-63ef816a6f1d,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,2.0
-a83d0189-63f6-483f-9f6e-8b8ad6f955ed,63590d2a-0f6c-4bbd-8743-63ef816a6f1d,Pacific Food Importers,Dairy,2.0,EA,HALF & HALF  QT,2.665,5.33,3.0
-ce450ad2-cb1f-4ee1-89f1-8cc82433c0f2,63590d2a-0f6c-4bbd-8743-63ef816a6f1d,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,35.361,35.36,4.0
-79e08898-3b7e-4577-9b94-b6ebe1dad30d,bc3e6241-63fa-4db3-8dc8-386a958764d1,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
-051aafa0-58c3-4dba-b1af-32b75ef7a815,bc3e6241-63fa-4db3-8dc8-386a958764d1,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,119.177,119.18,2.0
-68dfbf32-5e9a-4866-b2f8-f37480e30b2d,bc3e6241-63fa-4db3-8dc8-386a958764d1,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
-98226928-e5be-479c-91e3-2ca28c47ffeb,bc3e6241-63fa-4db3-8dc8-386a958764d1,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
-cdcb0008-4d7d-469f-bc51-bb2d5eb0e95c,bc3e6241-63fa-4db3-8dc8-386a958764d1,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,5.0
-e5f15212-9b5d-4555-8e6d-8339c4a4d274,bc3e6241-63fa-4db3-8dc8-386a958764d1,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,6.0
-1d7cd994-0814-4e27-bab9-a0ef1efbaef9,16f59728-8640-46b6-b942-ad2c4304c401,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
-786dc982-062b-4285-8c51-83c7dadd438c,16f59728-8640-46b6-b942-ad2c4304c401,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,119.177,119.18,2.0
-d12c6ecd-ff8b-4425-a738-aa8c7a66aefb,16f59728-8640-46b6-b942-ad2c4304c401,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
-fd402689-7cd6-4a4b-8537-2d1d45947eff,16f59728-8640-46b6-b942-ad2c4304c401,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
-00dbecdc-8fd6-4abd-9902-5942a1e86838,16f59728-8640-46b6-b942-ad2c4304c401,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,5.0
-20f9da8e-5664-457a-8ea6-5da393f4d4f9,16f59728-8640-46b6-b942-ad2c4304c401,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,6.0
-2ec89414-d5d7-4b48-861f-80998ad15b6f,178e6dc9-d27f-4677-aad3-ff0563f73f89,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-89974c7f-7197-4d2f-a212-00bcfa4c2326,178e6dc9-d27f-4677-aad3-ff0563f73f89,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR A/P UNBLEACHED  50 LB,21.582,21.58,2.0
-88fff674-57b5-4536-ad13-3360e2bbf91c,178e6dc9-d27f-4677-aad3-ff0563f73f89,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR MEDIUM RYE  50 LB,42.8,42.8,3.0
-1ca094f6-e52c-43c3-a6f4-3dbd73b5ab07,178e6dc9-d27f-4677-aad3-ff0563f73f89,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE***  25 LB,25.861,25.86,4.0
-65b955ba-b218-47b8-84b3-7962fe5b6799,178e6dc9-d27f-4677-aad3-ff0563f73f89,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST FRESH +  20 X 16 OZ,54.62,54.62,5.0
-1a4403e2-78bc-4327-b495-3ba2fd1fcac5,178e6dc9-d27f-4677-aad3-ff0563f73f89,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,71.658,71.66,6.0
-4311dea1-96f9-410f-acb6-4e7123aeaa2a,178e6dc9-d27f-4677-aad3-ff0563f73f89,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,7.0
-ffc3168c-c2d5-4b62-bb80-547073c8eb46,178e6dc9-d27f-4677-aad3-ff0563f73f89,Pacific Food Importers,Dairy,0.5,CS,EGGS LIQUID  2 X 20 LB,100.35,50.18,8.0
-ce75e448-625f-41d3-8597-83030ab0faeb,30a9dba7-c3bb-45e6-b71f-794cd9912f9e,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-46670918-f4b3-41e9-9c7a-ff06abf31cf4,30a9dba7-c3bb-45e6-b71f-794cd9912f9e,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR A/P UNBLEACHED  50 LB,21.582,21.58,2.0
-5bd955d1-6e27-46f7-a072-14ad12705388,30a9dba7-c3bb-45e6-b71f-794cd9912f9e,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR MEDIUM RYE  50 LB,42.8,42.8,3.0
-ef1db65a-bf30-477f-a8bc-afb39ea4d9ad,30a9dba7-c3bb-45e6-b71f-794cd9912f9e,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE***  25 LB,25.861,25.86,4.0
-8cc2faf0-d13a-4691-a704-71e5986e8761,30a9dba7-c3bb-45e6-b71f-794cd9912f9e,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST FRESH +  20 X 16 OZ,54.62,54.62,5.0
-27e4d13b-52fa-4950-81ee-4fc6d8d7a645,30a9dba7-c3bb-45e6-b71f-794cd9912f9e,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,71.658,71.66,6.0
-7b4fb27a-2a17-401e-b02f-91bcdf51df7a,30a9dba7-c3bb-45e6-b71f-794cd9912f9e,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,7.0
-8be461b5-26db-4f10-97a6-57cc137ed85d,30a9dba7-c3bb-45e6-b71f-794cd9912f9e,Pacific Food Importers,Dairy,0.5,CS,EGGS LIQUID  2 X 20 LB,100.35,50.18,8.0
-c17e40ab-8856-4ad2-8263-ae27311c8bbe,e0131b26-b71f-4658-a433-58ecae88c876,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-c4df0a8a-a9cf-421d-bfa3-b5a18bef196f,e0131b26-b71f-4658-a433-58ecae88c876,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,2.0
-9c84b962-4422-475b-b812-f3c150c60414,e0131b26-b71f-4658-a433-58ecae88c876,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR BROWN  25 LB,26.778,26.78,3.0
-283af264-980c-4274-9a1e-669de15f6b3b,e0131b26-b71f-4658-a433-58ecae88c876,Pacific Food Importers,Dairy,2.0,CS,MILK OAT  12 X 32 OZ,39.948,79.9,4.0
-4fbd81eb-806d-41c7-a8b1-8a0f70d7c3cc,e0131b26-b71f-4658-a433-58ecae88c876,Pacific Food Importers,Dairy,2.0,CS,EGGS LIQUID  2 X 20 LB,100.35,200.7,5.0
-330a3923-1538-429b-8140-5a48c95d7048,2bd77252-2baf-43a3-96ce-273ab7e3a989,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
-28b5973b-ea65-42b0-8fce-65ac2149c7d3,2bd77252-2baf-43a3-96ce-273ab7e3a989,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,2.0
-1b3c4dd8-42e3-4857-9cac-1f0ee397b740,2bd77252-2baf-43a3-96ce-273ab7e3a989,Pacific Food Importers,Dairy,1.0,CS,MILK WHOLE GALLON RED CAP  4,17.999,18.0,3.0
-04d3074f-ce55-479e-a189-befc25cbb0c6,2bd77252-2baf-43a3-96ce-273ab7e3a989,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,4.0
-185917a4-27e1-4dd2-8b85-007511f8de47,2bd77252-2baf-43a3-96ce-273ab7e3a989,Pacific Food Importers,Dairy,2.0,EA,HALF & HALF  QT,2.637,5.27,5.0
-e30bf16f-58cf-4aad-9b54-1393728ea5a6,2bd77252-2baf-43a3-96ce-273ab7e3a989,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.771,29.77,6.0
-1abd9cdf-e05f-4d3b-9c17-b06fc14986b2,fdf13315-825d-4db3-935e-489231774239,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-b5d48fc0-8d6d-45bc-b39b-9097494c85d5,fdf13315-825d-4db3-935e-489231774239,Pacific Food Importers,Dry Goods,1.0,EA,CURRANTS  5 LB,16.588,16.59,2.0
-5d5800ac-0efd-40c0-a2f8-ed0db6a07a5a,fdf13315-825d-4db3-935e-489231774239,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,3.0
-5f19e13b-9ae3-4cbb-84af-0cc51e5164c0,41961b6c-bac8-4be1-a1a1-d952ca31e186,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
-a4123c7d-5e67-4939-9bc9-420840c4e5b3,41961b6c-bac8-4be1-a1a1-d952ca31e186,Pacific Food Importers,Dairy,1.0,CS,ALMOND BARISTA BLEND  12 X 32,41.139,41.14,2.0
-1b1d3393-f9dd-4f13-bb74-24b5565b6976,41961b6c-bac8-4be1-a1a1-d952ca31e186,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,3.0
-6d794f1a-b937-46f3-8ac5-ed9d2370cf7e,41961b6c-bac8-4be1-a1a1-d952ca31e186,Pacific Food Importers,Beverage,2.0,CS,LIMONATA CANS  24 X 11 OZ,27.81,55.62,4.0
-693705a1-a926-4c1d-9ce1-7ef9a272daf7,a884c43a-2b72-4bfc-854a-41f3a5d3767a,Frank's Quality Produce,Produce,8.0,,"TOMATO, ROMA",1.99,15.92,1.0
-5b32e9ad-c086-4679-87ba-8264746e378e,a884c43a-2b72-4bfc-854a-41f3a5d3767a,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,2.0
-cb67dbdc-2ac0-416c-9e55-8a341ae54452,a884c43a-2b72-4bfc-854a-41f3a5d3767a,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-0242f62c-db8b-45de-bf70-05c9495aaacd,a884c43a-2b72-4bfc-854a-41f3a5d3767a,Frank's Quality Produce,Produce,10.0,,"ONION, WHITE",0.99,9.9,4.0
-a7a690bd-8115-496d-8219-d6b2fa52109c,a884c43a-2b72-4bfc-854a-41f3a5d3767a,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,5.0
-c9df7b6a-8cc2-4ba5-8d31-c867bd618160,a884c43a-2b72-4bfc-854a-41f3a5d3767a,Frank's Quality Produce,Produce,1.0,,"AVOCADO,",39.0,39.0,6.0
-29f44918-57af-4834-997c-c036608adc56,a33f632a-c723-44a9-b176-f80b2c8265fa,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
-c4fe760a-bdb2-49ed-9c73-b43ef68813cc,a33f632a-c723-44a9-b176-f80b2c8265fa,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,3.0
-75f96fae-fe8e-47a9-a91f-cdbc7f8ef394,a33f632a-c723-44a9-b176-f80b2c8265fa,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,4.0
-ad98c556-3a3f-4fee-a73a-d08e5b7ac833,2507650e-2aba-4ab9-98c7-351f1264d6e9,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
-d3608360-4667-45bb-9ded-2d0899579d78,2507650e-2aba-4ab9-98c7-351f1264d6e9,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
-8d7be43f-e011-4f2a-83d9-ad0f181c8634,2507650e-2aba-4ab9-98c7-351f1264d6e9,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-106b30d5-e4e4-4f58-8ad3-4f72fc212a1d,2507650e-2aba-4ab9-98c7-351f1264d6e9,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
-8cce43cd-ebef-4386-800e-c6c905771683,0ae3c07d-e342-443a-a5bf-dddc5ea7a632,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-e9f10d2e-d417-46f2-92a3-3eee25fe10d3,0ae3c07d-e342-443a-a5bf-dddc5ea7a632,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
-44e0e836-f2f5-4891-877e-edc920183db7,0ae3c07d-e342-443a-a5bf-dddc5ea7a632,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-8324e532-8f93-4734-be20-95ba0df5781d,0ae3c07d-e342-443a-a5bf-dddc5ea7a632,Frank's Quality Produce,Produce,2.0,,"HERBS, DILL BABY",11.0,22.0,5.0
-05eab16e-f29a-45a7-ba43-79ee1158f00f,b6cd1c4e-8c3e-4b81-a332-da4ce9a6d461,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-c3d653f3-3b4f-4256-97ea-2672f2269654,b6cd1c4e-8c3e-4b81-a332-da4ce9a6d461,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
-b1a2322a-287a-41c5-bdd4-236b33dc67df,b6cd1c4e-8c3e-4b81-a332-da4ce9a6d461,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-cc8d7aad-265c-4202-aa76-2eed42e63dd6,b6cd1c4e-8c3e-4b81-a332-da4ce9a6d461,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
-6fbddd72-eab9-4311-b848-a1c087b9827d,6b5ade94-48c9-46ef-a992-44e904d2f1cb,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
-d3e73bd6-6b83-4ad8-87f9-83c170a7f317,6b5ade94-48c9-46ef-a992-44e904d2f1cb,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
-f161bcc6-c3c3-4684-a25c-06fa8238453f,6b5ade94-48c9-46ef-a992-44e904d2f1cb,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,4.0
-eff741eb-85ef-4f00-ae4d-c20ba26ef8fd,6b5ade94-48c9-46ef-a992-44e904d2f1cb,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
-83b4e817-ffe9-4cf9-80fa-14ea76901044,ff5f4712-a2c4-4659-a8a6-b83bc431a661,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-a4f3bdc4-6109-4f37-a5a4-9014bb3c71a0,ff5f4712-a2c4-4659-a8a6-b83bc431a661,Frank's Quality Produce,Produce,3.0,,"ONION, ITALIAN RED",0.99,2.97,2.0
-eed761f7-9a9b-40e6-be7f-5a9b517f7b19,ff5f4712-a2c4-4659-a8a6-b83bc431a661,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,3.0
-f3eb2e38-a298-4411-b5ae-94597d5770ae,ff5f4712-a2c4-4659-a8a6-b83bc431a661,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,4.0
-d921bb6e-77d7-474f-8c95-750393c92487,dd305f22-99ab-4520-8f68-cd05e152ac42,Frank's Quality Produce,Produce,5.0,,"TOMATO, ROMA",1.99,9.95,2.0
-bd370cd7-268b-4aab-a69b-8ce1e7af6749,dd305f22-99ab-4520-8f68-cd05e152ac42,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-ec04a34e-2b73-4188-bc96-8966ebaa1607,dd305f22-99ab-4520-8f68-cd05e152ac42,Frank's Quality Produce,Produce,5.0,,"ONION, ITALIAN RED",0.99,4.95,4.0
-0256ce1c-0f31-4017-91ca-8208b996042e,294d4976-f247-4f3e-b9f6-2fe38b3f4e6f,Frank's Quality Produce,Produce,5.0,,"TOMATO, ROMA",1.99,9.95,2.0
-bb32a4cc-f996-47a6-af85-c4f87622e404,294d4976-f247-4f3e-b9f6-2fe38b3f4e6f,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-d4c09d1a-8009-4afd-a4fb-cd9ecd079542,294d4976-f247-4f3e-b9f6-2fe38b3f4e6f,Frank's Quality Produce,Produce,5.0,,"ONION, ITALIAN RED",0.99,4.95,4.0
-f6638b36-cf8f-48ae-8a3d-66e5534ef622,eda45344-011d-4b94-b84c-8e107efc1baf,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-1996bcff-bfef-4cc7-ab33-2130a13947ce,eda45344-011d-4b94-b84c-8e107efc1baf,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-80231831-f7af-4eaf-ab16-ca49c7fcf602,eda45344-011d-4b94-b84c-8e107efc1baf,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-29721bd5-1594-413d-a9a3-ce21b1d871b3,90c7f128-ff05-4d09-8153-273ebc612f95,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-7996cdcd-de2f-49b3-a7f8-9dc63ebbc35a,90c7f128-ff05-4d09-8153-273ebc612f95,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-7fe390f2-4a06-4bed-a007-fd3851690a6c,90c7f128-ff05-4d09-8153-273ebc612f95,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-b1ed3146-1162-4117-a07d-5a37242887d5,4d567293-bbcb-4d9b-922d-1515b2f19e6b,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-3d5ede87-4b15-4fa3-b838-bcbd636668a9,4d567293-bbcb-4d9b-922d-1515b2f19e6b,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-c5e0ddc6-8009-4165-80ce-eea7b9f60fb9,4d567293-bbcb-4d9b-922d-1515b2f19e6b,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
-0dbbf5a1-6bb5-4e74-89ef-ec2652740cf3,9f4be2d8-f66d-4540-a522-6da28aacf732,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-f4d245fd-a8f2-4607-aaaa-5aaca1af9d6b,9f4be2d8-f66d-4540-a522-6da28aacf732,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-6c6ada4d-97fe-4598-aade-d0d2753079b3,9f4be2d8-f66d-4540-a522-6da28aacf732,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
-18a062ff-c7ef-410b-bc7d-8097189a6489,a202cd8c-f68c-4a0d-866a-0dedbd2c5587,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-de89ebad-b558-449b-b29d-e8f277753cab,a202cd8c-f68c-4a0d-866a-0dedbd2c5587,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-a0808adb-3e2a-4ca0-add7-e21758810db3,a202cd8c-f68c-4a0d-866a-0dedbd2c5587,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
-7e23d05a-efa9-4391-806e-45a4514e8698,a202cd8c-f68c-4a0d-866a-0dedbd2c5587,Frank's Quality Produce,Produce,7.0,,"ONION, ITALIAN RED",0.99,6.93,6.0
-6073d6be-41c2-4601-b11a-342b3d6077fa,b60de464-579c-4aaa-91a5-36fd0f8ad5d0,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-032285fa-ff3e-42d4-ac6d-3e66b32e4a30,b60de464-579c-4aaa-91a5-36fd0f8ad5d0,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-50996c88-ddc8-4d53-a87a-52901494188e,b60de464-579c-4aaa-91a5-36fd0f8ad5d0,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
-1f1cdab5-79a8-43eb-89bd-17f5dd51d9ef,b60de464-579c-4aaa-91a5-36fd0f8ad5d0,Frank's Quality Produce,Produce,7.0,,"ONION, ITALIAN RED",0.99,6.93,6.0
-1b018b22-e4f9-4d88-a23e-502e31c48108,5079cd5b-5d7a-4cdc-bfc4-469b69cf80fd,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,1.0
-0ab6cbf2-e574-44e5-91f4-5dcec7c88cf7,5079cd5b-5d7a-4cdc-bfc4-469b69cf80fd,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-dabfc168-6e75-46bc-bf3a-89a04f295938,1ddb5380-452e-4830-ab38-6477cea031aa,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,1.0
-6d22e3b2-1b9c-4666-b00e-a2c951f7cb96,1ddb5380-452e-4830-ab38-6477cea031aa,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-21bd7c02-ccae-494f-8840-05648c1e4374,6ce9168e-ac64-4286-b4e4-773df42ecfe7,Frank's Quality Produce,Produce,8.0,,"TOMATO, ROMA",1.99,15.92,1.0
-7dce3db7-c424-4114-8b17-109faf74fb71,6ce9168e-ac64-4286-b4e4-773df42ecfe7,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,2.0
-b5d0a99f-7d3c-4ce5-bf71-5861a9f940db,6ce9168e-ac64-4286-b4e4-773df42ecfe7,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-d4b9501e-8005-47b3-8306-c38c7d084b5f,6ce9168e-ac64-4286-b4e4-773df42ecfe7,Frank's Quality Produce,Produce,10.0,,"ONION, WHITE",0.99,9.9,4.0
-8b8c3254-f3c1-4903-8c3f-1ccc37af6950,6ce9168e-ac64-4286-b4e4-773df42ecfe7,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,5.0
-00c364f6-38f9-4b07-b614-23eb3caf204d,6ce9168e-ac64-4286-b4e4-773df42ecfe7,Frank's Quality Produce,Produce,1.0,,"AVOCADO,",39.0,39.0,6.0
-f0a73e96-8e8c-4d83-bb96-8b894b37a6ed,818b81f2-8c2a-4819-b11a-6b312156b305,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
-d797e495-7106-4c32-ab6b-3a6d20c7e613,818b81f2-8c2a-4819-b11a-6b312156b305,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,3.0
-aa284afb-830a-4562-8411-bd63f73a11cf,818b81f2-8c2a-4819-b11a-6b312156b305,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,4.0
-98cf4071-d427-4eda-810d-9eb2d8420425,00d77974-954f-4db5-8ca9-b8409e495e00,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
-77e89532-1979-4af6-a34c-0dc5955e3189,00d77974-954f-4db5-8ca9-b8409e495e00,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
-5d743e5f-814e-4a1c-95e1-10191289a667,00d77974-954f-4db5-8ca9-b8409e495e00,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-cb7c7bf2-22bb-46a7-976c-0ac065d9806c,00d77974-954f-4db5-8ca9-b8409e495e00,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
-a1e6d35b-267b-47f4-be01-540cdbef75c8,0bf8551c-6c14-4000-b2a0-6dd2cd968f9a,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-d5adfadf-d4b9-41ea-9e50-b628b46bff32,0bf8551c-6c14-4000-b2a0-6dd2cd968f9a,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
-7778ab63-b114-4a20-be93-f2e3337b9cca,0bf8551c-6c14-4000-b2a0-6dd2cd968f9a,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-0eeb76a5-4584-4855-99fb-da54884b168d,0bf8551c-6c14-4000-b2a0-6dd2cd968f9a,Frank's Quality Produce,Produce,2.0,,"HERBS, DILL BABY",11.0,22.0,5.0
-5c68ed23-4242-41b3-92c8-42697c08676b,50a21d24-733d-467f-9267-b3025c5621af,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-e876c905-6a54-4579-8b5a-8ce2acb96c04,50a21d24-733d-467f-9267-b3025c5621af,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
-8b8af7fe-26d5-4cd3-a608-efe2f644c24b,50a21d24-733d-467f-9267-b3025c5621af,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-937cbb1d-2e12-4be3-ac5c-b33af6ab219d,50a21d24-733d-467f-9267-b3025c5621af,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
-0421a45d-8cee-4bee-9112-78a94f03d343,2b9ea943-17fd-407b-bcdd-97cdd1fbc350,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
-b9b2593e-ea79-4da4-9ddd-052d26b2da10,2b9ea943-17fd-407b-bcdd-97cdd1fbc350,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
-e4d887d0-5486-4639-9dac-c45b1ecd2de2,2b9ea943-17fd-407b-bcdd-97cdd1fbc350,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,4.0
-304b6994-6f3b-47e6-a1ed-c46b810c59bc,2b9ea943-17fd-407b-bcdd-97cdd1fbc350,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
-03b86596-cbb4-4757-a8dc-2161e6dd0c93,7141489f-e39b-4821-9092-bba3d5c478d5,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-8b17857d-a418-43c3-94ba-3b17690df018,7141489f-e39b-4821-9092-bba3d5c478d5,Frank's Quality Produce,Produce,3.0,,"ONION, ITALIAN RED",0.99,2.97,2.0
-a25ffe3d-bcd9-48e9-932a-da2fe52c7bb1,7141489f-e39b-4821-9092-bba3d5c478d5,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,3.0
-460f702d-1ea1-46e8-8af5-0efca2386bb6,7141489f-e39b-4821-9092-bba3d5c478d5,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,4.0
-d69c930e-8761-48ca-9455-c8e1924abbcc,d4041abb-4aad-4040-9b84-1fc2d40eb5cb,Frank's Quality Produce,Produce,5.0,,"TOMATO, ROMA",1.99,9.95,2.0
-0f480ff9-fe35-44dc-8c1b-ef772408bb78,d4041abb-4aad-4040-9b84-1fc2d40eb5cb,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-14d1f78e-ce80-406e-96ad-cfa77a5c4ca7,d4041abb-4aad-4040-9b84-1fc2d40eb5cb,Frank's Quality Produce,Produce,5.0,,"ONION, ITALIAN RED",0.99,4.95,4.0
-65f4abd7-4c3c-454d-8394-94424963a006,01658540-c80a-401f-b6f4-78f255f0433e,Frank's Quality Produce,Produce,5.0,,"TOMATO, ROMA",1.99,9.95,2.0
-86bde4ea-a4eb-4ae3-9ade-5e20d9f3bc2a,01658540-c80a-401f-b6f4-78f255f0433e,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-a1d0bc7f-d62f-4a79-bd07-d7ecd9deb81c,01658540-c80a-401f-b6f4-78f255f0433e,Frank's Quality Produce,Produce,5.0,,"ONION, ITALIAN RED",0.99,4.95,4.0
-2ba9e2a2-deb5-473e-9460-4c7e16f6682e,8675ac1f-6dfd-408f-83da-24d490029303,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-974c8987-66d7-4006-9787-e4a83636e85c,8675ac1f-6dfd-408f-83da-24d490029303,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-31b29b71-0aeb-4b76-a274-55ca45df3273,8675ac1f-6dfd-408f-83da-24d490029303,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-94f27ea3-471a-4e35-91d2-37224bd699fd,17abb090-37bf-4354-9715-36c3cf288045,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-f7d56a21-1882-43f9-b110-e47456ee5615,17abb090-37bf-4354-9715-36c3cf288045,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-57127154-86dd-4679-bbca-e162ffe0d661,17abb090-37bf-4354-9715-36c3cf288045,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
-cbacfdc2-bced-457d-8898-6ef88cf3027d,4765e33d-ed64-48ec-9bce-1d7e672039ff,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-484007a8-7e54-48f4-98ea-05c64bfaadd1,4765e33d-ed64-48ec-9bce-1d7e672039ff,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-6f3a75f7-18ae-4079-b3c9-72a439965ec6,4765e33d-ed64-48ec-9bce-1d7e672039ff,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
-132a6502-43eb-4e79-a66f-ad4240ba5f1f,beb343e7-1083-41b6-8616-6a6df59c580f,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-1e51042a-05a1-40d8-a5f2-04dacc6108ce,beb343e7-1083-41b6-8616-6a6df59c580f,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-8f8e1d42-edea-46ef-89db-d9330a391e7b,beb343e7-1083-41b6-8616-6a6df59c580f,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
-459e967c-5c19-4884-8ba0-eb2f3176c5a1,98f62323-3a63-43ae-82f7-8e447844badd,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-957dee34-d05f-4392-97f6-a3c4ae9e9f90,98f62323-3a63-43ae-82f7-8e447844badd,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-0c77b55c-a97a-4717-9983-d9cd1c33ffde,98f62323-3a63-43ae-82f7-8e447844badd,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
-ab998c36-3248-47df-9930-e736e7d91b1f,98f62323-3a63-43ae-82f7-8e447844badd,Frank's Quality Produce,Produce,7.0,,"ONION, ITALIAN RED",0.99,6.93,6.0
-b2dbdf59-8562-45fe-8156-8ee6781f9cef,062bd9c1-a49f-47bf-9a46-b0af8c1cccd4,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
-a6cc9119-d59b-4dc4-a9a8-7336226e02d2,062bd9c1-a49f-47bf-9a46-b0af8c1cccd4,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
-7a5eddd6-169a-427f-8945-e98efc958cf6,062bd9c1-a49f-47bf-9a46-b0af8c1cccd4,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
-4808787d-4b0a-4312-948e-9cc3a50d4e0b,062bd9c1-a49f-47bf-9a46-b0af8c1cccd4,Frank's Quality Produce,Produce,7.0,,"ONION, ITALIAN RED",0.99,6.93,6.0
-d263b5c6-7a75-4b57-aa4b-64eb456a7c1a,93d78888-f949-4be7-8837-bd0005cb7afe,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,1.0
-db47e2b4-85e0-4543-aa18-57648a6d4428,93d78888-f949-4be7-8837-bd0005cb7afe,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-4bc7a999-72ca-42ff-a9a3-3e2ba0053a2c,d1321155-5066-48f5-a47a-23b2c56a651c,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,1.0
-a484e1f4-5a13-46f8-9ce3-cad05226f154,d1321155-5066-48f5-a47a-23b2c56a651c,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
-7fb47f68-6d6e-44ff-ad0d-8ce632fcb278,8e959cb5-2eaf-4009-8c8d-1cf28689473a,Over the Moon Coffee Roasters,Paper Goods,11.0,Bag,5 LB Bag of Moonshadow,40.0,440.0,1.0
-fb8c9978-29a4-4d2a-a3af-bcc6d11f091e,8e959cb5-2eaf-4009-8c8d-1cf28689473a,Over the Moon Coffee Roasters,Paper Goods,4.0,bag,5 lb bag of Ecliptic,40.0,160.0,2.0
-fd9baec3-a4e8-4bcb-a656-38a7ef63f401,6c972886-7a15-41e2-b4f1-fbca4c95b824,Over the Moon Coffee Roasters,Dry Goods,13.0,Bag,5 LB Bag of Moonshadow,40.0,520.0,1.0
-7320c261-48e0-4721-a4f7-9c1b1c53245c,6c972886-7a15-41e2-b4f1-fbca4c95b824,Over the Moon Coffee Roasters,Beverage,1.0,bag,5 lb bag of Ecliptic,40.0,40.0,2.0
-7770f35c-e51e-434e-abf7-998773b47d59,34b58c56-96ed-422b-8042-ffe0c43cb1d3,Over the Moon Coffee Roasters,Dry Goods,13.0,Bag,5 LB Bag of Moonshadow,40.0,520.0,1.0
-d9e0ca51-6816-4506-909d-db2e95a760f7,34b58c56-96ed-422b-8042-ffe0c43cb1d3,Over the Moon Coffee Roasters,Dry Goods,1.0,bag,5 lb bag of Ecliptic,40.0,40.0,2.0
-5428d708-13a3-435c-9760-3105ee646676,0e07656b-c203-4418-af65-906311e1a37b,Over the Moon Coffee Roasters,Uncategorized,4.0,bag,5 lb bag of Ecliptic,40.0,160.0,1.0
-7ce2fe9a-27ee-4730-b2ab-82b91b77c8c8,0e07656b-c203-4418-af65-906311e1a37b,Over the Moon Coffee Roasters,Uncategorized,17.0,Bag,5 LB Bag of Moonshadow,40.0,680.0,2.0
-ee2b61b2-ede9-4c05-b345-a9762dd706aa,13769211-ac42-422c-9aa5-dbd0d12955d4,Over the Moon Coffee Roasters,Uncategorized,12.0,Bag,5 LB Bag of Moonshadow,40.0,480.0,1.0
-5383b7a5-e486-41d9-8fb4-97fc50fbe467,13769211-ac42-422c-9aa5-dbd0d12955d4,Over the Moon Coffee Roasters,Uncategorized,1.0,Bag,5 LB Bag of Decaf,40.0,40.0,2.0
-6435885f-62c8-4292-bb1f-6105c1d7e6b2,8423a805-d0b4-4dc2-a4b5-c04e886e6cc0,Over the Moon Coffee Roasters,Paper Goods,11.0,Bag,5 LB Bag of Moonshadow,40.0,440.0,1.0
-dbf20841-f6b5-4b4e-a9a5-f406833eb81d,8423a805-d0b4-4dc2-a4b5-c04e886e6cc0,Over the Moon Coffee Roasters,Paper Goods,4.0,bag,5 lb bag of Ecliptic,40.0,160.0,2.0
-aae51f24-b966-49ee-a01d-e04dd9898ae5,dc1fdc02-6dcb-45f7-8056-806d7aea570c,Over the Moon Coffee Roasters,Dry Goods,13.0,Bag,5 LB Bag of Moonshadow,40.0,520.0,1.0
-7b0ea1c9-c27a-4d3b-af52-34db422c422f,dc1fdc02-6dcb-45f7-8056-806d7aea570c,Over the Moon Coffee Roasters,Beverage,1.0,bag,5 lb bag of Ecliptic,40.0,40.0,2.0
-e51506de-79e5-404e-b115-156e392df433,2e8ce011-dfeb-4a7c-9cea-f4a7d310794b,Over the Moon Coffee Roasters,Dry Goods,13.0,Bag,5 LB Bag of Moonshadow,40.0,520.0,1.0
-cd8381f5-5505-443e-bf50-0b2e68b4b3cb,2e8ce011-dfeb-4a7c-9cea-f4a7d310794b,Over the Moon Coffee Roasters,Dry Goods,1.0,bag,5 lb bag of Ecliptic,40.0,40.0,2.0
-f1e70c09-7b28-4cdd-9de1-728b110a6bfa,a59491b5-deb8-47d2-8746-00099ebc1730,Over the Moon Coffee Roasters,Uncategorized,4.0,bag,5 lb bag of Ecliptic,40.0,160.0,1.0
-29f3e282-37ed-41d6-ad5e-04924f6811d7,a59491b5-deb8-47d2-8746-00099ebc1730,Over the Moon Coffee Roasters,Uncategorized,17.0,Bag,5 LB Bag of Moonshadow,40.0,680.0,2.0
-102fd7cb-a3dd-46e0-a8d4-b92003d590e8,c2c8d4bd-97bb-4a52-b3e7-3097aea26880,Over the Moon Coffee Roasters,Uncategorized,12.0,Bag,5 LB Bag of Moonshadow,40.0,480.0,1.0
-38035790-8c69-4a57-ba65-de1dcf134e23,c2c8d4bd-97bb-4a52-b3e7-3097aea26880,Over the Moon Coffee Roasters,Uncategorized,1.0,Bag,5 LB Bag of Decaf,40.0,40.0,2.0
+346363af-1d6f-4c57-a967-486333e039b7,39ea53be-4515-4d76-b677-a3a021c408be,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
+c512c5df-5a41-45a2-b212-4782a03824d9,39ea53be-4515-4d76-b677-a3a021c408be,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,2.0
+2015a2d0-7e75-4f04-a776-8a7db2ec1d7f,39ea53be-4515-4d76-b677-a3a021c408be,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
+e0ceeede-449c-489c-bfdf-56292cb9ca3e,39ea53be-4515-4d76-b677-a3a021c408be,Pacific Food Importers,Dry Goods,1.0,EA,CURRANTS  5 LB,29.203,29.2,4.0
+037e74c3-f3d9-4acb-be59-c8e297757a6f,39ea53be-4515-4d76-b677-a3a021c408be,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,5.0
+d23032c3-f2fd-4d99-a8e8-2104fc5d816d,39ea53be-4515-4d76-b677-a3a021c408be,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,28.587,28.59,6.0
+6e292a6a-6a36-4ef2-9777-8e363b4d7a73,39ea53be-4515-4d76-b677-a3a021c408be,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,7.0
+0687daba-5094-4523-9e6f-674e22a20b84,129db8a6-f21a-4d8a-8e12-a4456dade900,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
+8b9f891f-1eb7-40c5-b320-bf17fef382e1,129db8a6-f21a-4d8a-8e12-a4456dade900,Pacific Food Importers,Produce,1.0,CS,ONION MINCED  4 X 4.5 LB,113.333,113.33,2.0
+bc929adf-b6bb-493d-9b2f-98358cba385d,129db8a6-f21a-4d8a-8e12-a4456dade900,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,3.0
+a1319f1b-6018-417a-b77b-9f075fef07bb,129db8a6-f21a-4d8a-8e12-a4456dade900,Pacific Food Importers,Spices,2.0,CS,SALT KOSHER COARSE  9 X 3 LB,75.076,150.15,4.0
+b815d541-2d71-491b-8fc7-7c98984d1437,129db8a6-f21a-4d8a-8e12-a4456dade900,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,36.25,36.25,5.0
+88c8ace9-069a-4e16-a938-9a31c2d973fb,129db8a6-f21a-4d8a-8e12-a4456dade900,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST INSTANT RED LBL SAF  20 X,130.797,130.8,6.0
+38565f62-0d18-4a58-93c9-17fb5b09c028,2e2edcad-1cd9-4553-880a-5c695df5b461,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
+dd8ec704-5bb1-4246-a3cb-34d7bc2664bd,2e2edcad-1cd9-4553-880a-5c695df5b461,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,116.848,116.85,2.0
+ab72add3-07ee-4d8b-92d6-7d49d3e4a07e,2e2edcad-1cd9-4553-880a-5c695df5b461,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
+b784cac0-328e-455a-a035-9cac7b769af7,2e2edcad-1cd9-4553-880a-5c695df5b461,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.78,29.78,4.0
+8f49c38d-2220-43b7-b80f-77589649e47c,2e2edcad-1cd9-4553-880a-5c695df5b461,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,5.0
+308718db-c9ce-41bd-9481-39c690f78ed3,2e2edcad-1cd9-4553-880a-5c695df5b461,Pacific Food Importers,Dairy,1.0,CS,MILK OAT  12 X 32 OZ,39.948,39.95,6.0
+8073d786-fb15-4f4c-baf8-ffb8245ce2d4,52f6c849-2132-41db-a181-dccfce6f0381,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
+2f6a9b63-383b-421d-9b91-66b0a4ff460b,52f6c849-2132-41db-a181-dccfce6f0381,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE  25 LB,25.101,25.1,2.0
+318dbdf3-d835-4be2-9717-aa27ac84f2c2,52f6c849-2132-41db-a181-dccfce6f0381,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.783,29.78,3.0
+dc70af06-68b9-482f-87a0-544287d8d9d8,52f6c849-2132-41db-a181-dccfce6f0381,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,4.0
+f175e3f5-dc25-421b-83de-f8d07a01c943,52f6c849-2132-41db-a181-dccfce6f0381,Pacific Food Importers,Spices,1.0,CS,POPPY SEED  4 X 5.5 LB,96.0,96.0,5.0
+dcdc707f-dcfe-40e3-9488-fc28e3eab2cf,1917639c-2635-431d-8b75-ca8a772958ef,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
+0d15e063-8b61-4e15-a176-df261784af68,1917639c-2635-431d-8b75-ca8a772958ef,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,35.383,35.38,2.0
+f5cdcb82-ac9a-470a-87cd-768b5d0c6ec9,1917639c-2635-431d-8b75-ca8a772958ef,Pacific Food Importers,Condiments,1.0,CS,TAHINI EXTRA  12 X 454 GRM,57.776,57.78,3.0
+55346f34-f81e-44af-aa85-21487afe6e05,1917639c-2635-431d-8b75-ca8a772958ef,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
+d3e7d91b-5a7c-4dd0-a7e4-fe6497277790,1917639c-2635-431d-8b75-ca8a772958ef,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,5.0
+46200445-dc46-4198-ba5d-3640b5f13a90,bb38164b-3026-435c-9b74-050b2e8b3ab2,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
+64c94f44-5786-41eb-aea6-c511dfad8986,bb38164b-3026-435c-9b74-050b2e8b3ab2,Pacific Food Importers,Cooking Aids,1.0,CS,PAN SPRAY PREMIUM  6 X 14 OZ,34.038,34.04,2.0
+e289a098-4679-438f-bf61-6091658dc28a,bb38164b-3026-435c-9b74-050b2e8b3ab2,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,75.076,75.08,3.0
+c9e69f1c-dd1c-48ec-b04f-781774a2c2ff,bb38164b-3026-435c-9b74-050b2e8b3ab2,Pacific Food Importers,Produce,1.0,CS,ONION MINCED  4 X 4.5 LB,104.0,104.0,4.0
+1baacf19-bec3-44f8-9147-f8e0263a9bfd,bb38164b-3026-435c-9b74-050b2e8b3ab2,Pacific Food Importers,Produce,1.0,CS,GARLIC MINCED  4 X 6 LB,112.0,112.0,5.0
+79f1cfa4-e33a-4b2a-97fe-587e87f882e3,bb38164b-3026-435c-9b74-050b2e8b3ab2,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,6.0
+7ad713c6-9d5d-4e03-bf4e-95c699b4f4cc,bb38164b-3026-435c-9b74-050b2e8b3ab2,Pacific Food Importers,Dairy,1.0,CS,MILK OAT  12 X 32 OZ,39.948,39.95,8.0
+9954aca7-fb3a-4522-abf3-233eadd4cc37,bb38164b-3026-435c-9b74-050b2e8b3ab2,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,9.0
+f9bf3467-7f8b-48b0-a016-cddd172e3b3d,8d9cb2f7-2cce-41ef-97f3-05652b90672a,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
+251833bd-b8e1-482d-95d2-322fae9fdaed,8d9cb2f7-2cce-41ef-97f3-05652b90672a,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,100.35,100.35,2.0
+1b4ec62a-48cb-4708-a83f-09700e0003bb,8d9cb2f7-2cce-41ef-97f3-05652b90672a,Pacific Food Importers,Dairy,2.0,EA,HALF & HALF  QT,2.665,5.33,3.0
+dcae6763-20aa-4d52-901e-c51ebf6ee0c7,8d9cb2f7-2cce-41ef-97f3-05652b90672a,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE XL  10 x 100,35.361,35.36,4.0
+fbcbbe17-50cf-4c13-9eae-db36ec0bc7d8,e8db1617-4fc3-45ca-a83d-9de02953f752,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
+de1d698a-bf84-4588-a056-086bc8ff1561,e8db1617-4fc3-45ca-a83d-9de02953f752,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,119.177,119.18,2.0
+db1b18fa-b005-4296-8aa3-ab7a2f862a10,e8db1617-4fc3-45ca-a83d-9de02953f752,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
+904e5a5f-f1f7-4e30-956a-cb11c7b4b25a,e8db1617-4fc3-45ca-a83d-9de02953f752,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
+cdb1b285-8639-4db7-9ad7-24532ee6e803,e8db1617-4fc3-45ca-a83d-9de02953f752,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,5.0
+09750c05-cdec-45d8-9da7-e95682bb43f3,e8db1617-4fc3-45ca-a83d-9de02953f752,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,6.0
+fb2be4e7-ac8a-4901-aa86-e3414017bf64,c4474caa-f4a4-41ab-af1c-3770638efd2d,Pacific Food Importers,Dry Goods,12.0,CS,FLOUR POWER  50 LB,24.063,288.76,1.0
+9f9ac9e1-976e-45a5-a790-9023deafe30e,c4474caa-f4a4-41ab-af1c-3770638efd2d,Pacific Food Importers,Baking Ingredients,1.0,BG,MALT POWDER DIASTATIC+  50 LB,119.177,119.18,2.0
+8602aa94-d726-47a5-bec9-e6a1a4c68dc8,c4474caa-f4a4-41ab-af1c-3770638efd2d,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,3.0
+fc7305b8-7d0c-486a-988c-67a2c8f1c778,c4474caa-f4a4-41ab-af1c-3770638efd2d,Pacific Food Importers,Dairy,3.0,CS,MILK OAT  12 X 32 OZ,39.948,119.84,4.0
+015fc038-2454-46d6-8b7d-da3ca1da7cbe,c4474caa-f4a4-41ab-af1c-3770638efd2d,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,5.0
+ab32b18a-10b5-4bce-ab9c-e43912d55897,c4474caa-f4a4-41ab-af1c-3770638efd2d,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,6.0
+f68c8ec8-24ed-4100-82d6-2f9c7bad25c1,8937cf13-563e-41dc-aa04-a741a0dc00ca,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
+18c997b8-2b87-4c13-8d43-8fb7045a1623,8937cf13-563e-41dc-aa04-a741a0dc00ca,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR A/P UNBLEACHED  50 LB,21.582,21.58,2.0
+204795e0-c245-4d08-8099-9bc5087de8ab,8937cf13-563e-41dc-aa04-a741a0dc00ca,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR MEDIUM RYE  50 LB,42.8,42.8,3.0
+bccf709e-d324-4705-ac3b-7c561a2332ed,8937cf13-563e-41dc-aa04-a741a0dc00ca,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE***  25 LB,25.861,25.86,4.0
+ca2d57cf-921a-4cd5-936e-f7a5ec4ff965,8937cf13-563e-41dc-aa04-a741a0dc00ca,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST FRESH +  20 X 16 OZ,54.62,54.62,5.0
+4cdc9cf6-3a66-4784-8ef6-598967a3d34c,8937cf13-563e-41dc-aa04-a741a0dc00ca,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,71.658,71.66,6.0
+c9134fc1-074d-4653-9bd3-91a40b64c759,8937cf13-563e-41dc-aa04-a741a0dc00ca,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,7.0
+d1d2799c-c4c6-4fd8-805e-457849d36762,8937cf13-563e-41dc-aa04-a741a0dc00ca,Pacific Food Importers,Dairy,0.5,CS,EGGS LIQUID  2 X 20 LB,100.35,50.18,8.0
+1582b29a-fe65-4789-9a3a-0a96ddc07d8f,95013406-1884-43e2-9502-9904003136b2,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
+0fff695f-c45e-4bb1-bc80-d01b7f255d50,95013406-1884-43e2-9502-9904003136b2,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR A/P UNBLEACHED  50 LB,21.582,21.58,2.0
+9956c79a-debd-4e18-9e1a-ce687b606c6e,95013406-1884-43e2-9502-9904003136b2,Pacific Food Importers,Dry Goods,1.0,CS,FLOUR MEDIUM RYE  50 LB,42.8,42.8,3.0
+8c84a281-c9f1-4393-b406-4c9c19e7b74c,95013406-1884-43e2-9502-9904003136b2,Pacific Food Importers,Dry Goods,1.0,CS,CORNMEAL YELLOW FINE***  25 LB,25.861,25.86,4.0
+b71bcb22-1cf3-49ab-9bf1-f355d1a72889,95013406-1884-43e2-9502-9904003136b2,Pacific Food Importers,Baking Ingredients,1.0,CS,YEAST FRESH +  20 X 16 OZ,54.62,54.62,5.0
+92bce38f-dc4e-441b-a083-2879a29a9344,95013406-1884-43e2-9502-9904003136b2,Pacific Food Importers,Spices,1.0,CS,SALT KOSHER COARSE  9 X 3 LB,71.658,71.66,6.0
+d5e2f178-b4b5-4615-8ff3-e95043ee179d,95013406-1884-43e2-9502-9904003136b2,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,7.0
+a3ba0fd6-59bd-4877-b5d0-0827fe584cde,95013406-1884-43e2-9502-9904003136b2,Pacific Food Importers,Dairy,0.5,CS,EGGS LIQUID  2 X 20 LB,100.35,50.18,8.0
+6f10f017-ca54-46e7-9486-2f54d5a7ccd8,23613ac6-9bdd-4d07-aca8-c01d18c41bef,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
+a0df0d54-1122-4f2f-90cd-e22089df7007,23613ac6-9bdd-4d07-aca8-c01d18c41bef,Pacific Food Importers,Produce,1.0,CS,JALAPENO SLICED  6 #10,51.329,51.33,2.0
+8060b933-08f0-4d27-97a4-d5b5d29e096c,23613ac6-9bdd-4d07-aca8-c01d18c41bef,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR BROWN  25 LB,26.778,26.78,3.0
+cb584eeb-caf6-4a4c-921b-0040941fc1f0,23613ac6-9bdd-4d07-aca8-c01d18c41bef,Pacific Food Importers,Dairy,2.0,CS,MILK OAT  12 X 32 OZ,39.948,79.9,4.0
+3bc1df21-2c2f-4d67-b922-6dd6ddceafde,23613ac6-9bdd-4d07-aca8-c01d18c41bef,Pacific Food Importers,Dairy,2.0,CS,EGGS LIQUID  2 X 20 LB,100.35,200.7,5.0
+8a7d6cc0-9703-45dc-8336-99339441133b,671532db-23c0-4293-ba7c-e6fbbb9841a6,Pacific Food Importers,Dry Goods,8.0,CS,FLOUR POWER  50 LB,24.063,192.5,1.0
+abb555b3-2ff8-4cb3-a46d-f1f1b1195983,671532db-23c0-4293-ba7c-e6fbbb9841a6,Pacific Food Importers,Dry Goods,1.0,CS,SESAME SEEDS WHITE+  4 X 5 LB,80.25,80.25,2.0
+f5a616b7-a3b4-4cbf-914f-38fecaa3946a,671532db-23c0-4293-ba7c-e6fbbb9841a6,Pacific Food Importers,Dairy,1.0,CS,MILK WHOLE GALLON RED CAP  4,17.999,18.0,3.0
+3927c2cd-800b-4908-92af-eeb5e8b84ff1,671532db-23c0-4293-ba7c-e6fbbb9841a6,Pacific Food Importers,Dry Goods,1.0,CS,SUGAR GRANULATED CANE  25 LB,29.147,29.15,4.0
+fac63932-b70c-47f3-96d1-b3cb44537cf1,671532db-23c0-4293-ba7c-e6fbbb9841a6,Pacific Food Importers,Dairy,2.0,EA,HALF & HALF  QT,2.637,5.27,5.0
+8871b9f7-8307-4c3f-abc9-eea58bbadc6b,671532db-23c0-4293-ba7c-e6fbbb9841a6,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE MEDIUM  10 x 100,29.771,29.77,6.0
+73b54cae-ba26-4e77-ae09-57f3bbb4113d,ed8338d9-d357-445e-a071-927510bb5878,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
+861e571e-a0c0-40cc-9ab9-df89e0be9a33,ed8338d9-d357-445e-a071-927510bb5878,Pacific Food Importers,Dry Goods,1.0,EA,CURRANTS  5 LB,16.588,16.59,2.0
+7071ac22-caab-45db-8fc8-3bd7838379f9,ed8338d9-d357-445e-a071-927510bb5878,Pacific Food Importers,Paper Goods,1.0,CS,GLOVE NITRILE LARGE  10 x 100,29.774,29.77,3.0
+e009a0f0-7e3d-4001-8ceb-4e5b5f8daa67,aac0abcd-004f-4af4-9628-6787c274b675,Pacific Food Importers,Dry Goods,10.0,CS,FLOUR POWER  50 LB,24.063,240.63,1.0
+f164f7c6-47ba-46d0-b497-e924c9ea9a4e,aac0abcd-004f-4af4-9628-6787c274b675,Pacific Food Importers,Dairy,1.0,CS,ALMOND BARISTA BLEND  12 X 32,41.139,41.14,2.0
+ec698586-df30-4f3c-846f-97ca818b809c,aac0abcd-004f-4af4-9628-6787c274b675,Pacific Food Importers,Dairy,1.0,CS,EGGS LIQUID  2 X 20 LB,95.225,95.23,3.0
+d47db36e-01b7-49b0-b105-db58d70e4f9f,aac0abcd-004f-4af4-9628-6787c274b675,Pacific Food Importers,Beverage,2.0,CS,LIMONATA CANS  24 X 11 OZ,27.81,55.62,4.0
+f2cc8e71-02e5-4622-93c5-0a716766ddd0,e1a45c0e-e3cb-45de-a4f9-2a71054d82a6,Frank's Quality Produce,Produce,8.0,,"TOMATO, ROMA",1.99,15.92,1.0
+b8705829-f2ef-4d92-92a4-88b74456dec1,e1a45c0e-e3cb-45de-a4f9-2a71054d82a6,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,2.0
+4d444a79-279b-4476-b5ea-5c3e5351f318,e1a45c0e-e3cb-45de-a4f9-2a71054d82a6,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
+407082b1-c61d-4cd9-9a37-7c24b091a44d,e1a45c0e-e3cb-45de-a4f9-2a71054d82a6,Frank's Quality Produce,Produce,10.0,,"ONION, WHITE",0.99,9.9,4.0
+25a56a8a-93ba-4777-bba0-47697499160a,e1a45c0e-e3cb-45de-a4f9-2a71054d82a6,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,5.0
+a6ced244-d164-4935-bcf2-476a264c3bc7,e1a45c0e-e3cb-45de-a4f9-2a71054d82a6,Frank's Quality Produce,Produce,1.0,,"AVOCADO,",39.0,39.0,6.0
+c0176301-fade-4623-8013-f310cd1a821f,b7a3cf2c-7748-46df-ac41-8921a9c16f30,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
+33a7345e-c630-4f97-98cd-d1b49f331a2c,b7a3cf2c-7748-46df-ac41-8921a9c16f30,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,3.0
+56d87278-75bf-4ffc-b62b-5f4840a1f05a,b7a3cf2c-7748-46df-ac41-8921a9c16f30,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,4.0
+d6b624d2-f07a-47d4-830a-442e82ed7a21,aedaed65-8a72-4769-aa3a-734f8ef1ada6,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
+9f4a0de8-e803-43a2-8179-9ef37ba0968d,aedaed65-8a72-4769-aa3a-734f8ef1ada6,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
+6e7db37d-86fb-4069-a247-2dfb699853b9,aedaed65-8a72-4769-aa3a-734f8ef1ada6,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
+5be4d7af-f340-475c-ace1-2259d45afa38,aedaed65-8a72-4769-aa3a-734f8ef1ada6,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
+cd6349e8-c41e-4958-8bea-3caa29cdeee7,30f86e37-467f-48de-87cf-434684fa9429,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+fca50530-3305-424d-8f55-4f79f0feb047,30f86e37-467f-48de-87cf-434684fa9429,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
+9ffd83d1-3539-4cbf-baf5-5e8cc751c6bf,30f86e37-467f-48de-87cf-434684fa9429,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
+9edcc753-f3af-4f68-baba-1fa0b6558371,30f86e37-467f-48de-87cf-434684fa9429,Frank's Quality Produce,Produce,2.0,,"HERBS, DILL BABY",11.0,22.0,5.0
+c9bcb781-fcb5-4ed5-b204-323e0675573b,7e7449e4-1c6c-4ffb-b936-2d2c09b3153b,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+bcb7f1fe-de7c-4839-a9b7-abad89487b4e,7e7449e4-1c6c-4ffb-b936-2d2c09b3153b,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
+97722a37-8c74-4a32-b04a-f5760a94b36f,7e7449e4-1c6c-4ffb-b936-2d2c09b3153b,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
+c8f28f6e-0f56-448a-b36c-af13142dbbdc,7e7449e4-1c6c-4ffb-b936-2d2c09b3153b,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
+53c35870-547e-4099-9402-1796d29912bc,681e3e66-223c-4265-a5c4-bb6ec406d9b0,Frank's Quality Produce,Produce,10.0,,"TOMATO, ROMA",1.99,19.9,1.0
+f1c40803-4d00-4e3e-a7cb-325984ad9a25,681e3e66-223c-4265-a5c4-bb6ec406d9b0,Frank's Quality Produce,Produce,6.0,,"ONION, ITALIAN RED",0.99,5.94,3.0
+09dcadbb-c988-4e23-9e75-c4a5138cb117,681e3e66-223c-4265-a5c4-bb6ec406d9b0,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,4.0
+317fccaf-d60b-434a-a66b-065a8db960d6,681e3e66-223c-4265-a5c4-bb6ec406d9b0,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,5.0
+2c50ef40-11eb-48b9-95e3-24434e52d3c4,fe2be236-c30c-4b83-8c9f-b6b1cea1691f,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+cf1c59f7-fe02-4acd-bb6e-acb0e64eee69,fe2be236-c30c-4b83-8c9f-b6b1cea1691f,Frank's Quality Produce,Produce,3.0,,"ONION, ITALIAN RED",0.99,2.97,2.0
+1d1a1322-28bf-4048-9b00-5d9ba112ca80,fe2be236-c30c-4b83-8c9f-b6b1cea1691f,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,3.0
+4687bc62-06ea-4173-b203-0a9d3a0bd6cc,fe2be236-c30c-4b83-8c9f-b6b1cea1691f,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,4.0
+4b9dfb59-10a3-4c7d-a36a-d7761ee4f184,d7d6aed1-3cb2-41cf-9b7b-3e438430b1d4,Frank's Quality Produce,Produce,5.0,,"TOMATO, ROMA",1.99,9.95,2.0
+6e7926be-eb9b-4a88-a80c-b402cdf063f9,d7d6aed1-3cb2-41cf-9b7b-3e438430b1d4,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
+be7352af-f017-4906-9ed3-84f3a0a77ebd,d7d6aed1-3cb2-41cf-9b7b-3e438430b1d4,Frank's Quality Produce,Produce,5.0,,"ONION, ITALIAN RED",0.99,4.95,4.0
+2a04a799-e880-4f7e-aba1-537a6ca5982e,dd727d2f-160a-4c5f-a909-92387bf8d3d7,Frank's Quality Produce,Produce,5.0,,"TOMATO, ROMA",1.99,9.95,2.0
+091606e9-4507-4c49-9a15-2d9a742ffb7a,dd727d2f-160a-4c5f-a909-92387bf8d3d7,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
+543c30cb-7dc3-4ac6-bd12-e691498833b3,dd727d2f-160a-4c5f-a909-92387bf8d3d7,Frank's Quality Produce,Produce,5.0,,"ONION, ITALIAN RED",0.99,4.95,4.0
+2d9ea309-0e58-43fe-9bb0-93b81ca867b5,db2065fc-9105-4384-b923-ea9bb3f7f39c,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+17b6d68f-e62f-435f-9a57-b87c9a4f38d6,db2065fc-9105-4384-b923-ea9bb3f7f39c,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
+e2809fc2-927a-4d7f-8028-511a99c5bb57,db2065fc-9105-4384-b923-ea9bb3f7f39c,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
+dc167980-f452-4bac-be3c-71d42c10ab18,4e52a859-d7d6-457c-8fe6-298903aae406,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+0bd381c4-7b07-4ab5-ab66-6f94cf92b13c,4e52a859-d7d6-457c-8fe6-298903aae406,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
+927a9321-7c68-46ee-97ea-ff4a083c2579,4e52a859-d7d6-457c-8fe6-298903aae406,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,4.0
+9f3cb531-d877-482e-95bc-f5f85a95e7b3,2d4035eb-ba19-47e5-9890-0498f639dc01,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+db60e685-a8ad-430c-89b5-1bef8e8a61c8,2d4035eb-ba19-47e5-9890-0498f639dc01,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
+ea60be93-1532-4902-bf56-d11c84a80ecd,2d4035eb-ba19-47e5-9890-0498f639dc01,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
+58d312c3-fdeb-4d9d-8ec0-7a093c8a0ac4,639bb3dc-0354-4def-8b20-894c05b0aaa7,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+119b7f4d-5928-4b81-8214-cdf46615d04b,639bb3dc-0354-4def-8b20-894c05b0aaa7,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
+d9b59386-888e-4fb0-b730-4f136d37cf8c,639bb3dc-0354-4def-8b20-894c05b0aaa7,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
+d1573b34-35e0-4d04-97ac-f69a09bd0e59,cb0c3577-0eb8-4f91-8773-9a8d92274e31,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+00b86121-79d0-41ca-8e5f-9c9e59dc36ca,cb0c3577-0eb8-4f91-8773-9a8d92274e31,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
+6882380f-0db8-4797-97bd-f6d039747f29,cb0c3577-0eb8-4f91-8773-9a8d92274e31,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
+16181c40-03f4-4492-b5d2-921467f8ec19,cb0c3577-0eb8-4f91-8773-9a8d92274e31,Frank's Quality Produce,Produce,7.0,,"ONION, ITALIAN RED",0.99,6.93,6.0
+729f9049-a9ff-45c2-b86d-0cf56bab0c06,a8a2c69c-940c-4d6f-a3f8-8a7ebf33623e,Frank's Quality Produce,Produce,12.0,,"TOMATO, ROMA",1.99,23.88,1.0
+d9e935e2-a481-4719-be40-8663fe350cc7,a8a2c69c-940c-4d6f-a3f8-8a7ebf33623e,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,2.0
+5c49cb0d-9412-40f8-b112-495b97da5b8e,a8a2c69c-940c-4d6f-a3f8-8a7ebf33623e,Frank's Quality Produce,Produce,1.0,,"ONION, GREEN",10.0,10.0,5.0
+ab8c67b1-6bed-481a-bed8-042bc2009e70,a8a2c69c-940c-4d6f-a3f8-8a7ebf33623e,Frank's Quality Produce,Produce,7.0,,"ONION, ITALIAN RED",0.99,6.93,6.0
+60d25100-b018-41a0-8676-8e409febfa4c,36a6fc8c-23dc-4784-8517-1292ab84f471,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,1.0
+ac94d7e2-a8bf-4611-8a25-8bc56bd59aa8,36a6fc8c-23dc-4784-8517-1292ab84f471,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
+5fc1ef04-87d0-40a7-a626-cd5c6c9c063e,69308089-7dad-4dd6-bfa7-9b586c57dc15,Frank's Quality Produce,Produce,2.0,,"ONION, GREEN",10.0,20.0,1.0
+c6b3dbde-4aae-40f6-a16c-147670f8df03,69308089-7dad-4dd6-bfa7-9b586c57dc15,Frank's Quality Produce,Produce,1.0,,"HERBS, DILL BABY",11.0,11.0,3.0
+e2df585f-d90b-4e27-9ba0-9c438360fd14,fbad55a8-ae21-47f6-ba29-201d48aec9ee,Over the Moon Coffee Roasters,Coffee & Tea,11.0,Bag,5 LB Bag of Moonshadow,40.0,440.0,1.0
+b209cd58-869a-496c-948d-dfa8f268c380,fbad55a8-ae21-47f6-ba29-201d48aec9ee,Over the Moon Coffee Roasters,Coffee & Tea,4.0,bag,5 lb bag of Ecliptic,40.0,160.0,2.0
+e3d2183c-c3a8-4070-a281-9704fb5eb42d,2eb98b9d-fd10-41f7-8aaf-4fbd94a5dac3,Over the Moon Coffee Roasters,Coffee & Tea,13.0,Bag,5 LB Bag of Moonshadow,40.0,520.0,1.0
+581dc8db-ce11-43a9-b9f9-9b444d31d1ed,2eb98b9d-fd10-41f7-8aaf-4fbd94a5dac3,Over the Moon Coffee Roasters,Coffee & Tea,1.0,bag,5 lb bag of Ecliptic,40.0,40.0,2.0
+d672e638-7f46-485f-be86-546344b03b60,bc89455d-2a4d-4cc5-b85e-87cda55dcf4a,Over the Moon Coffee Roasters,Coffee & Tea,13.0,Bag,5 LB Bag of Moonshadow,40.0,520.0,1.0
+a9d2f84b-fccd-41c3-a077-4773fc45c8fe,bc89455d-2a4d-4cc5-b85e-87cda55dcf4a,Over the Moon Coffee Roasters,Coffee & Tea,1.0,bag,5 lb bag of Ecliptic,40.0,40.0,2.0
+592527dd-d192-4a1a-8bb7-a8e3630f3a86,02688da4-b707-4a3f-9abe-334168ab5516,Over the Moon Coffee Roasters,Coffee & Tea,4.0,bag,5 lb bag of Ecliptic,40.0,160.0,1.0
+1d464d7d-64c9-4ded-971c-277443da5d57,02688da4-b707-4a3f-9abe-334168ab5516,Over the Moon Coffee Roasters,Coffee & Tea,17.0,Bag,5 LB Bag of Moonshadow,40.0,680.0,2.0
+d85d35ad-03df-4a7d-9df4-03179a650d21,65b87587-1332-47eb-9ad6-53dc8bc00d81,Over the Moon Coffee Roasters,Coffee & Tea,12.0,Bag,5 LB Bag of Moonshadow,40.0,480.0,1.0
+67dbb8ac-5db0-4ccf-82f9-e0d49cb3d69e,65b87587-1332-47eb-9ad6-53dc8bc00d81,Over the Moon Coffee Roasters,Coffee & Tea,1.0,Bag,5 LB Bag of Decaf,40.0,40.0,2.0

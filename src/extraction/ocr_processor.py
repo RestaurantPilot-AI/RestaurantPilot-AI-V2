@@ -241,38 +241,42 @@ class OCRRouter:
         """
         try:
             # STEP 1: Gateway Check - Extract metrics
+            # if CONFIG['enable_logging']:
+            #     print(f"\n🔍 Gateway Check: {os.path.basename(image_path)}")
+            
+            # metrics = ImageProcessor.get_image_metrics(image_path)
+            # ImageProcessor.log_metrics(metrics, image_path)
+            
+            # # STEP 2: Decision Logic - Evaluate quality
+            # evaluation = self.evaluate_image_quality(metrics)
+            
+            # # STEP 3: Route to OCR engine
+            # if evaluation['is_high_quality']:
+            #     # PATH A: High quality → Fast Tesseract
+            #     if self.tesseract_available:
+            #         if CONFIG['enable_logging']:
+            #             print("✓ Route: TESSERACT (Fast Path)")
+            #         text = self._run_tesseract(image_path)
+            #         self.routing_stats['tesseract'] += 1
+            #         route = 'tesseract'
+            #     else:
+            #         print("⚠ Tesseract unavailable, falling back to EasyOCR")
+            #         text = self._run_easyocr(image_path)
+            #         self.routing_stats['easyocr'] += 1
+            #         route = 'easyocr'
+            # else:
+            #     # PATH B: Low quality → Accurate EasyOCR
+            #     if CONFIG['enable_logging']:
+            #         print("✓ Route: EASYOCR (Accuracy Path)")
+            #     text = self._run_easyocr(image_path)
+            #     self.routing_stats['easyocr'] += 1
+            #     route = 'easyocr'
             if CONFIG['enable_logging']:
-                print(f"\n🔍 Gateway Check: {os.path.basename(image_path)}")
-            
-            metrics = ImageProcessor.get_image_metrics(image_path)
-            ImageProcessor.log_metrics(metrics, image_path)
-            
-            # STEP 2: Decision Logic - Evaluate quality
-            evaluation = self.evaluate_image_quality(metrics)
-            
-            # STEP 3: Route to OCR engine
-            if evaluation['is_high_quality']:
-                # PATH A: High quality → Fast Tesseract
-                if self.tesseract_available:
-                    if CONFIG['enable_logging']:
-                        print("✓ Route: TESSERACT (Fast Path)")
-                    text = self._run_tesseract(image_path)
-                    self.routing_stats['tesseract'] += 1
-                    route = 'tesseract'
-                else:
-                    print("⚠ Tesseract unavailable, falling back to EasyOCR")
-                    text = self._run_easyocr(image_path)
-                    self.routing_stats['easyocr'] += 1
-                    route = 'easyocr'
-            else:
-                # PATH B: Low quality → Accurate EasyOCR
-                if CONFIG['enable_logging']:
-                    print("✓ Route: EASYOCR (Accuracy Path)")
+                print("✓ Route: EASYOCR (Accuracy Path)")
                 text = self._run_easyocr(image_path)
                 self.routing_stats['easyocr'] += 1
                 route = 'easyocr'
-            
-            return text, route, metrics, evaluation
+            return text, route
         
         except Exception as e:
             return f"ERROR: {str(e)}", "error", {}, {}
@@ -355,7 +359,7 @@ def extract_text_from_ocr(image_path: str) -> Optional[Tuple[str, str, int, int,
         filename = os.path.basename(image_path)
         extraction_timestamp = datetime.now().isoformat()
         
-        extracted_text, route, metrics, evaluation = ocr_router_instance.route_image(image_path)
+        extracted_text, route = ocr_router_instance.route_image(image_path)
         
         if route == "error":
             print(f"ERROR: OCR processing failed for {image_path}. Details: {extracted_text}")
@@ -363,9 +367,9 @@ def extract_text_from_ocr(image_path: str) -> Optional[Tuple[str, str, int, int,
         
         print(f"DEBUG: OCR Processor called for {image_path}. Route: {route}")
         
-        if CONFIG['enable_logging']:
-            ocr_router_instance.print_stats()
-            ImageProcessor.log_metrics(metrics, image_path)
+        # if CONFIG['enable_logging']:
+        #     ocr_router_instance.print_stats()
+        #     ImageProcessor.log_metrics(metrics, image_path)
         
         # specific requirement: page_count is fixed at 1
         page_count = 1

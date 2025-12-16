@@ -194,135 +194,135 @@ def process_single_file(uploaded_file, temp_dir: Path) -> Dict[str, Any]:
     return result
 
 
-def generate_demo_data():
-    """Generate dummy invoice data for demonstration."""
-    from bson import ObjectId
+# def generate_demo_data():
+#     """Generate dummy invoice data for demonstration."""
+#     from bson import ObjectId
     
-    # Get vendor IDs from database
-    vendors = list(db["vendors"].find({}, {"_id": 1, "name": 1}).limit(3))
-    if not vendors:
-        # Create placeholder vendor IDs
-        vendors = [
-            {"_id": ObjectId(), "name": "Demo Vendor 1"},
-            {"_id": ObjectId(), "name": "Demo Vendor 2"},
-        ]
+#     # Get vendor IDs from database
+#     vendors = list(db["vendors"].find({}, {"_id": 1, "name": 1}).limit(3))
+#     if not vendors:
+#         # Create placeholder vendor IDs
+#         vendors = [
+#             {"_id": ObjectId(), "name": "Demo Vendor 1"},
+#             {"_id": ObjectId(), "name": "Demo Vendor 2"},
+#         ]
     
-    demo_invoices = [
-        {
-            "filename": "demo_invoice_001.pdf",
-            "status": "success",
-            "message": "Extraction successful",
-            "invoice_df": pd.DataFrame({
-                "filename": ["demo_invoice_001.pdf"],
-                "invoice_number": ["INV-2024-001"],
-                "invoice_date": [datetime(2024, 12, 1)],
-                "invoice_total_amount": [1245.80],
-                "vendor_id": [str(vendors[0]["_id"])],
-                "vendor_name": [vendors[0]["name"]],
-                "text_length": [1523],
-                "page_count": [2]
-            }),
-            "line_items_df": pd.DataFrame({
-                "description": ["Fresh Organic Tomatoes", "Premium Lettuce Mix", "Yellow Onions"],
-                "quantity": [25.0, 10.0, 50.0],
-                "unit": ["lb", "case", "lb"],
-                "unit_price": [3.49, 18.99, 0.89],
-                "line_total": [87.25, 189.90, 44.50]
-            }),
-            "extracted_text": "INVOICE\n\nBill To: Demo Restaurant\nInvoice Number: INV-2024-001\nDate: 12/01/2024\n\nITEM DESCRIPTION    QTY    UNIT    PRICE    TOTAL\nFresh Organic Tomatoes    25    lb    $3.49    $87.25\nPremium Lettuce Mix    10    case    $18.99    $189.90\nYellow Onions    50    lb    $0.89    $44.50\n\nSubtotal: $321.65\nTax: $25.73\nTOTAL: $1,245.80",
-            "vendor_id": str(vendors[0]["_id"]),
-            "vendor_name": vendors[0]["name"],
-            "is_duplicate": False,
-            "duplicate_id": None,
-            "extraction_failed": False
-        },
-        {
-            "filename": "demo_invoice_002.pdf",
-            "status": "success",
-            "message": "Extraction successful",
-            "invoice_df": pd.DataFrame({
-                "filename": ["demo_invoice_002.pdf"],
-                "invoice_number": ["INV-2024-002"],
-                "invoice_date": [datetime(2024, 12, 3)],
-                "invoice_total_amount": [875.45],
-                "vendor_id": [str(vendors[1]["_id"]) if len(vendors) > 1 else str(vendors[0]["_id"])],
-                "vendor_name": [vendors[1]["name"] if len(vendors) > 1 else vendors[0]["name"]],
-                "text_length": [1342],
-                "page_count": [1]
-            }),
-            "line_items_df": pd.DataFrame({
-                "description": ["Prime Ribeye Steak", "Chicken Breast", "Pork Tenderloin"],
-                "quantity": [15.0, 20.0, 10.0],
-                "unit": ["lb", "lb", "lb"],
-                "unit_price": [24.99, 6.99, 8.99],
-                "line_total": [374.85, 139.80, 89.90]
-            }),
-            "extracted_text": "INVOICE\n\nInvoice #: INV-2024-002\nDate: 12/03/2024\nVendor: Quality Meats Co.\n\nPrime Ribeye Steak    15 lb    $24.99    $374.85\nChicken Breast    20 lb    $6.99    $139.80\nPork Tenderloin    10 lb    $8.99    $89.90\n\nTotal Due: $875.45",
-            "vendor_id": str(vendors[1]["_id"]) if len(vendors) > 1 else str(vendors[0]["_id"]),
-            "vendor_name": vendors[1]["name"] if len(vendors) > 1 else vendors[0]["name"],
-            "is_duplicate": False,
-            "duplicate_id": None,
-            "extraction_failed": False
-        },
-        {
-            "filename": "demo_invoice_003.pdf",
-            "status": "partial",
-            "message": "Data extraction incomplete - manual review required",
-            "invoice_df": pd.DataFrame({
-                "filename": ["demo_invoice_003.pdf"],
-                "invoice_number": [""],
-                "invoice_date": [datetime.now()],
-                "invoice_total_amount": [0.0],
-                "vendor_id": [str(vendors[2]["_id"]) if len(vendors) > 2 else str(vendors[0]["_id"])],
-                "vendor_name": [vendors[2]["name"] if len(vendors) > 2 else vendors[0]["name"]],
-                "text_length": [892],
-                "page_count": [1]
-            }),
-            "line_items_df": pd.DataFrame({
-                "description": ["Whole Milk", "Cheddar Cheese"],
-                "quantity": [12.0, 8.0],
-                "unit": ["gal", "lb"],
-                "unit_price": [4.49, 7.99],
-                "line_total": [53.88, 63.92]
-            }),
-            "extracted_text": "INVOICE - Dairy Delight\n\nWhole Milk (Gallon)    12 gal    @ $4.49    $53.88\nCheddar Cheese Block    8 lb    @ $7.99    $63.92\n\nPlease remit payment within 30 days.",
-            "vendor_id": str(vendors[2]["_id"]) if len(vendors) > 2 else str(vendors[0]["_id"]),
-            "vendor_name": vendors[2]["name"] if len(vendors) > 2 else vendors[0]["name"],
-            "is_duplicate": False,
-            "duplicate_id": None,
-            "extraction_failed": True
-        },
-        {
-            "filename": "demo_invoice_004_duplicate.pdf",
-            "status": "duplicate",
-            "message": "Duplicate found: Invoice #INV-2024-001 already exists",
-            "invoice_df": pd.DataFrame({
-                "filename": ["demo_invoice_004_duplicate.pdf"],
-                "invoice_number": ["INV-2024-001"],
-                "invoice_date": [datetime(2024, 12, 1)],
-                "invoice_total_amount": [1245.80],
-                "vendor_id": [str(vendors[0]["_id"])],
-                "vendor_name": [vendors[0]["name"]],
-                "text_length": [1523],
-                "page_count": [2]
-            }),
-            "line_items_df": pd.DataFrame({
-                "description": ["Fresh Organic Tomatoes", "Premium Lettuce Mix"],
-                "quantity": [25.0, 10.0],
-                "unit": ["lb", "case"],
-                "unit_price": [3.49, 18.99],
-                "line_total": [87.25, 189.90]
-            }),
-            "extracted_text": "INVOICE (DUPLICATE DEMO)\n\nThis is a duplicate invoice for demonstration purposes.",
-            "vendor_id": str(vendors[0]["_id"]),
-            "vendor_name": vendors[0]["name"],
-            "is_duplicate": True,
-            "duplicate_id": "demo_duplicate_id",
-            "extraction_failed": False
-        }
-    ]
+#     demo_invoices = [
+#         {
+#             "filename": "demo_invoice_001.pdf",
+#             "status": "success",
+#             "message": "Extraction successful",
+#             "invoice_df": pd.DataFrame({
+#                 "filename": ["demo_invoice_001.pdf"],
+#                 "invoice_number": ["INV-2024-001"],
+#                 "invoice_date": [datetime(2024, 12, 1)],
+#                 "invoice_total_amount": [1245.80],
+#                 "vendor_id": [str(vendors[0]["_id"])],
+#                 "vendor_name": [vendors[0]["name"]],
+#                 "text_length": [1523],
+#                 "page_count": [2]
+#             }),
+#             "line_items_df": pd.DataFrame({
+#                 "description": ["Fresh Organic Tomatoes", "Premium Lettuce Mix", "Yellow Onions"],
+#                 "quantity": [25.0, 10.0, 50.0],
+#                 "unit": ["lb", "case", "lb"],
+#                 "unit_price": [3.49, 18.99, 0.89],
+#                 "line_total": [87.25, 189.90, 44.50]
+#             }),
+#             "extracted_text": "INVOICE\n\nBill To: Demo Restaurant\nInvoice Number: INV-2024-001\nDate: 12/01/2024\n\nITEM DESCRIPTION    QTY    UNIT    PRICE    TOTAL\nFresh Organic Tomatoes    25    lb    $3.49    $87.25\nPremium Lettuce Mix    10    case    $18.99    $189.90\nYellow Onions    50    lb    $0.89    $44.50\n\nSubtotal: $321.65\nTax: $25.73\nTOTAL: $1,245.80",
+#             "vendor_id": str(vendors[0]["_id"]),
+#             "vendor_name": vendors[0]["name"],
+#             "is_duplicate": False,
+#             "duplicate_id": None,
+#             "extraction_failed": False
+#         },
+#         {
+#             "filename": "demo_invoice_002.pdf",
+#             "status": "success",
+#             "message": "Extraction successful",
+#             "invoice_df": pd.DataFrame({
+#                 "filename": ["demo_invoice_002.pdf"],
+#                 "invoice_number": ["INV-2024-002"],
+#                 "invoice_date": [datetime(2024, 12, 3)],
+#                 "invoice_total_amount": [875.45],
+#                 "vendor_id": [str(vendors[1]["_id"]) if len(vendors) > 1 else str(vendors[0]["_id"])],
+#                 "vendor_name": [vendors[1]["name"] if len(vendors) > 1 else vendors[0]["name"]],
+#                 "text_length": [1342],
+#                 "page_count": [1]
+#             }),
+#             "line_items_df": pd.DataFrame({
+#                 "description": ["Prime Ribeye Steak", "Chicken Breast", "Pork Tenderloin"],
+#                 "quantity": [15.0, 20.0, 10.0],
+#                 "unit": ["lb", "lb", "lb"],
+#                 "unit_price": [24.99, 6.99, 8.99],
+#                 "line_total": [374.85, 139.80, 89.90]
+#             }),
+#             "extracted_text": "INVOICE\n\nInvoice #: INV-2024-002\nDate: 12/03/2024\nVendor: Quality Meats Co.\n\nPrime Ribeye Steak    15 lb    $24.99    $374.85\nChicken Breast    20 lb    $6.99    $139.80\nPork Tenderloin    10 lb    $8.99    $89.90\n\nTotal Due: $875.45",
+#             "vendor_id": str(vendors[1]["_id"]) if len(vendors) > 1 else str(vendors[0]["_id"]),
+#             "vendor_name": vendors[1]["name"] if len(vendors) > 1 else vendors[0]["name"],
+#             "is_duplicate": False,
+#             "duplicate_id": None,
+#             "extraction_failed": False
+#         },
+#         {
+#             "filename": "demo_invoice_003.pdf",
+#             "status": "partial",
+#             "message": "Data extraction incomplete - manual review required",
+#             "invoice_df": pd.DataFrame({
+#                 "filename": ["demo_invoice_003.pdf"],
+#                 "invoice_number": [""],
+#                 "invoice_date": [datetime.now()],
+#                 "invoice_total_amount": [0.0],
+#                 "vendor_id": [str(vendors[2]["_id"]) if len(vendors) > 2 else str(vendors[0]["_id"])],
+#                 "vendor_name": [vendors[2]["name"] if len(vendors) > 2 else vendors[0]["name"]],
+#                 "text_length": [892],
+#                 "page_count": [1]
+#             }),
+#             "line_items_df": pd.DataFrame({
+#                 "description": ["Whole Milk", "Cheddar Cheese"],
+#                 "quantity": [12.0, 8.0],
+#                 "unit": ["gal", "lb"],
+#                 "unit_price": [4.49, 7.99],
+#                 "line_total": [53.88, 63.92]
+#             }),
+#             "extracted_text": "INVOICE - Dairy Delight\n\nWhole Milk (Gallon)    12 gal    @ $4.49    $53.88\nCheddar Cheese Block    8 lb    @ $7.99    $63.92\n\nPlease remit payment within 30 days.",
+#             "vendor_id": str(vendors[2]["_id"]) if len(vendors) > 2 else str(vendors[0]["_id"]),
+#             "vendor_name": vendors[2]["name"] if len(vendors) > 2 else vendors[0]["name"],
+#             "is_duplicate": False,
+#             "duplicate_id": None,
+#             "extraction_failed": True
+#         },
+#         {
+#             "filename": "demo_invoice_004_duplicate.pdf",
+#             "status": "duplicate",
+#             "message": "Duplicate found: Invoice #INV-2024-001 already exists",
+#             "invoice_df": pd.DataFrame({
+#                 "filename": ["demo_invoice_004_duplicate.pdf"],
+#                 "invoice_number": ["INV-2024-001"],
+#                 "invoice_date": [datetime(2024, 12, 1)],
+#                 "invoice_total_amount": [1245.80],
+#                 "vendor_id": [str(vendors[0]["_id"])],
+#                 "vendor_name": [vendors[0]["name"]],
+#                 "text_length": [1523],
+#                 "page_count": [2]
+#             }),
+#             "line_items_df": pd.DataFrame({
+#                 "description": ["Fresh Organic Tomatoes", "Premium Lettuce Mix"],
+#                 "quantity": [25.0, 10.0],
+#                 "unit": ["lb", "case"],
+#                 "unit_price": [3.49, 18.99],
+#                 "line_total": [87.25, 189.90]
+#             }),
+#             "extracted_text": "INVOICE (DUPLICATE DEMO)\n\nThis is a duplicate invoice for demonstration purposes.",
+#             "vendor_id": str(vendors[0]["_id"]),
+#             "vendor_name": vendors[0]["name"],
+#             "is_duplicate": True,
+#             "duplicate_id": "demo_duplicate_id",
+#             "extraction_failed": False
+#         }
+#     ]
     
-    return demo_invoices
+#     return demo_invoices
 
 
 def render_main_menu():
@@ -789,34 +789,7 @@ def render_upload_section():
         # Process button
         if st.button("🚀 Process Invoices", type="primary", use_container_width=True):
             # Check if demo mode is active
-            if demo_mode:
-                with st.spinner("Generating demo data..."):
-                    # Generate demo data based on number of files
-                    demo_data = generate_demo_data()
-                    
-                    # Use only first 3 patterns (success, success, partial) - exclude duplicate pattern
-                    demo_patterns = demo_data[:3]  # Exclude the duplicate demo
-                    
-                    # Repeat demo patterns to match file count
-                    processed_data = []
-                    for idx, uploaded_file in enumerate(uploaded_files):
-                        # Cycle through demo data patterns (only non-duplicate ones)
-                        demo_template = demo_patterns[idx % len(demo_patterns)].copy()
-                        demo_template["filename"] = uploaded_file.name
-                        demo_template["invoice_df"]["filename"] = [uploaded_file.name]
-                        # Generate unique invoice numbers to avoid false duplicates
-                        demo_template["invoice_df"]["invoice_number"] = [f"DEMO-{idx+1:04d}"]
-                        processed_data.append(demo_template)
-                    
-                    # Store in session state
-                    st.session_state.uploaded_files_data = processed_data
-                    st.session_state.processing_complete = True
-                    st.session_state.current_step = "review"
-                    save_session_to_db()
-                    
-                    st.success("✅ Demo data generated!")
-                    st.rerun()
-            else:
+            if True:
                 with st.spinner("Processing invoices..."):
                     # Create temporary directory
                     temp_dir = Path("data/temp_uploads")

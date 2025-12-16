@@ -28,7 +28,7 @@ from src.storage.database import (
 sns.set_theme(style="whitegrid")
 
 # ----- Configuration -----
-RESTAURANT_ID = "507f1f77bcf86cd799439011"  # Westman's Bagel & Coffee - Capitol Hill
+RESTAURANT_ID = "507f1f77bcf86cd799439011" 
 
 
 @st.cache_data

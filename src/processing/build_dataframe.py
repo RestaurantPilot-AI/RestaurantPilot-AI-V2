@@ -277,7 +277,7 @@ def _build_line_items_records(
             
             line_items.append(line_item)
     
-    print(f"\nline items  {line_items}")
+    # print(f"\nline items  {line_items}")
     
     # If no items were found, return an empty DataFrame with the correct schema columns
     if not line_items:

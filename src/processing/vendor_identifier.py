@@ -589,7 +589,7 @@ def llm_phase1_extract(file_path: str) -> Dict[str, Any]:
     # The OCR text step is now bypassed entirely.
     parsed = call_llm_api(prompt, file_path=file_path)
     
-    print(f"\nPhase 1 Output: {parsed}")
+    # print(f"\nPhase 1 Output: {parsed}")
 
     # 1) Try to extract JSON (Validation)
     # Note: We skip _safe_extract_json_from_llm because 'parsed' is already a dict

@@ -134,8 +134,8 @@ def process_single_file(uploaded_file, temp_dir: Path) -> Dict[str, Any]:
             file_path=file_path
         )
         
-        print(f"\n[INFO] Invoice DF (Upload_invoices.py) {inv_df}")
-        print(f"\n[INFO] Line item DF (Upload_invoices.py) {li_df}")
+        # print(f"\n[INFO] Invoice DF (Upload_invoices.py) {inv_df}")
+        # print(f"\n[INFO] Line item DF (Upload_invoices.py) {li_df}")
 
         if inv_df is None or inv_df.empty:
             result["status"] = "partial"

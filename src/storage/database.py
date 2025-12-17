@@ -239,6 +239,40 @@ class MockCollection:
         _save_table(df, self.name)
         return MockUpdateResult(1)
 
+    def update_one_no_id(self, filter, update, upsert=False):
+        df = _read_table(self.name)
+        target_idx = -1
+        
+        # Find row index
+        if not df.empty:
+            for idx, row in df.iterrows():
+                if _matches_query(row, filter):
+                    target_idx = idx
+                    break
+        
+        if target_idx == -1:
+            if upsert:
+                # Create new
+                new_doc = filter.copy()
+                if "$set" in update:
+                    new_doc.update(update["$set"])
+                # if "_id" not in new_doc:
+                #     new_doc["_id"] = _generate_id()
+                self.insert_one(new_doc)
+                return MockUpdateResult(0)
+            return MockUpdateResult(0)
+            
+        # Update existing
+        if "$set" in update:
+            for k, v in update["$set"].items():
+                val = v
+                if isinstance(v, (ObjectId, Decimal128)): val = str(v)
+                elif isinstance(v, datetime.datetime): val = v.isoformat()
+                df.at[target_idx, k] = val
+        
+        _save_table(df, self.name)
+        return MockUpdateResult(1)
+
     def delete_one(self, filter):
         df = _read_table(self.name)
         if df.empty: return MockDeleteResult(0)
@@ -328,7 +362,7 @@ def save_vendor_regex_template(new_vendor_id: str, new_regexes: Dict[str, Any]) 
         li.get("unit", ""), li.get("unit_price", ""), li.get("line_total", "")
     ]
     
-    db[COL_VENDOR_REGEXES].update_one(
+    db[COL_VENDOR_REGEXES].update_one_no_id(
         {"vendor_id": str(new_vendor_id)},
         {"$set": {"regex_patterns": json.dumps(flattened)}},
         upsert=True

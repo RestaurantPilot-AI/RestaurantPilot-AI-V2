@@ -87,6 +87,19 @@ def save_vendor_details(vendor_master_data: Dict[str, Any]) -> None:
     
     return create_vendor(vendor_master_data)
 
+def normalize_item_block(block: str) -> str:
+    lines = block.splitlines()
+
+    new_lines = []
+    removed = False
+
+    for line in lines:
+        if not removed and line.strip():
+            removed = True
+            continue
+        new_lines.append(line)
+
+    return "\n".join(new_lines)
 
 # ----------------------------
 # Vendor signal extraction
@@ -159,10 +172,10 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
     url_pattern = r'(?:https?://)?(?:www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:/[^\s]*)?'
     
     potential_urls = []
-    for line in lines[:40]: # Websites usually in header or footer
+    for line in lines: # Websites usually in header or footer
         # Skip lines that look like emails
-        if "@" in line: 
-            continue
+        # if "@" in line: 
+        #     continue
             
         found_urls = re.findall(url_pattern, line)
         for url in found_urls:
@@ -351,7 +364,7 @@ Required JSON structure:
 
 Context Definitions:
 - "unit": The unit of measure (e.g., "lb", "case", "oz", "each").
-- "order_date": The date the order was placed (distinct from invoice date), if available.
+- "order_date": The date the order was placed (distinct from invoice date if not specified use date), if available.
 - "vendor_name": The official name of the vendor/supplier.
 
 -------------------------
@@ -903,10 +916,13 @@ def find_vendor_name_by_id(id: str) -> Optional[str]:
     
     return vendor_name if vendor_name else None
 
-def apply_regex_extraction(text: str, regex_patterns: Union[List[str], Dict[str, Any]]) -> Tuple[Dict[str, str], List[Dict[str, Any]]]:
+def apply_regex_extraction(
+    text: str,
+    regex_patterns: Union[List[str], Dict[str, Any]]
+) -> Tuple[Dict[str, str], List[Dict[str, Any]]]:
     """
     Applies the strict 0-10 positional regex array to the raw invoice text.
-    
+
     Index Mapping:
     0: invoice_number        (Invoice Level)
     1: invoice_date          (Invoice Level)
@@ -921,139 +937,145 @@ def apply_regex_extraction(text: str, regex_patterns: Union[List[str], Dict[str,
     10: line_total           (Line Item Level)
     """
 
-    print("regex:",regex_patterns)
     # ---------------------------------------------------
     # 0. ADAPTER: Convert Dict to List if needed
     # ---------------------------------------------------
     if isinstance(regex_patterns, dict):
-        # We need to flatten the dictionary to match the strict index mapping
         inv = regex_patterns.get("invoice_level", {})
-        li = regex_patterns.get("line_item_level", {})
-        
+        li  = regex_patterns.get("line_item_level", {})
+
         regex_patterns = [
-            inv.get("invoice_number", ""),       # 0
-            inv.get("invoice_date", ""),         # 1
-            inv.get("invoice_total_amount", ""), # 2
-            inv.get("order_date", ""),           # 3
-            li.get("line_item_block_start", ""), # 4
-            li.get("line_item_block_end", ""),   # 5
-            li.get("quantity", ""),              # 6
-            li.get("description", ""),           # 7
-            li.get("unit", ""),                  # 8
-            li.get("unit_price", ""),            # 9
-            li.get("line_total", "")             # 10
+            inv.get("invoice_number", ""),
+            inv.get("invoice_date", ""),
+            inv.get("invoice_total_amount", ""),
+            inv.get("order_date", ""),
+            li.get("line_item_block_start", ""),
+            li.get("line_item_block_end", ""),
+            li.get("quantity", ""),
+            li.get("description", ""),
+            li.get("unit", ""),
+            li.get("unit_price", ""),
+            li.get("line_total", "")
         ]
 
-    # ---------------------------------------------------
-    # 1. UNPACK PATTERNS (Indices 0-10)
-    # ---------------------------------------------------
-    # We unpack them into named variables for absolute clarity
-    p_inv_num      = regex_patterns[0]
-    p_inv_date     = regex_patterns[1]
-    p_inv_total    = regex_patterns[2]
-    p_order_date   = regex_patterns[3]
-    
-    p_block_start  = regex_patterns[4]
-    p_block_end    = regex_patterns[5]
-    
-    p_li_qty       = regex_patterns[6]
-    p_li_desc      = regex_patterns[7]
-    p_li_unit      = regex_patterns[8]
-    p_li_price     = regex_patterns[9]
-    p_li_total     = regex_patterns[10]
+    (
+        p_inv_num,
+        p_inv_date,
+        p_inv_total,
+        p_order_date,
+        p_block_start,
+        p_block_end,
+        p_li_qty,
+        p_li_desc,
+        p_li_unit,
+        p_li_price,
+        p_li_total,
+    ) = regex_patterns
 
     # ---------------------------------------------------
-    # 2. INVOICE LEVEL EXTRACTION (Indices 0, 1, 2, 3)
+    # 1. INVOICE LEVEL EXTRACTION
     # ---------------------------------------------------
-    inv_data = {
-        "invoice_number": None,
-        "invoice_date": None,
-        "invoice_total_amount": None,
-        "order_date": None
-    }
-
-    # Helper to apply regex safely
-    def extract_val(pattern, text):
+    def extract_val(pattern: str, txt: str):
         if pattern and pattern.strip():
-            match = re.search(pattern, text)
-            if match:
-                return match.group(1).strip()
+            m = re.search(pattern, txt)
+            if m:
+                return m.group(1).strip()
         return None
 
-    inv_data["invoice_number"]       = extract_val(p_inv_num, text)
-    inv_data["invoice_date"]         = extract_val(p_inv_date, text)
-    inv_data["invoice_total_amount"] = extract_val(p_inv_total, text)
-    inv_data["order_date"]           = extract_val(p_order_date, text)
+    inv_data = {
+        "invoice_number": extract_val(p_inv_num, text),
+        "invoice_date": extract_val(p_inv_date, text),
+        "invoice_total_amount": extract_val(p_inv_total, text),
+        "order_date": extract_val(p_order_date, text),
+    }
 
     # ---------------------------------------------------
-    # 3. DEFINE SEARCH BLOCK (Indices 4, 5)
+    # 2. ISOLATE LINE ITEM BLOCK
     # ---------------------------------------------------
     start_index = 0
     end_index = len(text)
 
-    # Index 4: Block Start
     if p_block_start and p_block_start.strip():
-        s_match = re.search(p_block_start, text)
-        if s_match:
-            start_index = s_match.end() # Start reading AFTER the header
+        m = re.search(p_block_start, text, re.MULTILINE)
+        if m:
+            start_index = m.end()
 
-    # Index 5: Block End
     if p_block_end and p_block_end.strip():
-        # Search only in the remaining text
-        e_match = re.search(p_block_end, text[start_index:])
-        if e_match:
-            end_index = start_index + e_match.start() # Stop reading BEFORE the footer
+        m = re.search(p_block_end, text[start_index:], re.MULTILINE)
+        if m:
+            end_index = start_index + m.start()
 
-    # Slice the text to isolate the table
     block_text = text[start_index:end_index]
-    lines = block_text.split('\n')
 
     # ---------------------------------------------------
-    # 4. LINE ITEM EXTRACTION (Indices 6, 7, 8, 9, 10)
+    # 3. MODE DETECTION
     # ---------------------------------------------------
-    line_items = []
+    
+    # For now this is only for ChemMark of Washington
+    is_block_mode = (
+        ("\n" in p_li_desc) or
+        ("[\\s\\S]" in p_li_desc)
+    )
 
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
+    line_items: List[Dict[str, Any]] = []
 
-        # We will try to match ALL line item regexes (6-10).
-        # If a regex pattern exists (is not empty) but fails to match, 
-        # then this line is likely NOT a valid line item (or is garbage text).
-        
-        current_item = {}
-        is_valid_line = True
+    # ---------------------------------------------------
+    # 4A. BLOCK-WISE PARSING (multi-line items)
+    # ---------------------------------------------------
+    if is_block_mode:
+        item_block_re = re.compile(
+            r"""
+            (?:^|\n)                      # item boundary
+            [\s\S]+?                      # anything (description, codes, RC, FS, etc.)
+            \n\d+(?:\.\d+)?               # quantity
+            \s+\d+(?:\.\d+)?              # rate
+            \s+\d+(?:\.\d+)?T             # total + T (ONLY true terminator)
+            """,
+            re.VERBOSE
+        )
 
-        # Mapping for Line Items
-        # (Pattern, Key Name)
-        li_map = [
-            (p_li_qty,   "quantity"),    # Index 6
-            (p_li_desc,  "description"), # Index 7
-            (p_li_unit,  "unit"),        # Index 8
-            (p_li_price, "unit_price"),  # Index 9
-            (p_li_total, "line_total")   # Index 10
-        ]
+        for m in item_block_re.finditer(block_text):
+            block = m.group(0)
+            block = normalize_item_block(block)
 
-        for pattern, key in li_map:
-            if pattern and pattern.strip():
-                match = re.search(pattern, line)
-                if match:
-                    current_item[key] = match.group(1).strip()
-                else:
-                    # STRICT MODE: If a pattern was provided but didn't match, 
-                    # we assume this line is not a valid line item.
-                    is_valid_line = False
-                    break
-            else:
-                # If pattern is empty string "", we just set the value to None
-                current_item[key] = None
+            raw_desc = extract_val(p_li_desc, block)
 
-        if is_valid_line:
-            # Only add if we actually extracted something useful (e.g. at least a description)
-            if current_item.get("description") or current_item.get("line_total"):
-                current_item["raw_line"] = line # Helpful for debugging
-                line_items.append(current_item)
+            description = (
+                re.sub(r"\s+", " ", raw_desc).strip()
+                if raw_desc else None
+            )
+
+            item = {
+                "quantity": extract_val(p_li_qty, block),
+                "description": description,
+                "unit": extract_val(p_li_unit, block),
+                "unit_price": extract_val(p_li_price, block),
+                "line_total": extract_val(p_li_total, block),
+            }
+
+            if item["description"] or item["line_total"]:
+                line_items.append(item)
+
+
+    # ---------------------------------------------------
+    # 4B. LINE-WISE PARSING (single-line items)
+    # ---------------------------------------------------
+    else:
+        for line in block_text.split("\n"):
+            line = line.strip()
+            if not line:
+                continue
+
+            item = {
+                "quantity": extract_val(p_li_qty, line),
+                "description": extract_val(p_li_desc, line),
+                "unit": extract_val(p_li_unit, line),
+                "unit_price": extract_val(p_li_price, line),
+                "line_total": extract_val(p_li_total, line),
+            }
+
+            if item["description"] or item["line_total"]:
+                line_items.append(item)
 
     return inv_data, line_items
 
@@ -1088,6 +1110,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
         vendor_id = None
         matched_by = None
 
+    print(f"Matched by: ", matched_by)
     # --- CASE A: Vendor Found in DB ---
     if vendor_id:
         vendor_name = find_vendor_name_by_id(vendor_id)

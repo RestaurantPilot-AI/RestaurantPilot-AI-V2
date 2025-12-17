@@ -137,7 +137,8 @@ def predict_category_with_llm(description: str, existing_categories: List[str]) 
         return predicted_category
 
     except Exception as e:
-        print(f"[ERROR] LLM Prediction failed: {e}")
+        # print(f"[ERROR] LLM Prediction failed: {e}")
+        print("[ERROR] LLM Prediction failed: API Key limit")
         return "Uncategorized"
 
 def save_category_result(description: str, predicted_category: str, existing_categories: List[str]) -> None:
@@ -168,7 +169,7 @@ def get_line_item_category(description: str) -> str:
     # 1. Fetch from DB
     stored_category = get_stored_category(cleaned_description)
     if stored_category:
-        print(f"[INFO] Found decryption-category pair in DB: Description before: {description}, Cleaned Description: {cleaned_description}, Stored Category: {stored_category}.")
+        # print(f"[INFO] Found decryption-category pair in DB: Description before: {description}, Cleaned Description: {cleaned_description}, Stored Category: {stored_category}.")
         return stored_category
 
     # 2. Fetch Context from DB

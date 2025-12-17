@@ -2,13 +2,13 @@ import os
 import re
 import time
 import json
-import mimetypes
 from typing import Optional, Dict, Any, Tuple, List, Union
 from dotenv import load_dotenv
 
 # For real LLM integration
 import google.generativeai as genai
 from google.api_core.exceptions import ResourceExhausted
+# import google.api_core.exceptions
 
 from src.storage import (
     get_vendor_by_email,
@@ -156,26 +156,23 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
 
     # --- 3. Website (New Logic) ---
     # Strategy: Find URL patterns, excluding the email domain we just found.
-    url_pattern = re.compile(
-        r'(?:https?://)?(?:www\.)?(?:[a-zA-Z0-9]'
-        r'(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+'
-        r'[a-zA-Z]{2,}(?:/[^\s]*)?',
-        re.IGNORECASE
-    )
-
+    url_pattern = r'(?:https?://)?(?:www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:/[^\s]*)?'
+    
     potential_urls = []
-
-    for line in lines[:40]:
-        if "@" in line:
+    for line in lines[:40]: # Websites usually in header or footer
+        # Skip lines that look like emails
+        if "@" in line: 
             continue
-
-        for m in url_pattern.finditer(line):
-            url = m.group(0).lower()
-            potential_urls.append(url)
+            
+        found_urls = re.findall(url_pattern, line)
+        for url in found_urls:
+            # Clean validation
+            clean_url = url.lower()
+            if any(ext in clean_url for ext in ['.com', '.net', '.org', '.io', '.co', '.us', '.eu', '.de']):
+                potential_urls.append(url)
 
     if potential_urls:
         signals["website"] = potential_urls[0]
-
 
     # --- 4. Vendor Name (Hierarchical Logic) ---
     # Strategy: Explicit Header -> Legal Suffix -> UpperCase Header
@@ -280,138 +277,50 @@ def _safe_extract_json_from_llm(text: str) -> Optional[Dict[str, Any]]:
     except Exception:
         return None
 
-def call_llm_api(prompt: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+def call_llm_api(prompt: str) -> Dict[str, Any]:
     """
-    Calls Gemini API with multimodal support (file_path) by using genai.upload_file.
-    
-    The uploaded file is deleted after the attempt to generate content to conserve resources.
-
-    Args:
-        prompt (str): The textual prompt/instructions for the LLM.
-        file_path (Optional[str]): Path to the file (image/PDF) to include 
-                                    for visual multimodal input.
-                                    
+    Calls Gemini API with automatic retry on Rate Limit (429) errors.
     Returns parsed JSON dictionary.
-    
-    Raises:
-        RuntimeError: If API retries fail.
-        ValueError: If Gemini output is not valid JSON.
-        FileNotFoundError: If the provided file_path does not exist.
     """
     _setup_environment()
     model = genai.GenerativeModel(MODEL_NAME)
 
     max_retries = 3
     base_wait = 30  # Start waiting 30 seconds
-    
-    file_obj = None # Initialize file object outside the loop
-    
-    try:
-        # 1. Prepare Content (Prompt + File Part)
-        content_parts: List[Union[str, Any]] = [prompt] # Start with the prompt
 
-        if file_path:
-            if not os.path.exists(file_path):
-                 raise FileNotFoundError(f"Multimodal file not found at: {file_path}")
+    for attempt in range(max_retries):
+        try:
+            # --- Call Gemini model ---
+            response = model.generate_content(prompt)
             
-            # Use mimetypes to guess the file type for robust uploading
-            mime_type, _ = mimetypes.guess_type(file_path)
-            if mime_type is None:
-                # Fallback for unknown file types
-                mime_type = "image/jpeg" 
-            
-            try:
-                # Use the built-in SDK upload feature for files (required for PDFs/large files)
-                print(f"[INFO] Uploading file: {file_path} with MIME type: {mime_type} [vendor_identifier.py]")
-                file_obj = genai.upload_file(file_path, mime_type=mime_type)
-                
-                # Add the uploaded file object (Part) to the beginning of the content list
-                content_parts.insert(0, file_obj)
-                
-            except Exception as e:
-                # If file upload fails, raise error, but ensure cleanup occurs
-                raise RuntimeError(f"Failed to upload file to Gemini API: {e}")
-            
-        # 2. API Call with Retry Logic
-        for attempt in range(max_retries):
-            try:
-                # --- Call Gemini multimodal model ---
-                response = model.generate_content(content_parts)
-                
-                # --- Clean & parse JSON ---
-                raw_text = response.text.strip() if response and response.text else ""
-                
-                # Clean Markdown fences (```json or ```) and parse
-                cleaned = re.sub(r"^```(?:json)?|```$", "", raw_text.strip(), flags=re.MULTILINE).strip()
-                
-                try:
-                    corrected_json = json.loads(cleaned)
-                    return corrected_json
-                except json.JSONDecodeError as e:
-                     raise ValueError(
-                         f"Gemini did not return valid JSON. Error: {e}\nRaw output:\n{raw_text}"
-                     )
-                
-            except ResourceExhausted as e:
-                # This catches the 429 Quota Exceeded error
-                wait_time = base_wait * (attempt + 1)
-                print(f"\n[WARN] Gemini Quota Exceeded. Waiting {wait_time}s before retry ({attempt + 1}/{max_retries})...")
-                time.sleep(wait_time)
-            
-            except ValueError as e:
-                # Re-raise JSON errors immediately 
-                raise e 
-    
-            except Exception as e:
-                # Other errors (auth, network) should crash immediately
-                print(f"[ERROR] Gemini API Failed: {e}")
-                raise e
+            # --- Clean & parse JSON ---
+            # Return immediately if successful
+            return parse_llm_json(response.text)
 
-        # If we run out of retries
-        raise RuntimeError("Gemini API Quota Exceeded after multiple retries. Please check your billing/limits.")
+        except ResourceExhausted as e:
+            # This catches the 429 Quota Exceeded error
+            wait_time = base_wait * (attempt + 1)
+            print(f"\n[WARN] Gemini Quota Exceeded. Waiting {wait_time}s before retry ({attempt + 1}/{max_retries})...")
+            time.sleep(wait_time)
+        
+        except Exception as e:
+            # Other errors (auth, network) should crash immediately
+            print(f"[ERROR] Gemini API Failed: {e}")
+            raise e
 
-    finally:
-        # --- CRITICAL: Delete the uploaded file object ---
-        if file_obj:
-            try:
-                genai.delete_file(name=file_obj.name)
-                print(f"[INFO] Deleted uploaded file: {file_obj.name}")
-            except Exception as e:
-                print(f"[WARN] Failed to delete uploaded file {file_obj.name}: {e}")
+    # If we run out of retries
+    raise RuntimeError("Gemini API Quota Exceeded after multiple retries. Please check your billing/limits.")
 
-def make_phase1_prompt() -> str:
-    """
-    Construct phase-1 prompt for the visual model. 
-    It instructs the LLM to extract data solely from the provided image/PDF content.
-    """
-    # Define the mandatory fields at the top of the prompt for emphasis
-    mandatory_fields = [
-        "invoice_number", 
-        "invoice_date", 
-        "invoice_total_amount", 
-        "vendor_name", 
-        "description (in line_items)", 
-        "line_total (in line_items)"
-    ]
-
+def make_phase1_prompt(text: str) -> str:
+    """Construct phase-1 prompt (extract structured JSON matching DB Schema)."""
     return f"""
-You are a strict data extraction engine. Your task is to extract structured data solely from the **VISUAL INVOICE IMAGE** provided. You must use the layout, font size, and visual position to determine the correct fields.
+Extract structured data from the following invoice text.
 
 Rules:
-- Output ONLY the JSON object. No explanations or code fences (e.g., ```json).
-- Field names MUST match the required JSON structure exactly.
-- If a value is genuinely missing, return 'null'.
-- Only refer null if a field is missing, check thoroughly using the visual evidence.
-- For all currency/numeric fields, ensure the value is a string formatted as "0.00".
-
-==========================
-HIGH PRIORITY MANDATORY FIELDS
-==========================
-The following fields CANNOT be null. If they are not explicitly labeled, you must use **visual contextual cues** (e.g., location, size, format, bolding) to find them:
-- {', '.join(mandatory_fields)}
-
-VENDOR NAME STRATEGY:
-The 'vendor_name' is the name of the company that issued the invoice. It is the single most critical field. You MUST identify the single largest or most prominent business name/logo text located in the header/top section of the invoice and use that value.
+- Use ONLY the information explicitly present.
+- If a value is missing or not found, return null (not the string "None").
+- Output ONLY the JSON object. No explanations.
+- Field names MUST match exactly.
 
 Required JSON structure:
 
@@ -443,6 +352,12 @@ Required JSON structure:
 Context Definitions:
 - "unit": The unit of measure (e.g., "lb", "case", "oz", "each").
 - "order_date": The date the order was placed (distinct from invoice date), if available.
+- "vendor_name": The official name of the vendor/supplier.
+
+-------------------------
+RAW INVOICE TEXT BELOW:
+-------------------------
+{text}
 """.strip()
 
 def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
@@ -450,10 +365,6 @@ def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
     Construct a single-shot prompt that asks the model to return strict,
     reusable regex patterns for this invoice layout.
 
-    IMPORTANT:
-    All regexes MUST be returned as PYTHON STRING LITERALS.
-    This means every backslash required by the regex engine MUST be DOUBLE-ESCAPED (\\).
-    
     The model will receive:
       - RAW INVOICE TEXT (the full invoice as plain text)
       - VERIFIED JSON (the ground-truth extraction for that invoice)
@@ -483,41 +394,20 @@ def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
     return f"""
 You are given two inputs below: 1) RAW INVOICE TEXT and 2) VERIFIED JSON that contains the correct extracted values for that invoice.
 
-Task: Produce reusable, strict regex patterns for this invoice layout so that future invoices with the same layout can be parsed to get values in VERIFIED JSON using only regex. 
-Assume that only the values like description, quantity price etc will change not the format.
-
-CRITICAL OUTPUT REQUIREMENT (NON-NEGOTIABLE):
-
-All regex values MUST be VALID PYTHON STRING LITERALS.
-
-This means:
-- Every backslash required by the REGEX ENGINE must be written as a DOUBLE backslash (\\)
-- Examples:
-  - Regex meaning \s → output must contain \\s
-  - Regex meaning \d+ → output must contain \\d+
-  - Regex meaning \. → output must contain \\.
-  - Regex meaning (\d+) → output must contain (\\d+)
-
-Failure to double-escape backslashes is considered INCORRECT output.
+Task: Produce reusable, strict regex patterns for this invoice layout so that future invoices with the same layout can be parsed without calling an LLM.
 
 OUTPUT RULES:
-- Return ONLY one JSON object and nothing else.
-- No explanations, no markdown, no code fences.
-- JSON MUST match the exact structure provided.
-- Do NOT include regex delimiters or flags (no /.../, no (?i), etc.).
+- Return ONLY one JSON object and nothing else (no prose, no markdown, no code fences).
+- The JSON MUST match this exact structure (keys and nesting).
+- Do NOT include delimiters or flags (no /.../, no (?i), etc.).
+- Regexes must be as STRICT as reasonable: use surrounding labels, punctuation, and layout.
 
 CRITICAL REGEX RULES (STRICT ENFORCEMENT):
-1. EXACTLY ONE CAPTURING GROUP:
-   Every regex that extracts a value MUST contain exactly ONE capturing group `(…)`.
-2. NON-CAPTURING GROUPS ONLY FOR LOGIC:
-   If grouping is needed for alternation or structure, use `(?:…)`.
-   - BAD: `(CS|EA)`  ← creates an extra capture
-   - GOOD: `(?:CS|EA)` ← allowed
-3. MANDATORY FIELDS:
-   - invoice_number
-   - invoice_date
-   - invoice_total_amount
-   MUST NOT be empty.
+1. **EXACTLY ONE CAPTURING GROUP**: Every regex that extracts a value MUST contain exactly one capturing group `(...)` that isolates the target data.
+2. **USE NON-CAPTURING GROUPS**: If you need to group tokens for logic (e.g., matching "CS" or "EA"), you MUST use non-capturing groups `(?:...)`.
+   - BAD: `(CS|EA)` -> This captures the unit, creating a second group.
+   - GOOD: `(?:CS|EA)` -> This matches but does not capture.
+3. **MANDATORY FIELDS**: 'invoice_number', 'invoice_date', and 'invoice_total_amount' MUST HAVE A REGEX. Do not return empty strings for these.
 
 FIELD GUIDANCE:
 [Invoice Level]
@@ -527,7 +417,7 @@ FIELD GUIDANCE:
 [Line Item Level]
 - line_item_block_start: Regex that matches the first line or header (e.g., "Description   Qty   Price"). (No capture group needed here).
 - line_item_block_end: Regex that matches the line AFTER the last item (e.g., "Subtotal" or footer text). (No capture group needed here).
-- description(product name here is called description), quantity, unit_price, line_total: Regexes that extract fields from a SINGLE line item row.
+- description, quantity, unit_price, line_total: Regexes that extract fields from a SINGLE line item row.
 - unit: Regex that captures the unit (e.g., "CS", "EA") if present on the line.
 
 REQUIRED JSON STRUCTURE:
@@ -566,13 +456,9 @@ def _coerce_none_values(obj: Any) -> Any:
     return obj
 
 
-def llm_phase1_extract(file_path: str) -> Dict[str, Any]:
+def llm_phase1_extract(text: str) -> Dict[str, Any]:
     """
-    Phase 1: ask the MULTIMODAL LLM to extract key fields as JSON, 
-    using the visual content of the file.
-
-    Args:
-        file_path (str): Path to the invoice file (image or PDF).
+    Phase 1: ask LLM to extract key fields as JSON.
 
     Returns parsed JSON dict on success.
 
@@ -580,16 +466,12 @@ def llm_phase1_extract(file_path: str) -> Dict[str, Any]:
         Phase1ParseError: when LLM output is not valid JSON / not extractable.
         Phase1ValidationError: when JSON is missing required keys or has wrong types.
     """
-    print("\n[INFO] Starting Phase 1: Extract Vendor Details and Patterns (Multimodal)...")
+    print("\n[INFO] Starting Phase 1: Extract Vendor Details and Patterns...")
     
-    # 1. Generate the visual-focused prompt (takes no arguments now)
-    prompt = make_phase1_prompt()
+    prompt = make_phase1_prompt(text)
     
-    # 2. Call the LLM API, passing the prompt and the file_path for multimodal processing
-    # The OCR text step is now bypassed entirely.
-    parsed = call_llm_api(prompt, file_path=file_path)
-    
-    # print(f"\nPhase 1 Output: {parsed}")
+    # FIX: call_llm_api now returns the parsed JSON dict directly
+    parsed = call_llm_api(prompt)
 
     # 1) Try to extract JSON (Validation)
     # Note: We skip _safe_extract_json_from_llm because 'parsed' is already a dict
@@ -698,7 +580,7 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
     parsed = call_llm_api(prompt)
 
     # DEBUG: Print the raw output to see what the LLM actually gave us
-    # print(f"[DEBUG] Phase 2 Raw LLM Output:\n{json.dumps(parsed, indent=2)}")
+    print(f"[DEBUG] Phase 2 Raw LLM Output:\n{json.dumps(parsed, indent=2)}")
 
     # 1) Try to extract JSON (Validation)
     if not isinstance(parsed, dict):
@@ -738,17 +620,17 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
 
         # If it's a strict field, it cannot be empty.
         if k in strict_invoice_fields and v.strip() == "":
-            print(f"[WARN] Field '{k}' is empty in LLM output! in Phase 1")
+            print(f"[WARN] Field '{k}' is empty in LLM output!")
             empty_invoice_keys.append(f"invoice_level.{k}")
         
         # If we have a regex (non-empty), validate capture groups
-        # if v.strip() != "":
-        #     groups = _count_capture_groups(v)
-        #     # FIX: RELAXED VALIDATION. Allow > 1 group.
-        #     if groups < 1:
-        #         bad_group_keys.append(f"invoice_level.{k} (capture groups={groups})")
-        #     elif groups > 1:
-        #         print(f"[WARN] invoice_level.{k} has {groups} capture groups. System will default to group(1).")
+        if v.strip() != "":
+            groups = _count_capture_groups(v)
+            # FIX: RELAXED VALIDATION. Allow > 1 group.
+            if groups < 1:
+                bad_group_keys.append(f"invoice_level.{k} (capture groups={groups})")
+            elif groups > 1:
+                print(f"[WARN] invoice_level.{k} has {groups} capture groups. System will default to group(1).")
 
     if empty_invoice_keys:
         raise Phase2ValidationError(f"Empty/Invalid strictly required invoice_level regex values: {empty_invoice_keys}")
@@ -805,13 +687,13 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
 
         # If we have a regex (non-empty), validate capture groups
         # FIX: Skip check for marker fields
-        # if v.strip() != "" and k not in marker_fields:
-        #     groups = _count_capture_groups(v)
-        #     # FIX: RELAXED VALIDATION. Allow > 1 group.
-        #     if groups < 1:
-        #         bad_line_item_group_keys.append(f"line_item_level.{k} (capture groups={groups})")
-        #     elif groups > 1:
-        #          print(f"[WARN] line_item_level.{k} has {groups} capture groups. System will default to group(1).")
+        if v.strip() != "" and k not in marker_fields:
+            groups = _count_capture_groups(v)
+            # FIX: RELAXED VALIDATION. Allow > 1 group.
+            if groups < 1:
+                bad_line_item_group_keys.append(f"line_item_level.{k} (capture groups={groups})")
+            elif groups > 1:
+                 print(f"[WARN] line_item_level.{k} has {groups} capture groups. System will default to group(1).")
 
     if empty_line_item_keys:
         raise Phase2ValidationError(f"Empty/Invalid strictly required line_item_level regex values: {empty_line_item_keys}")
@@ -1021,160 +903,159 @@ def find_vendor_name_by_id(id: str) -> Optional[str]:
     
     return vendor_name if vendor_name else None
 
-# Helper to safely apply regex and handle multiple capture groups
-def extract_val(pattern: str, text: str, field_name: str) -> Optional[str]:
-    """
-    Applies regex, captures the first group (if > 1 group exists),
-    and handles warnings for multiple groups.
-    """
-    if pattern and pattern.strip():
-        try:
-            match = re.search(pattern, text)
-            if match:
-                groups = len(match.groups())
-
-                if groups == 0:
-                    # No capture group, cannot extract a value
-                    return None
-
-                elif groups > 1:
-                    print(f"[WARN] {field_name} has {groups} capture groups. Defaulting to group(1) [vendor_identifier.py].")
-
-                # Return group(1)
-                return match.group(1).strip()
-
-        except re.error as e:
-            print(f"[ERROR] Regex error in [vendor_identifier.py] for {field_name}: {e}")
-            return None
-
-    return None
-
-
-def apply_regex_extraction(
-    text: str,
-    regex_patterns: Union[List[str], Dict[str, Any]]
-) -> Tuple[Dict[str, str], List[Dict[str, Any]]]:
+def apply_regex_extraction(text: str, regex_patterns: Union[List[str], Dict[str, Any]]) -> Tuple[Dict[str, str], List[Dict[str, Any]]]:
     """
     Applies the strict 0-10 positional regex array to the raw invoice text.
+    
+    Index Mapping:
+    0: invoice_number        (Invoice Level)
+    1: invoice_date          (Invoice Level)
+    2: invoice_total_amount  (Invoice Level)
+    3: order_date            (Invoice Level)
+    4: line_item_block_start (Start Marker)
+    5: line_item_block_end   (End Marker)
+    6: quantity              (Line Item Level)
+    7: description           (Line Item Level)
+    8: unit                  (Line Item Level)
+    9: unit_price            (Line Item Level)
+    10: line_total           (Line Item Level)
     """
 
-    # Allow dictionary-based definitions
+    print("regex:",regex_patterns)
+    # ---------------------------------------------------
+    # 0. ADAPTER: Convert Dict to List if needed
+    # ---------------------------------------------------
     if isinstance(regex_patterns, dict):
+        # We need to flatten the dictionary to match the strict index mapping
         inv = regex_patterns.get("invoice_level", {})
         li = regex_patterns.get("line_item_level", {})
-
+        
         regex_patterns = [
-            inv.get("invoice_number", ""),        # 0
-            inv.get("invoice_date", ""),          # 1
-            inv.get("invoice_total_amount", ""),  # 2
-            inv.get("order_date", ""),            # 3
-
-            li.get("line_item_block_start", ""),  # 4
-            li.get("line_item_block_end", ""),    # 5
-
-            li.get("quantity", ""),               # 6
-            li.get("description", ""),            # 7
-            li.get("unit", ""),                   # 8
-            li.get("unit_price", ""),             # 9
-            li.get("line_total", "")              # 10
+            inv.get("invoice_number", ""),       # 0
+            inv.get("invoice_date", ""),         # 1
+            inv.get("invoice_total_amount", ""), # 2
+            inv.get("order_date", ""),           # 3
+            li.get("line_item_block_start", ""), # 4
+            li.get("line_item_block_end", ""),   # 5
+            li.get("quantity", ""),              # 6
+            li.get("description", ""),           # 7
+            li.get("unit", ""),                  # 8
+            li.get("unit_price", ""),            # 9
+            li.get("line_total", "")             # 10
         ]
 
     # ---------------------------------------------------
-    # 1. UNPACK PATTERNS
+    # 1. UNPACK PATTERNS (Indices 0-10)
     # ---------------------------------------------------
-    p_inv_num     = regex_patterns[0]
-    p_inv_date    = regex_patterns[1]
-    p_inv_total   = regex_patterns[2]
-    p_order_date  = regex_patterns[3]
-
-    p_block_start = regex_patterns[4]
-    p_block_end   = regex_patterns[5]
-
-    p_li_qty      = regex_patterns[6]
-    p_li_desc     = regex_patterns[7]
-    p_li_unit     = regex_patterns[8]
-    p_li_price    = regex_patterns[9]
-    p_li_total    = regex_patterns[10]
+    # We unpack them into named variables for absolute clarity
+    p_inv_num      = regex_patterns[0]
+    p_inv_date     = regex_patterns[1]
+    p_inv_total    = regex_patterns[2]
+    p_order_date   = regex_patterns[3]
+    
+    p_block_start  = regex_patterns[4]
+    p_block_end    = regex_patterns[5]
+    
+    p_li_qty       = regex_patterns[6]
+    p_li_desc      = regex_patterns[7]
+    p_li_unit      = regex_patterns[8]
+    p_li_price     = regex_patterns[9]
+    p_li_total     = regex_patterns[10]
 
     # ---------------------------------------------------
-    # 2. INVOICE LEVEL EXTRACTION
+    # 2. INVOICE LEVEL EXTRACTION (Indices 0, 1, 2, 3)
     # ---------------------------------------------------
     inv_data = {
-        "invoice_number": extract_val(p_inv_num, text, "Invoice Number"),
-        "invoice_date": extract_val(p_inv_date, text, "Invoice Date"),
-        "invoice_total_amount": extract_val(p_inv_total, text, "Invoice Total"),
-        "order_date": extract_val(p_order_date, text, "Order Date")
+        "invoice_number": None,
+        "invoice_date": None,
+        "invoice_total_amount": None,
+        "order_date": None
     }
 
+    # Helper to apply regex safely
+    def extract_val(pattern, text):
+        if pattern and pattern.strip():
+            match = re.search(pattern, text)
+            if match:
+                return match.group(1).strip()
+        return None
+
+    inv_data["invoice_number"]       = extract_val(p_inv_num, text)
+    inv_data["invoice_date"]         = extract_val(p_inv_date, text)
+    inv_data["invoice_total_amount"] = extract_val(p_inv_total, text)
+    inv_data["order_date"]           = extract_val(p_order_date, text)
+
     # ---------------------------------------------------
-    # 3. DEFINE SEARCH BLOCK
+    # 3. DEFINE SEARCH BLOCK (Indices 4, 5)
     # ---------------------------------------------------
     start_index = 0
     end_index = len(text)
 
+    # Index 4: Block Start
     if p_block_start and p_block_start.strip():
         s_match = re.search(p_block_start, text)
         if s_match:
-            start_index = s_match.end()
+            start_index = s_match.end() # Start reading AFTER the header
 
+    # Index 5: Block End
     if p_block_end and p_block_end.strip():
+        # Search only in the remaining text
         e_match = re.search(p_block_end, text[start_index:])
         if e_match:
-            end_index = start_index + e_match.start()
+            end_index = start_index + e_match.start() # Stop reading BEFORE the footer
 
+    # Slice the text to isolate the table
     block_text = text[start_index:end_index]
     lines = block_text.split('\n')
 
     # ---------------------------------------------------
-    # 4. LINE ITEM EXTRACTION
+    # 4. LINE ITEM EXTRACTION (Indices 6, 7, 8, 9, 10)
     # ---------------------------------------------------
     line_items = []
-
-    li_map = [
-        (p_li_qty, "quantity"),
-        (p_li_desc, "description"),
-        (p_li_unit, "unit"),
-        (p_li_price, "unit_price"),
-        (p_li_total, "line_total")
-    ]
 
     for line in lines:
         line = line.strip()
         if not line:
             continue
 
+        # We will try to match ALL line item regexes (6-10).
+        # If a regex pattern exists (is not empty) but fails to match, 
+        # then this line is likely NOT a valid line item (or is garbage text).
+        
         current_item = {}
-        successful_matches = 0
+        is_valid_line = True
 
-        # Run all patterns
+        # Mapping for Line Items
+        # (Pattern, Key Name)
+        li_map = [
+            (p_li_qty,   "quantity"),    # Index 6
+            (p_li_desc,  "description"), # Index 7
+            (p_li_unit,  "unit"),        # Index 8
+            (p_li_price, "unit_price"),  # Index 9
+            (p_li_total, "line_total")   # Index 10
+        ]
+
         for pattern, key in li_map:
             if pattern and pattern.strip():
-                extracted_value = extract_val(pattern, line, f"Line Item {key}")
-                if extracted_value is not None:
-                    current_item[key] = extracted_value
-                    successful_matches += 1
+                match = re.search(pattern, line)
+                if match:
+                    current_item[key] = match.group(1).strip()
                 else:
-                    current_item[key] = None
+                    # STRICT MODE: If a pattern was provided but didn't match, 
+                    # we assume this line is not a valid line item.
+                    is_valid_line = False
+                    break
             else:
+                # If pattern is empty string "", we just set the value to None
                 current_item[key] = None
 
-        # Validation: require line_total + (description or quantity)
-        if current_item.get("line_total") and (
-            current_item.get("description") or current_item.get("quantity")
-        ):
-            current_item["raw_line"] = line
-            line_items.append(current_item)
+        if is_valid_line:
+            # Only add if we actually extracted something useful (e.g. at least a description)
+            if current_item.get("description") or current_item.get("line_total"):
+                current_item["raw_line"] = line # Helpful for debugging
+                line_items.append(current_item)
 
-        elif successful_matches > 0:
-            # Soft fallback
-            current_item["raw_line"] = line
-            line_items.append(current_item)
-
-    print("[INFO] Values extracted using Regex [vendor_identifier.py]")
-    # print(f"\n INV extracted: {inv_data} [vendor_identifier.py]")
-    # print(f"\n LI extracted: {line_items} [vendor_identifier.py]")
     return inv_data, line_items
-
 
 def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     """
@@ -1212,7 +1093,6 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
         vendor_name = find_vendor_name_by_id(vendor_id)
         # A1. Existing Regex
         regex_list = get_regex_for_vendor(vendor_id)
-        print("[INFO] Fetched existing vendor regex [vendor_identifier.py]")
         
         if regex_list:
             return {
@@ -1230,7 +1110,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     # --- CASE B: Vendor NOT Found (Create New) ---
     else:
         # Phase 1: Extract clean master data
-        phase1 = llm_phase1_extract(file_path)
+        phase1 = llm_phase1_extract(text)
         if phase1:
                 # Merge new LLM data with existing signals
                 vendor = phase1["vendor_master_data"]
@@ -1244,7 +1124,6 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
                 
                 if new_regexes:
                     save_regex_for_vendor(new_vendor_id, new_regexes)
-                    print("[INFO] Generated new vendor regex [vendor_identifier.py]")
                     return {
                         "vendor_id": new_vendor_id,
                         "vendor_name": vendor_name,

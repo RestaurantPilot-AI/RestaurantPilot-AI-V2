@@ -1063,19 +1063,25 @@ def apply_regex_extraction(
             chunk = chunk.strip()
             if not chunk:
                 continue
-
+            
+            print(f"Chunk: {chunk}\n")
             # Normalize wrapped lines AFTER splitting
-            chunk = re.sub(r"\s*\n\s*", " ", chunk)
+            # chunk = re.sub(r"\s*\n\s*", " ", chunk)
 
+            description = extract_val(p_li_desc, chunk)
+
+            if description:
+                description = re.sub(r"\s*\n\s*", " ", description).strip()    
+                
             item = {
                 "quantity": extract_val(p_li_qty, chunk),
-                "description": extract_val(p_li_desc, chunk),
+                "description": description,
                 "unit": extract_val(p_li_unit, chunk),
                 "unit_price": extract_val(p_li_price, chunk),
                 "line_total": extract_val(p_li_total, chunk),
             }
 
-            if item["description"] or item["line_total"]:
+            if item["description"] and (item["line_total"] or item["unit_price"]):
                 line_items.append(item)
 
     # ---------------------------------------------------

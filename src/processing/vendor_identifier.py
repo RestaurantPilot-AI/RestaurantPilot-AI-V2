@@ -1040,56 +1040,43 @@ def apply_regex_extraction(
             end_index = start_index + m.start()
 
     block_text = text[start_index:end_index]
+    
+    print(f"Block text: {block_text}")
 
     # ---------------------------------------------------
     # 3. MODE DETECTION
     # ---------------------------------------------------
 
-    # Mode is determined strictly by line_item_split presence
-    # Empty string  -> line item mode
-    # Non-empty     -> block mode
-    is_block_mode = bool(p_li_split and p_li_split.strip())
-
+    is_block_mode = p_li_split is not None
+    
     line_items: List[Dict[str, Any]] = []
 
 
     # ---------------------------------------------------
     # 4A. BLOCK-WISE PARSING (multi-line items)
     # ---------------------------------------------------
-    if is_block_mode:
-        item_block_re = re.compile(
-            r"""
-            (?:^|\n)                      # item boundary
-            [\s\S]+?                      # anything (description, codes, RC, FS, etc.)
-            \n\d+(?:\.\d+)?               # quantity
-            \s+\d+(?:\.\d+)?              # rate
-            \s+\d+(?:\.\d+)?T             # total + T (ONLY true terminator)
-            """,
-            re.VERBOSE
-        )
+    if is_block_mode and p_li_split:
+        # Split block into item chunks using index 6
+        chunks = re.split(p_li_split, block_text)
 
-        for m in item_block_re.finditer(block_text):
-            block = m.group(0)
-            block = normalize_item_block(block)
+        for chunk in chunks:
+            chunk = chunk.strip()
+            if not chunk:
+                continue
 
-            raw_desc = extract_val(p_li_desc, block)
-
-            description = (
-                re.sub(r"\s+", " ", raw_desc).strip()
-                if raw_desc else None
-            )
+            # Normalize wrapped lines AFTER splitting
+            chunk = re.sub(r"\s*\n\s*", " ", chunk)
 
             item = {
-                "quantity": extract_val(p_li_qty, block),
-                "description": description,
-                "unit": extract_val(p_li_unit, block),
-                "unit_price": extract_val(p_li_price, block),
-                "line_total": extract_val(p_li_total, block),
+                "quantity": extract_val(p_li_qty, chunk),
+                "description": extract_val(p_li_desc, chunk),
+                "unit": extract_val(p_li_unit, chunk),
+                "unit_price": extract_val(p_li_price, chunk),
+                "line_total": extract_val(p_li_total, chunk),
             }
 
             if item["description"] or item["line_total"]:
                 line_items.append(item)
-
 
     # ---------------------------------------------------
     # 4B. LINE-WISE PARSING (single-line items)

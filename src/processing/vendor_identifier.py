@@ -143,27 +143,34 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
     # Strategy: Look for lines with "Phone/Tel" explicitly first. 
     # If not found, look for international format patterns.
     
-    phone_label_pattern = r'(?:Phone|Tel|Mobile|Cell|Ph|T)[:\.\-\s]+([+\d\(\)\-\s]{7,20})'
-    phone_strict_pattern = r'(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'
-    
+    phone_label_pattern = re.compile(
+        r'(?:Phone|Tel|Mobile|Cell|Ph|T)[:\.\-\s]+([+\d\(\)\-\s]{7,20})',
+        re.IGNORECASE
+    )
+
+    phone_strict_pattern = re.compile(
+        r'(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'
+    )
+
     # Attempt 1: Look for labelled phone numbers (Best Match)
-    for line in lines[:30]: # Usually in header
-        m_label = re.search(phone_label_pattern, line, re.IGNORECASE)
+    for line in lines[:30]:  # Usually in header
+        m_label = phone_label_pattern.search(line)
         if m_label:
-            # Clean up the match (remove unrelated text caught by greedy regex)
             raw_num = m_label.group(1).strip()
-            if sum(c.isdigit() for c in raw_num) >= 7: # Valid check
+            if sum(c.isdigit() for c in raw_num) >= 7:
+                # print(f"phone number found {raw_num}")
                 signals["vendor_phone_number"] = raw_num
                 break
-    
+
     # Attempt 2: Strict Regex scan if no label found
-    if not signals["vendor_phone_number"]:
-        # Find all strict matches in the first half of text
-        matches = re.findall(phone_strict_pattern, text[:2000])
+    if not signals.get("vendor_phone_number"):
+        matches = phone_strict_pattern.findall(text[:2000])
         if matches:
-            # specific filter to avoid dates (e.g. 2023-12-05)
-            # Valid phones usually don't start with 202x unless international
-            valid_phones = [p for p in matches if not re.match(r'20[2-3]\d', p)]
+            # filter out date-like false positives (e.g. 2023-12-05)
+            valid_phones = [
+                p for p in matches
+                if not re.match(r'20[2-3]\d', p)
+            ]
             if valid_phones:
                 signals["vendor_phone_number"] = valid_phones[0]
 
@@ -384,21 +391,22 @@ def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
 
     The model must return only a JSON object (no explanations, no markdown).
     """
-    
+
     # Schema to match 'vendor_regex_templates' requirements
     schema = {
         "invoice_level": {
             "invoice_number": "",
             "invoice_date": "",
             "invoice_total_amount": "",
-            "order_date": "" 
+            "order_date": ""
         },
         "line_item_level": {
             "line_item_block_start": "",
             "line_item_block_end": "",
-            "description": "",
+            "line_item_split": "",
             "quantity": "",
-            "unit": "",       
+            "description": "",
+            "unit": "",
             "unit_price": "",
             "line_total": ""
         }
@@ -416,11 +424,11 @@ OUTPUT RULES:
 - Regexes must be as STRICT as reasonable: use surrounding labels, punctuation, and layout.
 
 CRITICAL REGEX RULES (STRICT ENFORCEMENT):
-1. **EXACTLY ONE CAPTURING GROUP**: Every regex that extracts a value MUST contain exactly one capturing group `(...)` that isolates the target data.
-2. **USE NON-CAPTURING GROUPS**: If you need to group tokens for logic (e.g., matching "CS" or "EA"), you MUST use non-capturing groups `(?:...)`.
-   - BAD: `(CS|EA)` -> This captures the unit, creating a second group.
-   - GOOD: `(?:CS|EA)` -> This matches but does not capture.
-3. **MANDATORY FIELDS**: 'invoice_number', 'invoice_date', and 'invoice_total_amount' MUST HAVE A REGEX. Do not return empty strings for these.
+1. EXACTLY ONE CAPTURING GROUP: Every regex that extracts a value MUST contain exactly one capturing group (...) that isolates the target data.
+2. USE NON-CAPTURING GROUPS: If you need to group tokens for logic, you MUST use non-capturing groups (?:...).
+   - BAD: (CS|EA)
+   - GOOD: (?:CS|EA)
+3. MANDATORY FIELDS: 'invoice_number', 'invoice_date', and 'invoice_total_amount' MUST HAVE A REGEX. Do not return empty strings for these.
 
 FIELD GUIDANCE:
 [Invoice Level]
@@ -428,10 +436,13 @@ FIELD GUIDANCE:
 - order_date: Capture the date the order was placed. Distinct from Invoice Date.
 
 [Line Item Level]
-- line_item_block_start: Regex that matches the first line or header (e.g., "Description   Qty   Price"). (No capture group needed here).
-- line_item_block_end: Regex that matches the line AFTER the last item (e.g., "Subtotal" or footer text). (No capture group needed here).
-- description, quantity, unit_price, line_total: Regexes that extract fields from a SINGLE line item row.
-- unit: Regex that captures the unit (e.g., "CS", "EA") if present on the line.
+- line_item_block_start: Regex that matches the first line or header of the line item section (e.g., "Description   Qty   Price"). No capture group required.
+- line_item_block_end: Regex that matches the line immediately AFTER the final line item (e.g., "Subtotal", "Tax", footer text). No capture group required.
+- line_item_split: Regex used to split the extracted line item block into individual line item strings.
+  - SHOULD identify full line item rows.
+  - MAY be empty if line items are already naturally separated.
+  - No capture group required.
+- description, quantity, unit, unit_price, line_total: Regexes that extract fields from a SINGLE line item row.
 
 REQUIRED JSON STRUCTURE:
 {json.dumps(schema, indent=2)}
@@ -595,12 +606,15 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
     # DEBUG: Print the raw output to see what the LLM actually gave us
     print(f"[DEBUG] Phase 2 Raw LLM Output:\n{json.dumps(parsed, indent=2)}")
 
-    # 1) Try to extract JSON (Validation)
+    # =========================================================
+    # 0. ROOT VALIDATION
+    # =========================================================
     if not isinstance(parsed, dict):
         snippet = str(parsed or "")[:1000]
-        raise Phase2ParseError(f"Phase2 parse failure: LLM output not JSON-dict. Raw output snippet: {snippet!s}")
+        raise Phase2ParseError(
+            f"Phase2 parse failure: LLM output not JSON-dict. Raw output snippet: {snippet!s}"
+        )
 
-    # --- REQUIRED TOP-LEVEL KEYS ---
     required_root_keys = {"invoice_level", "line_item_level"}
     missing_root = sorted(list(required_root_keys - set(parsed.keys())))
     if missing_root:
@@ -613,14 +627,21 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
     if not isinstance(invoice, dict):
         raise Phase2ValidationError("invoice_level must be an object/dict.")
 
-    # All these keys MUST be present in the JSON keys
-    required_invoice_keys = {"invoice_number", "invoice_date", "invoice_total_amount", "order_date"}
+    required_invoice_keys = {
+        "invoice_number",
+        "invoice_date",
+        "invoice_total_amount",
+        "order_date",
+    }
     missing_invoice = sorted(list(required_invoice_keys - set(invoice.keys())))
     if missing_invoice:
         raise Phase2ValidationError(f"invoice_level missing keys: {missing_invoice}")
 
-    # Which fields are strictly required to have a non-empty regex?
-    strict_invoice_fields = {"invoice_number", "invoice_date", "invoice_total_amount"}
+    strict_invoice_fields = {
+        "invoice_number",
+        "invoice_date",
+        "invoice_total_amount",
+    }
 
     empty_invoice_keys = []
     bad_group_keys = []
@@ -631,24 +652,28 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
             empty_invoice_keys.append(f"invoice_level.{k} (not a string)")
             continue
 
-        # If it's a strict field, it cannot be empty.
         if k in strict_invoice_fields and v.strip() == "":
             print(f"[WARN] Field '{k}' is empty in LLM output!")
             empty_invoice_keys.append(f"invoice_level.{k}")
-        
-        # If we have a regex (non-empty), validate capture groups
+
         if v.strip() != "":
             groups = _count_capture_groups(v)
-            # FIX: RELAXED VALIDATION. Allow > 1 group.
             if groups < 1:
                 bad_group_keys.append(f"invoice_level.{k} (capture groups={groups})")
             elif groups > 1:
-                print(f"[WARN] invoice_level.{k} has {groups} capture groups. System will default to group(1).")
+                print(
+                    f"[WARN] invoice_level.{k} has {groups} capture groups. "
+                    "System will default to group(1)."
+                )
 
     if empty_invoice_keys:
-        raise Phase2ValidationError(f"Empty/Invalid strictly required invoice_level regex values: {empty_invoice_keys}")
+        raise Phase2ValidationError(
+            f"Empty/Invalid strictly required invoice_level regex values: {empty_invoice_keys}"
+        )
     if bad_group_keys:
-        raise Phase2ValidationError(f"invoice_level regex capture-group errors: {bad_group_keys}")
+        raise Phase2ValidationError(
+            f"invoice_level regex capture-group errors: {bad_group_keys}"
+        )
 
     # =========================================================
     # 2. LINE ITEM LEVEL VALIDATION
@@ -657,10 +682,10 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
     if not isinstance(line_item, dict):
         raise Phase2ValidationError("line_item_level must be an object/dict.")
 
-    # All these keys MUST be present in the JSON keys
     required_line_item_keys = {
         "line_item_block_start",
         "line_item_block_end",
+        "line_item_split",
         "description",
         "quantity",
         "unit",
@@ -671,18 +696,26 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
     if missing_line_item:
         raise Phase2ValidationError(f"line_item_level missing keys: {missing_line_item}")
 
-    # Which fields are strictly required to have a non-empty regex?
     strict_line_fields = {
-        "line_item_block_start", 
-        "line_item_block_end", 
-        "description", 
-        "quantity", 
-        "unit_price", 
-        "line_total"
+        "line_item_block_start",
+        "line_item_block_end",
+        "description",
+        "quantity",
+        "unit_price",
+        "line_total",
     }
-    
-    # These fields represent 'markers' (headers/footers) so they don't NEED a capture group.
-    marker_fields = {"line_item_block_start", "line_item_block_end"}
+
+    marker_fields = {
+        "line_item_block_start",
+        "line_item_block_end",
+    }
+
+    # Fields that must NEVER be capture-group validated
+    non_capture_fields = {
+        "line_item_block_start",
+        "line_item_block_end",
+        "line_item_split",
+    }
 
     empty_line_item_keys = []
     bad_line_item_group_keys = []
@@ -693,27 +726,31 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
             empty_line_item_keys.append(f"line_item_level.{k} (not a string)")
             continue
 
-        # If it's a strict field, it cannot be empty.
         if k in strict_line_fields and v.strip() == "":
             print(f"[WARN] Field '{k}' is empty in LLM output!")
             empty_line_item_keys.append(f"line_item_level.{k}")
 
-        # If we have a regex (non-empty), validate capture groups
-        # FIX: Skip check for marker fields
-        if v.strip() != "" and k not in marker_fields:
+        if v.strip() != "" and k not in non_capture_fields:
             groups = _count_capture_groups(v)
-            # FIX: RELAXED VALIDATION. Allow > 1 group.
             if groups < 1:
-                bad_line_item_group_keys.append(f"line_item_level.{k} (capture groups={groups})")
+                bad_line_item_group_keys.append(
+                    f"line_item_level.{k} (capture groups={groups})"
+                )
             elif groups > 1:
-                 print(f"[WARN] line_item_level.{k} has {groups} capture groups. System will default to group(1).")
+                print(
+                    f"[WARN] line_item_level.{k} has {groups} capture groups. "
+                    "System will default to group(1)."
+                )
 
     if empty_line_item_keys:
-        raise Phase2ValidationError(f"Empty/Invalid strictly required line_item_level regex values: {empty_line_item_keys}")
+        raise Phase2ValidationError(
+            f"Empty/Invalid strictly required line_item_level regex values: {empty_line_item_keys}"
+        )
     if bad_line_item_group_keys:
-        raise Phase2ValidationError(f"line_item_level regex capture-group errors: {bad_line_item_group_keys}")
+        raise Phase2ValidationError(
+            f"line_item_level regex capture-group errors: {bad_line_item_group_keys}"
+        )
 
-    # If we reach here, parsed appears valid per rules
     print("[SUCCESS] Phase 2 Validation Passed.")
     return parsed
 
@@ -878,13 +915,7 @@ def find_vendor_by_phone(extracted_phone: str) -> Optional[str]:
     """
     Finds vendor by exact phone match. Returns vendor_id string only.
     """
-    # Strip non-digits to ensure clean match against DB
-    target = re.sub(r'\D', '', str(extracted_phone))
-    
-    if len(target) < 7: 
-        return None
-
-    vendor_id_object = get_vendor_by_phone(target)
+    vendor_id_object = get_vendor_by_phone(extracted_phone)
     
     return str(vendor_id_object) if vendor_id_object else None
 
@@ -921,7 +952,7 @@ def apply_regex_extraction(
     regex_patterns: Union[List[str], Dict[str, Any]]
 ) -> Tuple[Dict[str, str], List[Dict[str, Any]]]:
     """
-    Applies the strict 0-10 positional regex array to the raw invoice text.
+    Applies the strict positional regex array to the raw invoice text.
 
     Index Mapping:
     0: invoice_number        (Invoice Level)
@@ -930,11 +961,12 @@ def apply_regex_extraction(
     3: order_date            (Invoice Level)
     4: line_item_block_start (Start Marker)
     5: line_item_block_end   (End Marker)
-    6: quantity              (Line Item Level)
-    7: description           (Line Item Level)
-    8: unit                  (Line Item Level)
-    9: unit_price            (Line Item Level)
-    10: line_total           (Line Item Level)
+    6: line_item_split       (Split block into individual items)
+    7: quantity              (Line Item Level)
+    8: description           (Line Item Level)
+    9: unit                  (Line Item Level)
+    10: unit_price           (Line Item Level)
+    11: line_total           (Line Item Level)
     """
 
     # ---------------------------------------------------
@@ -951,11 +983,12 @@ def apply_regex_extraction(
             inv.get("order_date", ""),
             li.get("line_item_block_start", ""),
             li.get("line_item_block_end", ""),
+            li.get("line_item_split", ""),
             li.get("quantity", ""),
             li.get("description", ""),
             li.get("unit", ""),
             li.get("unit_price", ""),
-            li.get("line_total", "")
+            li.get("line_total", ""),
         ]
 
     (
@@ -965,6 +998,7 @@ def apply_regex_extraction(
         p_order_date,
         p_block_start,
         p_block_end,
+        p_li_split,
         p_li_qty,
         p_li_desc,
         p_li_unit,
@@ -1010,14 +1044,14 @@ def apply_regex_extraction(
     # ---------------------------------------------------
     # 3. MODE DETECTION
     # ---------------------------------------------------
-    
-    # For now this is only for ChemMark of Washington
-    is_block_mode = (
-        ("\n" in p_li_desc) or
-        ("[\\s\\S]" in p_li_desc)
-    )
+
+    # Mode is determined strictly by line_item_split presence
+    # Empty string  -> line item mode
+    # Non-empty     -> block mode
+    is_block_mode = bool(p_li_split and p_li_split.strip())
 
     line_items: List[Dict[str, Any]] = []
+
 
     # ---------------------------------------------------
     # 4A. BLOCK-WISE PARSING (multi-line items)
@@ -1110,7 +1144,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
         vendor_id = None
         matched_by = None
 
-    print(f"Matched by: ", matched_by)
+    # print(f"Matched by: ", matched_by)
     # --- CASE A: Vendor Found in DB ---
     if vendor_id:
         vendor_name = find_vendor_name_by_id(vendor_id)

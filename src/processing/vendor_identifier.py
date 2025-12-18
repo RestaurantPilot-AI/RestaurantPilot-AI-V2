@@ -152,29 +152,67 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
         r'(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'
     )
 
+    def normalize_phone(p: str) -> str:
+        return re.sub(r'\D', '', p)
+
+    BLACKLISTED_PHONES = {
+        "3525028078"
+    }
+
     # Attempt 1: Look for labelled phone numbers (Best Match)
-    for line in lines[:30]:  # Usually in header
+    for line in lines[:50]:  # Usually in header
         m_label = phone_label_pattern.search(line)
         if m_label:
             raw_num = m_label.group(1).strip()
             if sum(c.isdigit() for c in raw_num) >= 7:
-                # print(f"phone number found {raw_num}")
-                signals["vendor_phone_number"] = raw_num
-                break
+                if normalize_phone(raw_num) not in BLACKLISTED_PHONES:
+                    signals["vendor_phone_number"] = raw_num
+                    break
 
-    # Attempt 2: Strict Regex scan if no label found
+# Attempt 2: Strict Regex scan if no label found
     if not signals.get("vendor_phone_number"):
         matches = phone_strict_pattern.findall(text[:2000])
         if matches:
-            # filter out date-like false positives (e.g. 2023-12-05)
-            valid_phones = [
-                p for p in matches
-                if not re.match(r'20[2-3]\d', p)
-            ]
+            valid_phones = []
+            for p in matches:
+                # Calculate normalized version once for checks below
+                norm = normalize_phone(p)
+
+                # --- NEW CONDITION 1: Spacing Check ---
+                # Should not contain more than 2 continuous spaces (rejects 3 or more)
+                if '   ' in p:
+                    continue
+
+                # --- NEW CONDITION 2: Digit Length Check ---
+                # Valid if: 10 digits OR (11 digits AND starts with '1')
+                if len(norm) == 10:
+                    pass # Valid
+                elif len(norm) == 11 and norm.startswith('1'):
+                    pass # Valid
+                else:
+                    continue # Skip if length is weird (e.g. 7, 12) or 11 digits without country code 1
+
+                # 1. Filter out date-like false positives
+                if re.match(r'20[2-3]\d', p):
+                    continue
+                
+                # 2. Check Blacklist
+                if norm in BLACKLISTED_PHONES:
+                    continue
+
+                # 3. Strict Bracket Rule
+                if '(' in p:
+                    prefix = p.split('(')[0].strip()
+                    if prefix not in ['', '1', '+1']:
+                        continue
+
+                valid_phones.append(p)
+
             if valid_phones:
                 signals["vendor_phone_number"] = valid_phones[0]
 
-    # --- 3. Website (New Logic) ---
+
+    # --- 3. Website ---
     # Strategy: Find URL patterns, excluding the email domain we just found.
     url_pattern = r'(?:https?://)?(?:www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:/[^\s]*)?'
     
@@ -208,7 +246,7 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
     # B. Legal Entity Suffix Search (The most robust method for native text)
     if not signals["vendor_name"]:
         # Exhaustive list of global company suffixes
-        legal_suffixes = r'\b(Inc|LLC|Ltd|GmbH|BV|B\.V\.|Co\.|Company|Corp|Corporation|S\.A\.|S\.L\.|AG|Pty|Pvt|Private|Plc)\b'
+        legal_suffixes = r'\b(Inc|LLC|Ltd|GmbH|BV|B\.V\.|Co\.|Company|Corp|Corporation|S\.A\.|S\.L\.|AG|Pty|Pvt|Private|Plc|Service)\b'
         
         for i, line in enumerate(lines[:20]): # Vendor is usually at the top
             # Skip lines that look like "Bill To" or "Ship To"
@@ -275,28 +313,6 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
 # ----------------------------
 # LLM helpers (isolated)
 # ----------------------------
-def _safe_extract_json_from_llm(text: str) -> Optional[Dict[str, Any]]:
-    """
-    Given an LLM textual response, attempt to extract the first top-level JSON object and parse it.
-    Returns dict on success, None on failure.
-    """
-    if not text or not isinstance(text, str):
-        return None
-    
-    # Try greedy match from first { to last }
-    try:
-        first = text.index('{')
-        last = text.rindex('}')
-        candidate = text[first:last + 1]
-    except ValueError:
-        return None
-
-    try:
-        parsed = json.loads(candidate)
-        return parsed
-    except Exception:
-        return None
-
 def call_llm_api(prompt: str) -> Dict[str, Any]:
     """
     Calls Gemini API with automatic retry on Rate Limit (429) errors.
@@ -867,11 +883,8 @@ def search_vendor_by_signals(signals: Dict[str, Optional[str]]) -> Optional[Tupl
 
     # 6. Search by Name (Lowest Confidence / Fallback)
     if name:
-        normalized = _normalize_name(name)
-        if len(normalized) >= 3:
-            vid = find_vendor_by_name(normalized)
-            if vid:
-                return vid, "name"
+        vid = find_vendor_by_name(name)
+        return vid, "name"
 
     return None
 
@@ -1064,7 +1077,7 @@ def apply_regex_extraction(
             if not chunk:
                 continue
             
-            print(f"Chunk: {chunk}\n")
+            # print(f"Chunk: {chunk}\n")
             # Normalize wrapped lines AFTER splitting
             # chunk = re.sub(r"\s*\n\s*", " ", chunk)
 
@@ -1080,6 +1093,7 @@ def apply_regex_extraction(
                 "unit_price": extract_val(p_li_price, chunk),
                 "line_total": extract_val(p_li_total, chunk),
             }
+            # print(f"Item: {item}\n")
 
             if item["description"] and (item["line_total"] or item["unit_price"]):
                 line_items.append(item)
@@ -1128,6 +1142,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     """
     # 1. Extract signals using the new corrected method
     signals = extract_vendor_signals(text)
+    # print(signals)
 
     # 2. Search for existing vendor
     search_result = search_vendor_by_signals(signals)
@@ -1142,6 +1157,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     if vendor_id:
         vendor_name = find_vendor_name_by_id(vendor_id)
         # A1. Existing Regex
+        # print(vendor_name)
         regex_list = get_regex_for_vendor(vendor_id)
         
         if regex_list:

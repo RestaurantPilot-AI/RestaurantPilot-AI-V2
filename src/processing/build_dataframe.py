@@ -50,33 +50,34 @@ def get_structured_data_from_text(
 
     except Exception as exc:
         print(f"[WARN] Vendor identification failed: {exc}")
-        print("[INFO] Falling back to default vendor and generic regex patterns")
+        return
+        # print("[INFO] Falling back to default vendor and generic regex patterns")
         
-        # Create a fallback vendor context with default patterns
-        from bson import ObjectId
-        vendor_context = {
-            "vendor_id": ObjectId(),  # Temporary ID for "Unknown Vendor"
-            "vendor_name": "Unknown Vendor",
-            "regex": {
-                "invoice_level": {
-                    "invoice_number": r"(?:invoice|inv)[\s#:]*([0-9]+)",
-                    "invoice_date": r"(?:date|dated)[\s:]*(\d{1,2}[-/]\d{1,2}[-/]\d{2,4})",
-                    "invoice_total_amount": r"(?:total|amount due)[\s:$]*(\d+[.,]\d{2})",
-                    "order_date": ""
-                },
-                "line_item_level": {
-                    "line_item_block_start": r"(?:description|item)",
-                    "line_item_block_end": r"(?:subtotal|total)",
-                    "quantity": r"(\d+\.?\d*)",
-                    "description": r"([A-Za-z0-9\s,.-]+)",
-                    "unit": r"(EA|LB|CS|GAL|BOX|PKG)",
-                    "unit_price": r"\$?(\d+\.\d{2})",
-                    "line_total": r"\$?(\d+\.\d{2})"
-                }
-            }
-        }
-        # Store vendor identification error for later reference
-        vendor_context["identification_error"] = str(exc)
+        # # Create a fallback vendor context with default patterns
+        # from bson import ObjectId
+        # vendor_context = {
+        #     "vendor_id": ObjectId(),  # Temporary ID for "Unknown Vendor"
+        #     "vendor_name": "Unknown Vendor",
+        #     "regex": {
+        #         "invoice_level": {
+        #             "invoice_number": r"(?:invoice|inv)[\s#:]*([0-9]+)",
+        #             "invoice_date": r"(?:date|dated)[\s:]*(\d{1,2}[-/]\d{1,2}[-/]\d{2,4})",
+        #             "invoice_total_amount": r"(?:total|amount due)[\s:$]*(\d+[.,]\d{2})",
+        #             "order_date": ""
+        #         },
+        #         "line_item_level": {
+        #             "line_item_block_start": r"(?:description|item)",
+        #             "line_item_block_end": r"(?:subtotal|total)",
+        #             "quantity": r"(\d+\.?\d*)",
+        #             "description": r"([A-Za-z0-9\s,.-]+)",
+        #             "unit": r"(EA|LB|CS|GAL|BOX|PKG)",
+        #             "unit_price": r"\$?(\d+\.\d{2})",
+        #             "line_total": r"\$?(\d+\.\d{2})"
+        #         }
+        #     }
+        # }
+        # # Store vendor identification error for later reference
+        # vendor_context["identification_error"] = str(exc)
     
     try:
         extracted_inv_data, extracted_li_data = apply_regex_extraction(

@@ -166,6 +166,11 @@ def get_line_item_category(description: str) -> str:
         return "Uncategorized"
 
     cleaned_description = clean_description(description)
+
+    if not cleaned_description:
+        print("[INFO] Cleaned Description empty.")
+        return "Uncategorized"
+    
     # 1. Fetch from DB
     stored_category = get_stored_category(cleaned_description)
     if stored_category:

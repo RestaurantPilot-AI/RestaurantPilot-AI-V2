@@ -981,4 +981,486 @@ bab879f7-69a5-4a89-a6d7-150b97bdbca3,958cb410-4f31-4b58-9056-e0bb8e907f60,Costco
 4be72fe5-257c-4df2-b529-6c407f740164,958cb410-4f31-4b58-9056-e0bb8e907f60,Costco Business Delivery,Dairy,3.0,,"KIRKLAND SIGNATURE WHOLE MILK, 1 GALLON, 2 CT",7.86,23.58,5.0
 21805089-df78-4dae-bad9-66275ca81836,958cb410-4f31-4b58-9056-e0bb8e907f60,Costco Business Delivery,Dairy,4.0,,"WILCOX LIQUID EGG PRODUCT, CAGE FREE, 20 LBS",61.89,247.56,6.0
 4ef61c90-4f9e-48fa-b926-feb4137b4ed6,958cb410-4f31-4b58-9056-e0bb8e907f60,Costco Business Delivery,Uncategorized,1.0,,"MASTER CHEF CANOLA FRYING OIL, 35 LBS",34.89,34.89,7.0
-e9979fd8-7eb4-4e7d-a94c-93d77c98a1f5,958cb410-4f31-4b58-9056-e0bb8e907f60,Costco Business Delivery,Uncategorized,2.0,None,"DEL SOL NACHO SLICED JALAPENO PEPPERS, #10 CAN, 6 LBS 4 OZ",6.66,13.32,8.0
+e9979fd8-7eb4-4e7d-a94c-93d77c98a1f5,958cb410-4f31-4b58-9056-e0bb8e907f60,Costco Business Delivery,Uncategorized,2.0,,"DEL SOL NACHO SLICED JALAPENO PEPPERS, #10 CAN, 6 LBS 4 OZ",6.66,13.32,8.0
+ea980f7b-f5cc-4c23-a178-16da60e2d79b,c584bc04-1f99-43d5-9272-b6e2f54f7d77,Villa Jerada,Paper Goods,1.0,,#8 Kraft - Husky FSC Paper Bags Duro,23.96,23.96,1.0
+169da5d0-06a6-4ac7-a157-28267cf5a0e9,c584bc04-1f99-43d5-9272-b6e2f54f7d77,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+a0c161a6-a7fd-48ea-9b75-bf201d034833,c584bc04-1f99-43d5-9272-b6e2f54f7d77,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+49d4b0b7-1003-4a8a-b9da-88a5b7180f1a,c584bc04-1f99-43d5-9272-b6e2f54f7d77,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+8ae9a7e9-7b44-4e08-86d0-916b85cc0f09,c584bc04-1f99-43d5-9272-b6e2f54f7d77,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+ba13d3ee-b614-45b8-8cf8-f81a15766d03,60d57de5-9d00-4845-b729-eabd90f3e177,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+e909caed-4462-43af-92d5-e2ece3f05722,60d57de5-9d00-4845-b729-eabd90f3e177,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+4edd2543-3b8f-47ea-8a01-6af4b3aa7d8d,60d57de5-9d00-4845-b729-eabd90f3e177,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+6cd03cf5-347a-4c69-aa8f-8f2d40696845,60d57de5-9d00-4845-b729-eabd90f3e177,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+38f41820-1c88-4847-a3ea-9bc526a6f677,60d57de5-9d00-4845-b729-eabd90f3e177,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+ca097347-6c5f-4fb7-936e-abf6872fd3ad,ab4186be-a030-4a81-8544-307721b1e22f,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+41b0f24a-797c-4fb9-a1a6-4f20a7702e58,ab4186be-a030-4a81-8544-307721b1e22f,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+c0937596-04b1-4665-8b06-2bff86bd9807,ab4186be-a030-4a81-8544-307721b1e22f,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+bd0e022d-4664-486f-ac46-3ab1ba3b4396,ab4186be-a030-4a81-8544-307721b1e22f,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+f63ec4c3-1742-49f4-a9db-fd33cf08037d,ab4186be-a030-4a81-8544-307721b1e22f,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+fed5a66f-3532-4a4a-95d8-31d9d63762e9,73181517-9873-409d-a53f-885dddc18699,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+7fe754d2-34c6-4e4b-a355-5745511c78cc,73181517-9873-409d-a53f-885dddc18699,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+317651f0-2d8e-4421-9975-f4f9f5fbb572,73181517-9873-409d-a53f-885dddc18699,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+72b42dd7-f2c3-455c-b791-1fc492a048a4,73181517-9873-409d-a53f-885dddc18699,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+86db21b1-42cd-4605-8730-fcd8ce69d2ed,73181517-9873-409d-a53f-885dddc18699,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+e09dfbc0-8c77-4baa-a2b6-d5b2b2bd917d,8a2efd51-2694-4cac-b03d-1ce58c9d7058,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+5d3b206e-35da-40e5-8078-6ce0bdbe5965,8a2efd51-2694-4cac-b03d-1ce58c9d7058,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+3a884d9e-def7-4037-a096-c153b86a12ac,8a2efd51-2694-4cac-b03d-1ce58c9d7058,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+e68f82f5-c1d9-4e38-ad73-520882d53594,8a2efd51-2694-4cac-b03d-1ce58c9d7058,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+e1a1f4de-3d3a-40e0-9a6e-def88f91cf33,8a2efd51-2694-4cac-b03d-1ce58c9d7058,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+44947e2a-c852-42e2-8fcf-1ac54ef6361d,4c7999d5-63ca-4962-aa44-37af0e85b5ef,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+a796e20c-c79e-42cf-bab8-a9f570430f26,4c7999d5-63ca-4962-aa44-37af0e85b5ef,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+f6030f6e-eb13-43e0-a086-e84702bd147a,4c7999d5-63ca-4962-aa44-37af0e85b5ef,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+45044bd1-5485-4140-9616-15d8741b6734,4c7999d5-63ca-4962-aa44-37af0e85b5ef,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+480d277b-f92f-4a08-9bd5-1386feb4c650,4c7999d5-63ca-4962-aa44-37af0e85b5ef,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+25c084b1-a920-44b8-a985-50d959a7acbe,fae0d6ad-1898-44c7-95ef-a6e4ddfb3d8a,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:#8 Kraft - Husky FSC Paper Bags Duro,23.96,23.96,1.0
+cffe9265-76a0-4957-a736-25c6aa0c3948,fae0d6ad-1898-44c7-95ef-a6e4ddfb3d8a,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:8oz Hot Cup Lids - CPLA - (Case of,65.0,65.0,2.0
+2c4c452f-3480-4c8a-8c63-b14c7ddc8c4b,fae0d6ad-1898-44c7-95ef-a6e4ddfb3d8a,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:8oz Hot Cups Compostable (Case of,77.46,77.46,3.0
+a9c1e3f3-5fbe-4691-b45b-e816ebebbc9b,fae0d6ad-1898-44c7-95ef-a6e4ddfb3d8a,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+ef486fa4-ce3c-4209-b917-1e997da655e5,fae0d6ad-1898-44c7-95ef-a6e4ddfb3d8a,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+df73b3ec-10d1-4b8f-93b3-84f0e7b7e0e4,c357e9e5-28a1-40ec-b19e-3fa1f5f8192e,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+b04c6c53-bf1f-4059-a5e7-f617621c6f63,c357e9e5-28a1-40ec-b19e-3fa1f5f8192e,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+9c2c4805-05c2-426f-bd24-030ab9767732,c357e9e5-28a1-40ec-b19e-3fa1f5f8192e,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+e955b90b-50b6-4bf9-b979-73d5eb91f283,c357e9e5-28a1-40ec-b19e-3fa1f5f8192e,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+66104d5d-1b92-4bde-8a63-4bf3c1736b0e,3faf6e23-edd0-46d2-b10b-37d780baf3e3,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+d703c89d-c821-4dee-ad5f-f22bf4ffa925,3faf6e23-edd0-46d2-b10b-37d780baf3e3,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+2c179099-62b6-422a-9074-c98cef7510de,3faf6e23-edd0-46d2-b10b-37d780baf3e3,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+d6f982cc-fbca-445a-a032-1214c5fb5577,3faf6e23-edd0-46d2-b10b-37d780baf3e3,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+342fd40e-abb8-4d34-9f12-92d41f866479,9306dda5-43ed-46f1-992c-d135f752522c,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+c68ea873-cb7a-498d-bfeb-77ac2ceefc88,9306dda5-43ed-46f1-992c-d135f752522c,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+31fad08d-3c72-4ff8-be45-d4a290f738f7,9306dda5-43ed-46f1-992c-d135f752522c,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+e8d6c4e2-729c-4979-b24b-2fd66c09ebeb,9306dda5-43ed-46f1-992c-d135f752522c,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+9e80f541-386a-431a-9129-5ba2a5802f75,831cdef2-f7e1-4f9c-9d4a-5275ffd8b25a,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+0d2f2bde-f286-44d4-beae-acf7b449555b,831cdef2-f7e1-4f9c-9d4a-5275ffd8b25a,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+d43b7de8-43a1-42e8-aef7-020b22472ba9,831cdef2-f7e1-4f9c-9d4a-5275ffd8b25a,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+55682500-d6c5-41ea-8363-e225211c23aa,831cdef2-f7e1-4f9c-9d4a-5275ffd8b25a,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+a1349a26-1c12-41cd-8060-1173e99347f5,2eb12eb7-3a12-4117-974a-e6ce7103758b,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+3861ff84-1acc-4371-bb96-8de5027792dd,2eb12eb7-3a12-4117-974a-e6ce7103758b,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+c2047f68-bdec-42cd-adae-1c3e12405699,2eb12eb7-3a12-4117-974a-e6ce7103758b,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+80202f58-c30d-4463-b290-c419768800f0,2eb12eb7-3a12-4117-974a-e6ce7103758b,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+1c158926-da76-4c3b-ab83-06c7acebd223,13b270f6-a832-4485-8c41-7ff84adacafc,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+71ef0b99-eec0-4c26-80c7-5970c88a5a12,13b270f6-a832-4485-8c41-7ff84adacafc,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+f4757fec-2c91-4ae6-acab-19927f1c0a1e,13b270f6-a832-4485-8c41-7ff84adacafc,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+94594f59-f73a-4d91-bdd6-84913e0b8ff6,13b270f6-a832-4485-8c41-7ff84adacafc,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+d44c78f8-1357-45da-a82a-efd02c5e53eb,cfa764d7-b088-49b9-91c8-f40d771d442d,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,1.0
+29901208-b1eb-4a03-bc85-17159087ea78,cfa764d7-b088-49b9-91c8-f40d771d442d,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+82775bcf-38c0-48c6-8b30-2e1ab73caee2,cfa764d7-b088-49b9-91c8-f40d771d442d,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+9c159291-4f7a-4143-8a98-47434a9e96ee,cfa764d7-b088-49b9-91c8-f40d771d442d,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Cold Cups - Compostable (Case,131.53,131.53,4.0
+26d2deab-9100-4c46-ba08-bdc615edc9f2,040fe54b-4a3f-4327-a140-075b246b1d77,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+8d1cb6a3-9af7-464e-90f8-29bcb896bf7c,040fe54b-4a3f-4327-a140-075b246b1d77,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+a18c0120-74f3-41c0-a88d-4080a6600b06,040fe54b-4a3f-4327-a140-075b246b1d77,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+7dcfc8de-1b47-4071-8632-df1c1320c9de,040fe54b-4a3f-4327-a140-075b246b1d77,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+89602948-11bf-4739-ab7a-cf4264fcc46b,040fe54b-4a3f-4327-a140-075b246b1d77,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+8f9a7204-2a16-444b-9953-51077c925784,040fe54b-4a3f-4327-a140-075b246b1d77,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+6e71625b-1d91-4b52-9ad2-4449deaba66e,040fe54b-4a3f-4327-a140-075b246b1d77,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+8427cfaf-024b-4000-8faf-9ed640600e50,234f3f51-5a3e-4c51-89e1-0062b65e57fc,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+4edfe0ce-4527-4e4e-abf5-865194d477f6,234f3f51-5a3e-4c51-89e1-0062b65e57fc,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+9901fe8c-1f15-44ef-8a8f-200b7913cc0a,234f3f51-5a3e-4c51-89e1-0062b65e57fc,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+0606391d-af04-4bc5-a670-cf4df2a6e8bf,234f3f51-5a3e-4c51-89e1-0062b65e57fc,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+fc047442-a08e-4535-abf4-787ebbb25308,234f3f51-5a3e-4c51-89e1-0062b65e57fc,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+58968074-99da-4043-943c-bd7c91c9bbba,234f3f51-5a3e-4c51-89e1-0062b65e57fc,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+9bab1dac-485b-4c0a-9c43-e5129db41c86,234f3f51-5a3e-4c51-89e1-0062b65e57fc,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+9c1a172b-07e2-4298-abc8-f461d6404ae4,57b34d57-7a80-4566-8e15-6b7744819635,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+5b4cb17e-f595-45e3-accf-b06da7f69f8b,57b34d57-7a80-4566-8e15-6b7744819635,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+c1b4a5c6-4fff-4461-a2b8-72bbf2b063e1,57b34d57-7a80-4566-8e15-6b7744819635,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+ac845dfe-41bb-43a5-8a15-e2b8ba442b64,57b34d57-7a80-4566-8e15-6b7744819635,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+4da5e229-0119-411c-8ad9-8fc00ea40688,57b34d57-7a80-4566-8e15-6b7744819635,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+35e40e8f-b303-489d-82b1-bf6bf04971ae,57b34d57-7a80-4566-8e15-6b7744819635,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+32fc0289-8ed7-4dd7-b742-c02ecdcf04b7,57b34d57-7a80-4566-8e15-6b7744819635,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+ea57985b-7a1e-41eb-bd0d-afdcf67777ae,d7f9c18a-343e-4b63-86b4-3dfdb8a3dbab,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+135d1f91-5697-4d48-bb4f-bd76a84e7447,d7f9c18a-343e-4b63-86b4-3dfdb8a3dbab,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+1a48b1af-5468-468f-bdd5-7e1bd75f6c5d,d7f9c18a-343e-4b63-86b4-3dfdb8a3dbab,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+cd33e277-a777-43e4-9caa-b41bc64614ba,d7f9c18a-343e-4b63-86b4-3dfdb8a3dbab,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+f876f94f-ed31-4333-ad10-71e14ed0067a,d7f9c18a-343e-4b63-86b4-3dfdb8a3dbab,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+9b34c32a-b546-4441-8044-91aa4396b717,d7f9c18a-343e-4b63-86b4-3dfdb8a3dbab,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+b617ed3a-5f9c-44e9-82e1-7f9e7a9f13f0,d7f9c18a-343e-4b63-86b4-3dfdb8a3dbab,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+7664fd43-8c0d-44aa-8868-7588c990e20d,0aa4786e-0378-498d-9b77-5ff73a6161c5,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+8dbba4cf-9b27-4725-9a10-c742ff46d7f2,0aa4786e-0378-498d-9b77-5ff73a6161c5,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+d259c709-c867-4922-aaa8-c733e02addc1,0aa4786e-0378-498d-9b77-5ff73a6161c5,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+50f9c844-77e2-4d58-b685-e55cce6d389f,0aa4786e-0378-498d-9b77-5ff73a6161c5,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+bc0688e9-1533-46ca-8161-451adc19452b,0aa4786e-0378-498d-9b77-5ff73a6161c5,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+994b42a4-5641-4438-8526-9da7f4c7aa02,0aa4786e-0378-498d-9b77-5ff73a6161c5,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+898eb7c2-4bca-4a31-b4ce-615146ce5772,0aa4786e-0378-498d-9b77-5ff73a6161c5,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+b42d7c04-d2a2-42eb-97b9-6d5c92a837ea,c7a9cc0b-034c-416b-8e9d-886ed01c1b0c,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+9cd48bea-5a29-4d96-b75d-0ee6256e7282,c7a9cc0b-034c-416b-8e9d-886ed01c1b0c,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+278b614c-71eb-427b-a0d3-03a4a5614cfc,c7a9cc0b-034c-416b-8e9d-886ed01c1b0c,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+0e8684c1-34d3-4e09-818a-97042d6bc36a,c7a9cc0b-034c-416b-8e9d-886ed01c1b0c,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+c03ac879-b52c-41ce-922d-474fe5b14320,c7a9cc0b-034c-416b-8e9d-886ed01c1b0c,Villa Jerada,Paper Goods,1.0,,#8 Kraft - Husky FSC Paper Bags Duro,23.96,23.96,5.0
+d9048436-4fc2-45fe-b041-8bda2e40a43e,c7a9cc0b-034c-416b-8e9d-886ed01c1b0c,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+0801f3bc-623f-4524-a52a-6c6fa61d95b5,c7a9cc0b-034c-416b-8e9d-886ed01c1b0c,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+8e49f642-bdee-4d6b-b1cc-600529d94ed3,826f9751-69cd-48ac-8560-265cf87c8319,Villa Jerada,Uncategorized,1.0,,Zaatar Palestinian (Organic),12.48,12.48,1.0
+6a112824-5d75-4dca-83fd-d82caf3c7e4c,826f9751-69cd-48ac-8560-265cf87c8319,Villa Jerada,Uncategorized,8.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,175.92,2.0
+4bc8ccee-b508-4ff3-a975-ad51b8f269df,826f9751-69cd-48ac-8560-265cf87c8319,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,3.0
+10d29181-2bc4-40c3-a019-06d86acff0a3,826f9751-69cd-48ac-8560-265cf87c8319,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+a2c8f9aa-68c2-4e91-973c-5b0c4227b8d9,826f9751-69cd-48ac-8560-265cf87c8319,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+7e44cded-798f-43b5-96d6-d46d2d6b1c98,ad250ace-d8f1-4ebf-9a0b-4602609c63aa,Villa Jerada,Uncategorized,1.0,,Zaatar Palestinian (Organic),12.48,12.48,1.0
+859a3754-ecee-45db-bd22-c4f88971ac37,ad250ace-d8f1-4ebf-9a0b-4602609c63aa,Villa Jerada,Uncategorized,8.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,175.92,2.0
+ce1ea911-63bf-4328-929e-a3204265d77e,ad250ace-d8f1-4ebf-9a0b-4602609c63aa,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,3.0
+f8cf1785-44b1-48e3-95d3-63319d3be55e,ad250ace-d8f1-4ebf-9a0b-4602609c63aa,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+8d7e527d-7145-4bd0-99ee-f56e3013aef5,ad250ace-d8f1-4ebf-9a0b-4602609c63aa,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+f76df6da-c230-4fbf-bee9-1dd0b4982170,82912c9b-a210-4e98-a558-824f9ab62165,Villa Jerada,Uncategorized,1.0,,Zaatar Palestinian (Organic),12.48,12.48,1.0
+945372c0-a53e-4804-9c42-1be9ec402a35,82912c9b-a210-4e98-a558-824f9ab62165,Villa Jerada,Uncategorized,8.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,175.92,2.0
+375ce8dc-f0ee-4ab5-8e4f-228579177a50,82912c9b-a210-4e98-a558-824f9ab62165,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,3.0
+d7d6883b-2043-42b9-9c1a-c26373b3d96f,82912c9b-a210-4e98-a558-824f9ab62165,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+77f82738-66d1-46b8-a3fa-51756c861c57,82912c9b-a210-4e98-a558-824f9ab62165,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+dc7e41f6-9ff9-4ce0-b148-1d0073409aa1,506dd319-9f4e-4c08-87c9-7d67280ee39f,Villa Jerada,Uncategorized,4.0,,Zaatar Palestinian (Organic),12.48,49.92,1.0
+597ff9f5-9a5d-485f-95db-69f3ae7fc76b,506dd319-9f4e-4c08-87c9-7d67280ee39f,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,2.0
+c3c6b39f-f6f4-4177-808e-0b4633b8029d,ce4aa37b-6f50-475f-891c-73d53addab38,Villa Jerada,Uncategorized,4.0,,Zaatar Palestinian (Organic),12.48,49.92,1.0
+f6a6772c-41c1-4daf-b9da-d4a9ca159518,ce4aa37b-6f50-475f-891c-73d53addab38,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,2.0
+8763138c-216d-4801-ab40-277a6dd02f33,6c82832a-52cd-4684-8836-6713d0c4a0d1,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+68211609-c4bb-4dab-ab25-bf58426e7eca,6c82832a-52cd-4684-8836-6713d0c4a0d1,Villa Jerada,Uncategorized,6.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+c537be3b-b77a-4329-9948-ef1873786b9b,6c82832a-52cd-4684-8836-6713d0c4a0d1,Villa Jerada,Uncategorized,1.0,,16oz Hot Cups - Paper - Compostable,112.65,112.65,3.0
+2443aa94-7e75-4096-ab6b-ac12238d94ab,6c82832a-52cd-4684-8836-6713d0c4a0d1,Villa Jerada,Uncategorized,1.0,,12oz Hot Cups - Paper - Compostable,98.12,98.12,4.0
+b6cf8161-b4b4-45bb-9b04-397b6fb70f23,6c82832a-52cd-4684-8836-6713d0c4a0d1,Villa Jerada,Uncategorized,1.0,,Toilet Paper 2-ply (Case of 96 Rolls),55.9,55.9,5.0
+8a2535af-fbf8-49dc-bac8-7ed668755dac,6c82832a-52cd-4684-8836-6713d0c4a0d1,Villa Jerada,Uncategorized,1.0,,33gal Trash Can Liners,28.59,28.59,6.0
+be093e08-ae6e-482e-ab03-2629fb99d26e,2823aa56-4655-4c46-865a-5d663edcacd0,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+af6527af-b5b1-4be0-b3cd-4b98271975c7,2823aa56-4655-4c46-865a-5d663edcacd0,Villa Jerada,Uncategorized,6.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+d0e72bc1-6cf3-46ae-9582-b4659d30e612,2823aa56-4655-4c46-865a-5d663edcacd0,Villa Jerada,Uncategorized,1.0,,16oz Hot Cups - Paper - Compostable,112.65,112.65,3.0
+8db448cf-e96d-4494-8768-ddead702dad1,2823aa56-4655-4c46-865a-5d663edcacd0,Villa Jerada,Uncategorized,1.0,,12oz Hot Cups - Paper - Compostable,98.12,98.12,4.0
+e780d20f-eef6-41b9-a7cd-bb671d0e16e1,2823aa56-4655-4c46-865a-5d663edcacd0,Villa Jerada,Uncategorized,1.0,,Toilet Paper 2-ply (Case of 96 Rolls),55.9,55.9,5.0
+612d6cd9-1e64-46cf-8ae5-0c2678252036,2823aa56-4655-4c46-865a-5d663edcacd0,Villa Jerada,Uncategorized,1.0,,33gal Trash Can Liners,28.59,28.59,6.0
+c312fd73-a7e6-442d-8b2f-f5e55ebc6bf6,136286f7-ab07-4eca-9e0c-dc3a48736d99,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves  - (Black),79.0,79.0,1.0
+e8ec26c0-4247-469b-9549-0c3f30940215,136286f7-ab07-4eca-9e0c-dc3a48736d99,Villa Jerada,Uncategorized,6.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+e6d143f6-1fd7-46f4-b9b6-4d06c2228615,136286f7-ab07-4eca-9e0c-dc3a48736d99,Villa Jerada,Uncategorized,1.0,,Jumbo Green Air Straws - Compostable -,47.0,47.0,3.0
+2059fdf8-4317-45ae-b312-73daacb1fa8a,136286f7-ab07-4eca-9e0c-dc3a48736d99,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+992c39d8-82d9-4aa8-ac2d-c6bd8553e989,136286f7-ab07-4eca-9e0c-dc3a48736d99,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+c7ef8c29-704b-4eca-b113-6e239a45933f,adb9be75-3d12-49d0-aea0-3fdf935e8b02,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves  - (Black),79.0,79.0,1.0
+0dd0b847-7c46-4d61-8772-b7c2d68b1ebe,adb9be75-3d12-49d0-aea0-3fdf935e8b02,Villa Jerada,Uncategorized,6.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+2eff2010-d692-48eb-9851-ea22437ff218,adb9be75-3d12-49d0-aea0-3fdf935e8b02,Villa Jerada,Uncategorized,1.0,,TO GO - CUTLERY:Jumbo Green Air Straws -,47.0,47.0,3.0
+3fb12dc2-5ac7-471d-b3ae-9802a9ed9a75,adb9be75-3d12-49d0-aea0-3fdf935e8b02,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:Java Jacket Hot Cup Sleeves -,21.99,21.99,4.0
+73ba87ec-cf10-482a-b1eb-828f212c1e7b,adb9be75-3d12-49d0-aea0-3fdf935e8b02,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+e3ff263d-0e64-4419-ae4d-f8048a1a8974,664e4862-315c-48f8-b81b-edc67270fc5b,Villa Jerada,Paper Goods,2.0,,#8 Kraft - Husky FSC Paper Bags Duro,20.99,41.98,1.0
+056e8766-f8aa-4381-9fa7-a5fc8ad607ad,664e4862-315c-48f8-b81b-edc67270fc5b,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of,78.46,78.46,2.0
+ba6a19de-871b-4190-bd3e-33d251b383fc,664e4862-315c-48f8-b81b-edc67270fc5b,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,3.0
+9443959c-4833-411f-aeed-794875f8da75,664e4862-315c-48f8-b81b-edc67270fc5b,Villa Jerada,Uncategorized,1.0,,Bag Kraft Paper Duro - 20lbs (500 units),38.99,38.99,4.0
+a0c36dec-5f68-4cba-8871-c2e0d1a486ee,664e4862-315c-48f8-b81b-edc67270fc5b,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,5.0
+d3ca39f5-ee05-4ecf-b348-b5635668ff07,5cf6b166-c772-4667-aa5d-9ba7fc300eb2,Villa Jerada,Uncategorized,2.0,,TO GO - BAGS:#8 Kraft - Husky FSC Paper Bags,20.99,41.98,1.0
+8c027744-661f-4e40-a040-6d7cd95deea1,5cf6b166-c772-4667-aa5d-9ba7fc300eb2,Villa Jerada,Uncategorized,1.0,,16oz Cold Cups - Compostable (Case of 50),9.66,9.66,2.0
+c8559d53-d4cf-436d-8d97-a6599ffaa638,5cf6b166-c772-4667-aa5d-9ba7fc300eb2,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:8oz Hot Cups Compostable (Case,78.46,78.46,3.0
+a78207b9-6885-4bdc-9797-57b3e433265b,5cf6b166-c772-4667-aa5d-9ba7fc300eb2,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,4.0
+22b02284-d6b8-4863-9097-56bac3ba84d3,5cf6b166-c772-4667-aa5d-9ba7fc300eb2,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:Bag Kraft Paper Duro - 20lbs (500,38.99,38.99,5.0
+9d4860a7-3f0b-4647-b90a-7c1825532a9d,5cf6b166-c772-4667-aa5d-9ba7fc300eb2,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:#25 Kraft Paper Bags Duro (500,34.43,34.43,6.0
+965718c6-a915-45c8-b909-59a7c42d2ed8,ec599e6e-5feb-47b4-981d-42dac5503085,Villa Jerada,Uncategorized,5.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+a1ec9d95-c5d2-447c-847a-b6346e4c4c9c,ec599e6e-5feb-47b4-981d-42dac5503085,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Cold Cups - Compostable,133.53,133.53,2.0
+30b209d8-4c89-4c28-80b6-64c7e212fb08,ec599e6e-5feb-47b4-981d-42dac5503085,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+4c4294a5-0d06-463e-94bd-7f0b392ab244,ec599e6e-5feb-47b4-981d-42dac5503085,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+e51abb49-5a20-4b33-a520-88f96b1f5ffb,ec599e6e-5feb-47b4-981d-42dac5503085,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+d096e1bd-7d48-4bea-bf94-219b7f596f40,33f4c7d2-36aa-4390-91ac-2c1a3b049b49,Villa Jerada,Uncategorized,5.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+2f4d07b6-a838-46cc-9ff2-7e8860156c28,33f4c7d2-36aa-4390-91ac-2c1a3b049b49,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Cold Cups - Compostable,133.53,133.53,2.0
+f9b56e4a-e5d2-4de9-a9d2-9d0cf55abaef,33f4c7d2-36aa-4390-91ac-2c1a3b049b49,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+7ffdb5ae-f42a-42c8-86f5-f4a079bf6316,33f4c7d2-36aa-4390-91ac-2c1a3b049b49,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+d968f30d-8724-4725-92c8-8ae6e69cc25e,33f4c7d2-36aa-4390-91ac-2c1a3b049b49,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+3e93eb7c-66c0-45ee-a60b-caae5daa17a8,b87865a3-ecb5-48dd-a88b-4931c6ab6998,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Oat Milk Organic Califia - 32oz,21.99,21.99,1.0
+c2bf23e6-8efc-4b6b-978c-3bad9271e870,b87865a3-ecb5-48dd-a88b-4931c6ab6998,Villa Jerada,Uncategorized,1.0,,TAKE OUT PACKAGING:Lid for 8oz Paper Bowl -,55.58,55.58,2.0
+8c08b7fa-4db0-40f5-8cef-0d196d1075c7,b87865a3-ecb5-48dd-a88b-4931c6ab6998,Villa Jerada,Uncategorized,1.0,,"TO GO - CUTLERY:10"" Paper Straws - Kraft",110.96,110.96,3.0
+25b268ec-e7a3-46b0-b25b-d28f0ef30ecb,b87865a3-ecb5-48dd-a88b-4931c6ab6998,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,4.0
+470a2027-51d0-49b8-9c42-518fe50b8087,06711c1c-bfa7-4f70-bcad-7d6611d86c33,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Oat Milk Organic Califia - 32oz,21.99,21.99,1.0
+b18f59af-5478-4cbb-b509-b1f5ae557c27,06711c1c-bfa7-4f70-bcad-7d6611d86c33,Villa Jerada,Uncategorized,1.0,,TAKE OUT PACKAGING:Lid for 8oz Paper Bowl -,55.58,55.58,2.0
+af99223c-8209-4576-85cd-d5b9078b38eb,06711c1c-bfa7-4f70-bcad-7d6611d86c33,Villa Jerada,Uncategorized,1.0,,"TO GO - CUTLERY:10"" Paper Straws - Kraft",110.96,110.96,3.0
+3c6e3983-fe9c-4d5e-86f7-5286416f8d40,06711c1c-bfa7-4f70-bcad-7d6611d86c33,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,4.0
+ef484dad-8ef8-4142-b3c1-8206865dc147,00ad5fb6-d896-4cd1-bdea-c4605ff34376,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:Sandwich,62.71,62.71,1.0
+63734ee2-3db7-4c81-9e91-d105de1ade1e,00ad5fb6-d896-4cd1-bdea-c4605ff34376,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,2.0
+2359cfe3-b9cd-4f56-ac79-d10b8a2dd260,00ad5fb6-d896-4cd1-bdea-c4605ff34376,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+b6712a1f-7427-4f1e-9d69-e12ccf61fe84,344465d8-f8a6-4766-a244-57da9130e5a5,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:Sandwich,62.71,62.71,1.0
+15fbed9b-c41b-4335-ad4e-3132c4014519,344465d8-f8a6-4766-a244-57da9130e5a5,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,2.0
+6dd98048-7121-45b3-8f5c-20cc074db0df,344465d8-f8a6-4766-a244-57da9130e5a5,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+efdae809-0a73-4fd7-a3ab-0d1317c755fc,df117fc8-1162-4ac3-8203-4218daf1ce9e,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,1.0
+7874c96a-3593-4a43-824d-6c039b0f2dca,cab0f660-7daf-41d4-a752-c73a61831332,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,1.0
+cbd536b1-9cd8-4ec7-831d-3898496148f0,d6efac02-f607-463a-94d1-8ad052f72236,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,1.0
+9e4c4f2e-f83a-473f-ba19-02956cb4e275,bcfbe620-06a7-420e-aaea-92c1ed8bc9b0,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,1.0
+1072cf83-f7af-4e95-8b30-9177e5e1dabf,89104d33-e252-4805-985e-5b9cca5c8287,Villa Jerada,Uncategorized,1.0,,"TO GO - NAPKINS:Interfold Dispenser Napkins 2-Ply, 6.5 x",64.0,64.0,1.0
+2337d7da-e851-44ff-a4d3-567b3be4cb49,89104d33-e252-4805-985e-5b9cca5c8287,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Hot Cups - Paper - Compostable -,99.12,99.12,2.0
+99c264ab-1704-4195-9023-52e76a4d19bb,89104d33-e252-4805-985e-5b9cca5c8287,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:16oz Hot Cups - Paper - Compostable (Case,113.65,113.65,3.0
+6f361fea-dea5-459f-a5dd-98e8b9ff8b1e,89104d33-e252-4805-985e-5b9cca5c8287,Villa Jerada,Uncategorized,4.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,87.96,4.0
+4569e2d0-6ecd-4ff0-b80a-68df921c143a,89104d33-e252-4805-985e-5b9cca5c8287,Villa Jerada,Uncategorized,1.0,,SPICES:Citric Acid - 1lb,6.5,6.5,5.0
+90971539-3f2d-4798-862e-1205d30c6606,89104d33-e252-4805-985e-5b9cca5c8287,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,6.0
+a4ff388b-507c-4771-9444-d56f7194c382,24ebe80b-d579-4ce0-bb1b-04af41158e87,Villa Jerada,Uncategorized,1.0,,"TO GO - NAPKINS:Interfold Dispenser Napkins 2-Ply, 6.5 x",64.0,64.0,1.0
+0ba9a9d5-3635-4d18-a59a-993897ae23ec,24ebe80b-d579-4ce0-bb1b-04af41158e87,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Hot Cups - Paper - Compostable -,99.12,99.12,2.0
+75d1553d-1a79-45f4-8cb8-acbcd0d8b7ed,24ebe80b-d579-4ce0-bb1b-04af41158e87,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:16oz Hot Cups - Paper - Compostable (Case,113.65,113.65,3.0
+3ef5bb81-0254-4bd4-b878-6cb5b803e42f,24ebe80b-d579-4ce0-bb1b-04af41158e87,Villa Jerada,Uncategorized,4.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,87.96,4.0
+b00a8200-bd27-45ac-b330-2bc5bf187216,24ebe80b-d579-4ce0-bb1b-04af41158e87,Villa Jerada,Uncategorized,1.0,,SPICES:Citric Acid - 1lb,6.5,6.5,5.0
+29895830-7196-4d6c-8e02-28651cfb2f04,24ebe80b-d579-4ce0-bb1b-04af41158e87,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,6.0
+f975df91-26f3-4855-8db4-329ff217f030,ae7311f4-c8dc-4f1f-a594-4b7695ad4d97,Villa Jerada,Uncategorized,1.0,,"TO GO - NAPKINS:Interfold Dispenser Napkins 2-Ply, 6.5 x",64.0,64.0,1.0
+b4d47216-db3d-4b12-aef1-97e5c1947bd3,ae7311f4-c8dc-4f1f-a594-4b7695ad4d97,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Hot Cups - Paper - Compostable -,99.12,99.12,2.0
+4321358e-a521-408e-90e2-e65e3e2a2d1f,ae7311f4-c8dc-4f1f-a594-4b7695ad4d97,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:16oz Hot Cups - Paper - Compostable (Case,113.65,113.65,3.0
+7a34910b-ce6b-4cfa-ae20-dd749669ecde,ae7311f4-c8dc-4f1f-a594-4b7695ad4d97,Villa Jerada,Uncategorized,4.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,87.96,4.0
+b2848607-1003-4ee1-aab3-03b76da0d24f,ae7311f4-c8dc-4f1f-a594-4b7695ad4d97,Villa Jerada,Uncategorized,1.0,,SPICES:Citric Acid - 1lb,6.5,6.5,5.0
+dfe88dec-a9ff-4fcf-a756-8269a9c80e3e,ae7311f4-c8dc-4f1f-a594-4b7695ad4d97,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,6.0
+17512ebe-6019-48c4-beef-a3342640a683,c3b3b922-90d9-4bba-9107-1ab1a378a6a2,Villa Jerada,Uncategorized,1.0,,"TO GO - NAPKINS:Interfold Dispenser Napkins 2-Ply, 6.5 x",64.0,64.0,1.0
+667c601b-46bb-40be-814a-7766ff92f459,c3b3b922-90d9-4bba-9107-1ab1a378a6a2,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Hot Cups - Paper - Compostable -,99.12,99.12,2.0
+dc7bb85c-6a8f-44d5-a444-44bbffcacea0,c3b3b922-90d9-4bba-9107-1ab1a378a6a2,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:16oz Hot Cups - Paper - Compostable (Case,113.65,113.65,3.0
+a7ab1139-fb35-439d-b8a9-c6b311b8b418,c3b3b922-90d9-4bba-9107-1ab1a378a6a2,Villa Jerada,Uncategorized,4.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,87.96,4.0
+a3caf0b1-08b9-4e9b-95a9-07c3e7c13511,c3b3b922-90d9-4bba-9107-1ab1a378a6a2,Villa Jerada,Uncategorized,1.0,,SPICES:Citric Acid - 1lb,6.5,6.5,5.0
+2d8d6c6f-5abb-4723-99cf-02cb1fe3639a,c3b3b922-90d9-4bba-9107-1ab1a378a6a2,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,6.0
+a0dc8ea6-4f14-47d8-9729-d9f490c3ca18,c24dd084-b17e-4d68-908d-75b5c42fb2c1,Villa Jerada,Uncategorized,3.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,65.97,1.0
+a128f0df-b103-4633-8d5f-2eb33addf789,c24dd084-b17e-4d68-908d-75b5c42fb2c1,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,43.98,2.0
+7a37d12a-4d73-450d-8916-6c12ffc77c34,c24dd084-b17e-4d68-908d-75b5c42fb2c1,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+e7ea81db-9b3d-4b66-80f5-5a00cee855bb,2c829363-e44e-4943-bebd-af9d71c01784,Villa Jerada,Uncategorized,3.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,65.97,1.0
+f86f3717-8757-4d30-b8a7-5150a6078fef,2c829363-e44e-4943-bebd-af9d71c01784,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,43.98,2.0
+21abbf21-4a42-49c7-a9ff-c5fa5d9d9f55,2c829363-e44e-4943-bebd-af9d71c01784,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+e8de59f8-a5da-424b-aeff-69450b2d5a9b,5a32db5c-14ad-4a2c-8e21-f03c582c97a2,Villa Jerada,Uncategorized,3.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,65.97,1.0
+e0f0ef58-423a-4e30-a507-f697d33359c0,5a32db5c-14ad-4a2c-8e21-f03c582c97a2,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,43.98,2.0
+b43cbeb3-1f45-4a4b-92f6-d63cbbc334d4,5a32db5c-14ad-4a2c-8e21-f03c582c97a2,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+d31eca3e-edc1-4eec-a70f-5e9f4f4838f3,bd44f283-470b-4fb8-a231-e5da09d2cd7d,Villa Jerada,Uncategorized,3.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,65.97,1.0
+b8a4ffcf-be8b-4a0e-9b44-795183572b68,bd44f283-470b-4fb8-a231-e5da09d2cd7d,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,43.98,2.0
+c3861ea3-d979-437b-8eb0-e467fae10764,bd44f283-470b-4fb8-a231-e5da09d2cd7d,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+ab53594d-2410-4c2d-b8df-9b10ee4683d9,742dc04f-7dcd-406f-9bbd-f0ec841044b3,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:10-20oz Hot Cup Lids - CPLA - (Case of 1000),73.74,73.74,1.0
+49230b8b-934e-4a79-b726-1c2a39b7d312,742dc04f-7dcd-406f-9bbd-f0ec841044b3,Villa Jerada,Uncategorized,1.0,,Shipping Cost,10.0,10.0,2.0
+c37b8b68-5312-44aa-b1f6-d7e0473832cc,1461435d-ea47-42e8-801b-a8d0d6c027b1,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:10-20oz Hot Cup Lids - CPLA - (Case of 1000),73.74,73.74,1.0
+10e809ce-f678-4bd3-b723-9333aa529e29,1461435d-ea47-42e8-801b-a8d0d6c027b1,Villa Jerada,Uncategorized,1.0,,Shipping Cost,10.0,10.0,2.0
+ccceba1d-e5f2-4307-b582-f6a4b8e8fcbf,6fc0fc1a-a27d-454d-aeb5-0d48de4d116a,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:10-20oz Hot Cup Lids - CPLA - (Case of 1000),73.74,73.74,1.0
+2c2110c8-d5b1-40bc-b41d-bbd072143806,6fc0fc1a-a27d-454d-aeb5-0d48de4d116a,Villa Jerada,Uncategorized,1.0,,Shipping Cost,10.0,10.0,2.0
+da67b108-5b2a-4a22-b113-c073f9f4c2e2,2f064b71-8810-4dd4-9c74-bd17b3dc3d1a,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,1.0
+a7350a3a-e3dc-46cf-b2d6-09499e6d0290,2f064b71-8810-4dd4-9c74-bd17b3dc3d1a,Villa Jerada,Uncategorized,6.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+b9425913-758a-4599-99b8-a42cdba80bbf,2f064b71-8810-4dd4-9c74-bd17b3dc3d1a,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:9Q-24oz Clear Cold Cup Lids - Strawless -,67.54,67.54,3.0
+42c357bf-dea9-4a92-9437-1d4355a85b86,2f064b71-8810-4dd4-9c74-bd17b3dc3d1a,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+cb914754-fe1b-455d-8709-5f23bfd5f787,2f064b71-8810-4dd4-9c74-bd17b3dc3d1a,Villa Jerada,Uncategorized,1.0,,TO GO - NAPKINS:Unbleached Multifold Towels - Recycled,44.55,44.55,5.0
+8471908b-aa84-4fb4-a4e2-a4bb710a6be9,2f064b71-8810-4dd4-9c74-bd17b3dc3d1a,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:#12 Kraft Paper Bags Duro (500 units),24.68,24.68,6.0
+c1de9f95-020c-467b-89f7-6ca41fc92884,2f064b71-8810-4dd4-9c74-bd17b3dc3d1a,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+8d9d6012-12ab-44b3-ad6c-6cf7d3d32a48,a3707577-53ff-47a3-8dea-4ea3da6b9fda,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,1.0
+9a21c8a2-8cc8-4a13-9d1a-2b7dbe3e66bc,a3707577-53ff-47a3-8dea-4ea3da6b9fda,Villa Jerada,Uncategorized,6.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+0c582642-30f6-4699-a42c-f1ecf0c1503a,a3707577-53ff-47a3-8dea-4ea3da6b9fda,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:9Q-24oz Clear Cold Cup Lids - Strawless -,67.54,67.54,3.0
+8c623d7f-7099-4d6b-8cf1-98962d2244fb,a3707577-53ff-47a3-8dea-4ea3da6b9fda,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+fb0c41f5-e3c7-4c51-b9d2-00fa48142db6,a3707577-53ff-47a3-8dea-4ea3da6b9fda,Villa Jerada,Uncategorized,1.0,,TO GO - NAPKINS:Unbleached Multifold Towels - Recycled,44.55,44.55,5.0
+a2f41f86-0485-492c-bd0f-720f87706f05,a3707577-53ff-47a3-8dea-4ea3da6b9fda,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:#12 Kraft Paper Bags Duro (500 units),24.68,24.68,6.0
+4f273115-d0f1-4be1-8578-2b6e6b7c509f,a3707577-53ff-47a3-8dea-4ea3da6b9fda,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+52a72ce3-3d84-42f1-91bb-1ebab4aeaa2e,e148e68b-ebe2-47a2-b7fc-5696e6a044e6,Villa Jerada,Paper Goods,1.0,,#8 Kraft - Husky FSC Paper Bags Duro,23.96,23.96,1.0
+f5942be1-3613-4da2-82d5-10fd41b838c5,e148e68b-ebe2-47a2-b7fc-5696e6a044e6,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+afc141d5-2463-446c-be1c-8f075e489373,e148e68b-ebe2-47a2-b7fc-5696e6a044e6,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+de68dbd4-8b59-4b20-b78b-3833558a36ca,e148e68b-ebe2-47a2-b7fc-5696e6a044e6,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+8b26ce78-ee8c-4247-babb-7eb0b1afb4ff,e148e68b-ebe2-47a2-b7fc-5696e6a044e6,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+b86123f2-ec03-484c-ab38-d55355d0a432,36401788-d537-4eec-8315-f022f8733454,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+8c804ddf-fbf4-4591-8a93-2a04d2ebe95e,36401788-d537-4eec-8315-f022f8733454,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+8f1599f6-d919-46fa-921a-c60db9fb9093,36401788-d537-4eec-8315-f022f8733454,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+4b64dc0e-5d12-4b48-a7ed-f71f33d95ef1,36401788-d537-4eec-8315-f022f8733454,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+23be5d73-c085-4d80-bf9a-fa323580f2d8,36401788-d537-4eec-8315-f022f8733454,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+64589015-3c42-4a54-aa7b-35423fb3cf15,e25ffa55-5c67-4a65-81d5-07cf32f8c335,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+94e7feaf-dad8-4eca-a8d9-51e896ed6e57,e25ffa55-5c67-4a65-81d5-07cf32f8c335,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+6aaf2be3-4d7c-4200-947d-b3abbb7f03b8,e25ffa55-5c67-4a65-81d5-07cf32f8c335,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+0871f6ef-ec06-49b4-8467-bbbbb3c1f19b,e25ffa55-5c67-4a65-81d5-07cf32f8c335,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+f244d172-9f63-471f-b137-276b1b1977e7,e25ffa55-5c67-4a65-81d5-07cf32f8c335,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+8a5067df-472e-4d64-9ad5-9f181adb4c0a,14b30d4e-998e-4918-8952-c6d1a009aeb1,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+814b6af4-b21e-4cf9-80bb-6d1e9c7f9714,14b30d4e-998e-4918-8952-c6d1a009aeb1,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+abd8f21f-c1df-42c8-b267-f0e772d03aad,14b30d4e-998e-4918-8952-c6d1a009aeb1,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+a2b16f98-407d-4e9e-8d49-156bcb9ded56,14b30d4e-998e-4918-8952-c6d1a009aeb1,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+947b8814-d5d2-4dee-946b-4582452a7cad,14b30d4e-998e-4918-8952-c6d1a009aeb1,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+890e1939-7e87-496c-8c17-55b13baa68a8,daaadbfd-16ef-4f1f-bc4f-8b3d5792a3f8,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+dbc21cb5-4fe2-4f20-8a6c-fc3b309a567e,daaadbfd-16ef-4f1f-bc4f-8b3d5792a3f8,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+d8290018-4a16-46eb-962d-f1e34fa9220b,daaadbfd-16ef-4f1f-bc4f-8b3d5792a3f8,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+74380225-65ea-4733-9486-1512ce943b63,daaadbfd-16ef-4f1f-bc4f-8b3d5792a3f8,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+eb592299-2576-465d-b8a8-a102316827fa,daaadbfd-16ef-4f1f-bc4f-8b3d5792a3f8,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+2fd8adc8-5225-43aa-a67a-03fbff8e8479,3712ac89-790f-4655-9fac-07f523eb92ff,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,1.0
+2397fc00-2743-4995-affa-b5ec441d4bea,3712ac89-790f-4655-9fac-07f523eb92ff,Villa Jerada,Paper Goods,1.0,,8oz Hot Cup Lids - CPLA - (Case of 1000),65.0,65.0,2.0
+52a44e6f-3e40-477b-8d2c-45805a100181,3712ac89-790f-4655-9fac-07f523eb92ff,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of 1000),77.46,77.46,3.0
+86434ede-a910-47cc-a536-6003d32b0a16,3712ac89-790f-4655-9fac-07f523eb92ff,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+03c142b6-282e-41c4-9f63-36607701035f,3712ac89-790f-4655-9fac-07f523eb92ff,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+99aea419-4547-4324-a462-7e5fc5d95df8,eb9e2717-427c-42be-811a-216ae205c03e,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:#8 Kraft - Husky FSC Paper Bags Duro,23.96,23.96,1.0
+941c2389-8f6c-411a-b88d-3f56b3f8b437,eb9e2717-427c-42be-811a-216ae205c03e,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:8oz Hot Cup Lids - CPLA - (Case of,65.0,65.0,2.0
+7b2a202c-1754-472d-a632-ac0dcb088c77,eb9e2717-427c-42be-811a-216ae205c03e,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:8oz Hot Cups Compostable (Case of,77.46,77.46,3.0
+2a805280-1ed7-4138-a552-d6f046502cde,eb9e2717-427c-42be-811a-216ae205c03e,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+e287107e-9974-48fe-b130-4ca0c7bd8d08,eb9e2717-427c-42be-811a-216ae205c03e,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+87b0bdd8-e376-464f-8697-1f7b5a1cb660,62876294-773e-483d-ab18-ab381fa644c8,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+13d8c6d7-52a5-4718-9a5c-d77d15956460,62876294-773e-483d-ab18-ab381fa644c8,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+34af8c9d-3dd8-488c-badb-0a754e216cec,62876294-773e-483d-ab18-ab381fa644c8,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+6c743630-951e-4c59-98a0-39d0f42d1fdd,62876294-773e-483d-ab18-ab381fa644c8,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+952e09bb-2d18-4b5d-ab5a-d4731de6d0c9,4a30f987-ecd0-4436-b677-0c39c3f60a86,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+7d8dba6f-0856-4864-b04a-2f25d17f1fde,4a30f987-ecd0-4436-b677-0c39c3f60a86,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+04276020-178a-42e4-9676-ec143734124b,4a30f987-ecd0-4436-b677-0c39c3f60a86,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+1b5c89d5-e9dd-485a-99fe-f3d9e0d76699,4a30f987-ecd0-4436-b677-0c39c3f60a86,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+1ae91b66-e67e-4b28-a4cb-67fdfc8a6e32,90c2c71d-c70c-42c2-aadd-dc2aa62ce2a4,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+568bccca-15bf-419c-87d7-54bee4ce8f3b,90c2c71d-c70c-42c2-aadd-dc2aa62ce2a4,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+0fddc951-98dc-4047-98f0-ca2cead9c7ea,90c2c71d-c70c-42c2-aadd-dc2aa62ce2a4,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+b3d5e4f4-ffa4-4074-b9f4-b8f7dce94275,90c2c71d-c70c-42c2-aadd-dc2aa62ce2a4,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+225b1768-194a-4dcc-a71c-a61d158a2bb5,09ad2438-47c6-400c-9d64-e51467c0b617,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+a72d0702-b377-4eaa-ac1f-c7d3257aa8f7,09ad2438-47c6-400c-9d64-e51467c0b617,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+82b43607-a9c9-4fc2-bf8d-b4f5dd144dc8,09ad2438-47c6-400c-9d64-e51467c0b617,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+144dd775-df6c-454f-8944-2724aeb4c4b0,09ad2438-47c6-400c-9d64-e51467c0b617,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+83f9da0c-8d49-4a8b-9c87-610f070b9263,0e6e144c-4e52-4436-847b-b208bd1a610f,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+6941ebc6-8263-4d0a-a1bf-15ca52d1b259,0e6e144c-4e52-4436-847b-b208bd1a610f,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+54d40027-cc3f-4d69-870a-56ec9cd687ff,0e6e144c-4e52-4436-847b-b208bd1a610f,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+bdff12a4-b2c9-46aa-baeb-1ac7c46d69f7,0e6e144c-4e52-4436-847b-b208bd1a610f,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+b5e64c23-0eb0-42e4-af2c-6e8115eaadd5,cdb1a6b9-3ec3-4318-9519-819176c18009,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+2b3e4a0f-de49-46e4-bb9c-96e305d5109f,cdb1a6b9-3ec3-4318-9519-819176c18009,Villa Jerada,Uncategorized,2.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+34039ee3-34a9-4f71-93ec-de4f6d08e9cd,cdb1a6b9-3ec3-4318-9519-819176c18009,Villa Jerada,Uncategorized,1.0,,Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+a5a50b78-768b-4188-a259-b8d15249a104,cdb1a6b9-3ec3-4318-9519-819176c18009,Villa Jerada,Uncategorized,1.0,,12oz Cold Cups - Compostable (Case of,131.53,131.53,4.0
+542e5c78-e921-49c9-b207-2484e186e8e5,b981b8f5-d999-4057-9f06-42ed50e7ea5c,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,1.0
+51799578-44ae-490b-b5c9-dc90602dbf85,b981b8f5-d999-4057-9f06-42ed50e7ea5c,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,43.98,2.0
+06560e16-aa37-4eac-a68d-9ae3821b7b8c,b981b8f5-d999-4057-9f06-42ed50e7ea5c,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+1daee4f1-e432-470c-90e2-963b488660d8,b981b8f5-d999-4057-9f06-42ed50e7ea5c,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Cold Cups - Compostable (Case,131.53,131.53,4.0
+9b45bca3-73e0-4cfd-821a-aa40d6c1b0b4,e95fc08b-9653-48b5-b8b1-56482ab77a85,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+b70f546e-0653-4043-8476-2331631d69d9,e95fc08b-9653-48b5-b8b1-56482ab77a85,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+7d35d4c9-b442-4b09-b522-b2e7d98b1814,e95fc08b-9653-48b5-b8b1-56482ab77a85,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+ac3584c2-19cb-4444-83c1-cb4e6a46921a,e95fc08b-9653-48b5-b8b1-56482ab77a85,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+82b64cba-36c4-446f-a41b-77562e8d5b8b,e95fc08b-9653-48b5-b8b1-56482ab77a85,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+b0dc7139-4d4e-4b42-ad5d-80c668aaac90,e95fc08b-9653-48b5-b8b1-56482ab77a85,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+7105c3f6-bbd6-42fd-a4af-0b3aa72221d4,e95fc08b-9653-48b5-b8b1-56482ab77a85,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+6eecc9f6-a7e5-45a7-823d-a2751577aa43,abf9c90c-d4ba-4edb-aafe-6c88dce26d8f,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+78f05c8f-479b-40c4-b21c-6661131eeaaf,abf9c90c-d4ba-4edb-aafe-6c88dce26d8f,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+a34d564e-90f7-4002-949a-c7489af26589,abf9c90c-d4ba-4edb-aafe-6c88dce26d8f,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+f9c25079-b5a1-4a63-a60b-863f7c71ea94,abf9c90c-d4ba-4edb-aafe-6c88dce26d8f,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+bfeede0f-6a0b-4917-bff3-be14010c8c1b,abf9c90c-d4ba-4edb-aafe-6c88dce26d8f,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+e4e61deb-4ab6-4a72-8ca6-8a66c2e6dfc7,abf9c90c-d4ba-4edb-aafe-6c88dce26d8f,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+15e72fd3-5d79-4f36-95d7-668a6118d9e3,abf9c90c-d4ba-4edb-aafe-6c88dce26d8f,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+f4a58de4-4c72-4241-b9bc-d78b488fc371,0f053c67-8df4-4163-b850-292d3ba63e14,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+a5c3db25-c11c-4f17-9192-0fca7aaf96dd,0f053c67-8df4-4163-b850-292d3ba63e14,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+752f3d35-4e74-4234-9ff3-a3f8e4b2429c,0f053c67-8df4-4163-b850-292d3ba63e14,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+efe24d04-a91b-48af-8542-6ed5401ffded,0f053c67-8df4-4163-b850-292d3ba63e14,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+550e3445-d438-49f5-967a-e727262ff5b7,0f053c67-8df4-4163-b850-292d3ba63e14,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+f54af7ea-c7d1-4dfc-ab9d-50aa9a48482e,0f053c67-8df4-4163-b850-292d3ba63e14,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+f66cf487-b554-43d8-b7e5-7c468f20adf2,0f053c67-8df4-4163-b850-292d3ba63e14,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+732b65fc-9495-4058-bfc2-265f1d9d6c49,3f286a54-3f7f-4782-8313-12ed159ee54b,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+d076c5a6-c655-49c1-8a6f-51da751aa177,3f286a54-3f7f-4782-8313-12ed159ee54b,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+9acf1410-7ed9-4bd1-b2a1-c0ff575d6c10,3f286a54-3f7f-4782-8313-12ed159ee54b,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+468b1a6c-b4c9-4405-b16b-7a139aca3af5,3f286a54-3f7f-4782-8313-12ed159ee54b,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+23c666ea-4f78-4026-84ff-674ebefda396,3f286a54-3f7f-4782-8313-12ed159ee54b,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+7afd4fb6-cee3-406b-bce2-8ac34681c72b,3f286a54-3f7f-4782-8313-12ed159ee54b,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+b5fecb8a-beeb-44ff-b868-3b3672ac6e09,3f286a54-3f7f-4782-8313-12ed159ee54b,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+d356b42b-ffbb-4449-95dd-e167aa30c0dd,c04b88c9-360b-4752-ad3f-584f64b773af,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+1c013234-f665-4b98-8c6c-782dce52cf11,c04b88c9-360b-4752-ad3f-584f64b773af,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+54c2245e-55f0-4c74-9dd2-274b267b437e,c04b88c9-360b-4752-ad3f-584f64b773af,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+ea0c24de-72d8-4022-8507-df2e15831c99,c04b88c9-360b-4752-ad3f-584f64b773af,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+5c0a8475-668d-4277-b951-159c18cd3f6a,c04b88c9-360b-4752-ad3f-584f64b773af,Villa Jerada,Uncategorized,1.0,,#8 Kraft Paper Bags Duro (500 units),23.96,23.96,5.0
+f08551ee-f156-4c5b-9270-5ea28c39d97c,c04b88c9-360b-4752-ad3f-584f64b773af,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+310594ed-9326-4d09-8d57-453daf8da455,c04b88c9-360b-4752-ad3f-584f64b773af,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+cb098d96-023b-4ac6-84b0-f205402494f4,be8978eb-cb35-44b6-8be9-454d97ccb27c,Villa Jerada,Uncategorized,5.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+f3f43c2b-a7f3-4705-bf4c-8931edc6b53d,be8978eb-cb35-44b6-8be9-454d97ccb27c,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,2.0
+170c921d-4418-4aaf-b252-79d40fbc83b2,be8978eb-cb35-44b6-8be9-454d97ccb27c,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves - (Black),79.0,79.0,3.0
+5e2d14a3-95e9-4622-b4b0-1f7a1e831ca8,be8978eb-cb35-44b6-8be9-454d97ccb27c,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+5063bd52-0504-4a16-9ad0-3f3fbdb9ee96,be8978eb-cb35-44b6-8be9-454d97ccb27c,Villa Jerada,Paper Goods,1.0,,#8 Kraft - Husky FSC Paper Bags Duro,23.96,23.96,5.0
+d41aa246-b661-4d99-a8e9-0e98dc364001,be8978eb-cb35-44b6-8be9-454d97ccb27c,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,6.0
+9b95fabf-c797-41e7-859c-d369c71c70d2,be8978eb-cb35-44b6-8be9-454d97ccb27c,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+39a80754-2da8-43a7-8580-d0fc70e9e3cf,c8b8d736-299a-4d9e-a15b-926371970cb7,Villa Jerada,Uncategorized,1.0,,Zaatar Palestinian (Organic),12.48,12.48,1.0
+ca4cbeed-26df-4eb3-89d7-94c9e11afbe6,c8b8d736-299a-4d9e-a15b-926371970cb7,Villa Jerada,Uncategorized,8.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,175.92,2.0
+b18a2f33-5017-467b-9ca4-bf9f25905e50,c8b8d736-299a-4d9e-a15b-926371970cb7,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,3.0
+53926ce8-1c37-4c7f-b4a4-97559071acd3,c8b8d736-299a-4d9e-a15b-926371970cb7,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+23f4d6bb-5433-4e75-8555-21f27a18dcae,c8b8d736-299a-4d9e-a15b-926371970cb7,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+4e290ca4-3921-4683-ae07-fe305f23ab7d,1f4f75e9-5a52-4f24-84f4-3e9fc17e8069,Villa Jerada,Uncategorized,1.0,,Zaatar Palestinian (Organic),12.48,12.48,1.0
+d31036f9-4b7e-4321-b7b7-a85c5441e6d1,1f4f75e9-5a52-4f24-84f4-3e9fc17e8069,Villa Jerada,Uncategorized,8.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,175.92,2.0
+24c0debd-a5e4-4cfc-8a86-8a688ec0fb4e,1f4f75e9-5a52-4f24-84f4-3e9fc17e8069,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,3.0
+73e9194b-ce4f-4bcb-94fc-432718c75007,1f4f75e9-5a52-4f24-84f4-3e9fc17e8069,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+cb9639a2-f719-4bdd-a673-4b87c38a0ea4,1f4f75e9-5a52-4f24-84f4-3e9fc17e8069,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+1d9c1ad9-ac5c-4dd8-8b12-c9ec4d3b25ac,14203025-a848-4685-9575-e76e068f88e8,Villa Jerada,Uncategorized,1.0,,Zaatar Palestinian (Organic),12.48,12.48,1.0
+00f74009-25b9-4c8e-9228-e14fd647796a,14203025-a848-4685-9575-e76e068f88e8,Villa Jerada,Uncategorized,8.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,175.92,2.0
+77c4be7d-4423-43dc-9ff2-2ce9c6ff70c1,14203025-a848-4685-9575-e76e068f88e8,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,3.0
+47903776-644a-48cb-890d-4e6fac06c339,14203025-a848-4685-9575-e76e068f88e8,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+6f450696-bd84-4b1b-9572-3018885b329d,14203025-a848-4685-9575-e76e068f88e8,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+cd70b675-1679-498e-949f-b1c214c110c1,aea77dc0-282f-48b6-b6d5-8e6cb183a3b6,Villa Jerada,Uncategorized,4.0,,Zaatar Palestinian (Organic),12.48,49.92,1.0
+90c92cfe-b618-4685-b5c2-a1c701c2c855,aea77dc0-282f-48b6-b6d5-8e6cb183a3b6,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,2.0
+6c38f291-64cf-4c24-a220-95b643ed3d89,da3fcc9a-8dca-4b91-8928-186e9df6d38e,Villa Jerada,Uncategorized,4.0,,Zaatar Palestinian (Organic),12.48,49.92,1.0
+63e6d138-4966-41fb-ba1a-1cc2dfedb8c8,da3fcc9a-8dca-4b91-8928-186e9df6d38e,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,2.0
+b574af3d-ffb5-4dc6-bf5f-e84840c333e4,70305b17-fcf6-43a7-b959-e0f8f74f4984,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+665fd5fa-b467-488e-8e1b-139251b78a59,70305b17-fcf6-43a7-b959-e0f8f74f4984,Villa Jerada,Uncategorized,6.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+a4f157af-231b-410e-b958-dae5a896dd6f,70305b17-fcf6-43a7-b959-e0f8f74f4984,Villa Jerada,Uncategorized,1.0,,16oz Hot Cups - Paper - Compostable,112.65,112.65,3.0
+02b6a271-3e85-45b2-a574-34cbf31561fc,70305b17-fcf6-43a7-b959-e0f8f74f4984,Villa Jerada,Uncategorized,1.0,,12oz Hot Cups - Paper - Compostable,98.12,98.12,4.0
+e6a0da2b-4cf6-4aaf-88fe-170a1ba7598c,70305b17-fcf6-43a7-b959-e0f8f74f4984,Villa Jerada,Uncategorized,1.0,,Toilet Paper 2-ply (Case of 96 Rolls),55.9,55.9,5.0
+5e80c584-3b9b-4a19-b855-3c166a30afab,70305b17-fcf6-43a7-b959-e0f8f74f4984,Villa Jerada,Uncategorized,1.0,,33gal Trash Can Liners,28.59,28.59,6.0
+1e4779c8-382c-4a1d-a6ce-4b008860d003,a0741bb3-8642-4e47-a741-bd37abf0d794,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,1.0
+553640c2-a8cb-49a8-95ba-5d5a86ed4b7e,a0741bb3-8642-4e47-a741-bd37abf0d794,Villa Jerada,Uncategorized,6.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+8eb5d475-4c2f-4237-8ad3-be412fd4e592,a0741bb3-8642-4e47-a741-bd37abf0d794,Villa Jerada,Uncategorized,1.0,,16oz Hot Cups - Paper - Compostable,112.65,112.65,3.0
+7656a229-524b-42d2-9cb9-f4699efee7af,a0741bb3-8642-4e47-a741-bd37abf0d794,Villa Jerada,Uncategorized,1.0,,12oz Hot Cups - Paper - Compostable,98.12,98.12,4.0
+7789e343-602d-466a-a1cf-934b4ec7af98,a0741bb3-8642-4e47-a741-bd37abf0d794,Villa Jerada,Uncategorized,1.0,,Toilet Paper 2-ply (Case of 96 Rolls),55.9,55.9,5.0
+62feb76a-106c-417a-9538-44dade9e4c3f,a0741bb3-8642-4e47-a741-bd37abf0d794,Villa Jerada,Uncategorized,1.0,,33gal Trash Can Liners,28.59,28.59,6.0
+82092cd6-815d-4236-93c3-864fdc1304dd,2581e0f4-7918-4f02-9eb2-0527232db5d2,Villa Jerada,Paper Goods,1.0,,Derma2 Nitrile Gloves  - (Black),79.0,79.0,1.0
+303055ec-dde8-4083-a34e-ae5b0f717e7d,2581e0f4-7918-4f02-9eb2-0527232db5d2,Villa Jerada,Uncategorized,6.0,,Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+e57cab5a-6c91-4fd3-90a6-b5a4f66d2c44,2581e0f4-7918-4f02-9eb2-0527232db5d2,Villa Jerada,Uncategorized,1.0,,Jumbo Green Air Straws - Compostable -,47.0,47.0,3.0
+a123950c-12df-4a06-928e-ffa215ac37a4,2581e0f4-7918-4f02-9eb2-0527232db5d2,Villa Jerada,Uncategorized,1.0,,Java Jacket Hot Cup Sleeves - Natural,21.99,21.99,4.0
+15782f1d-7da5-4488-b00a-55baa1d739be,2581e0f4-7918-4f02-9eb2-0527232db5d2,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+cb7ee44f-6f0e-49de-895d-07c64b676d2c,d4bd6fc5-1fa4-41da-8c97-eff7ba577672,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves  - (Black),79.0,79.0,1.0
+21cb2a81-6a1e-4883-b08c-a759e9715bcb,d4bd6fc5-1fa4-41da-8c97-eff7ba577672,Villa Jerada,Uncategorized,6.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+457edf93-8942-422d-aa58-cf8310a23881,d4bd6fc5-1fa4-41da-8c97-eff7ba577672,Villa Jerada,Uncategorized,1.0,,TO GO - CUTLERY:Jumbo Green Air Straws -,47.0,47.0,3.0
+a3ba3b9d-6623-4681-991d-02746170c33d,d4bd6fc5-1fa4-41da-8c97-eff7ba577672,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:Java Jacket Hot Cup Sleeves -,21.99,21.99,4.0
+cbafb450-f94e-47fa-be22-593ef6cf07cd,d4bd6fc5-1fa4-41da-8c97-eff7ba577672,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+84bca49a-3866-4b98-ba1e-333f1ea7c8dc,4a37b378-c73f-4cac-b1e8-b7a6e315a472,Villa Jerada,Paper Goods,2.0,,#8 Kraft - Husky FSC Paper Bags Duro,20.99,41.98,1.0
+5eab4f3f-0637-48a7-af36-37ac687dd783,4a37b378-c73f-4cac-b1e8-b7a6e315a472,Villa Jerada,Paper Goods,1.0,,8oz Hot Cups Compostable (Case of,78.46,78.46,2.0
+20d1dc73-ee17-4ade-8d9e-a95c621321b4,4a37b378-c73f-4cac-b1e8-b7a6e315a472,Villa Jerada,Uncategorized,1.0,,Sandwich Wrap,139.82,139.82,3.0
+d33bc6e7-10af-4167-a2d8-d03d0c2ae8c5,4a37b378-c73f-4cac-b1e8-b7a6e315a472,Villa Jerada,Uncategorized,1.0,,Bag Kraft Paper Duro - 20lbs (500 units),38.99,38.99,4.0
+0e420f12-de0c-4e21-bb3c-08a95fd73511,4a37b378-c73f-4cac-b1e8-b7a6e315a472,Villa Jerada,Uncategorized,1.0,,#25 Kraft Paper Bags Duro (500 units),34.43,34.43,5.0
+d50df480-3f25-4279-ab50-1e47fd48411d,0a9e8a27-0dcf-45b9-b7a5-afc47efb003f,Villa Jerada,Uncategorized,2.0,,TO GO - BAGS:#8 Kraft - Husky FSC Paper Bags,20.99,41.98,1.0
+6f2122c2-2b7e-4a58-b60f-f32bdd250d60,0a9e8a27-0dcf-45b9-b7a5-afc47efb003f,Villa Jerada,Uncategorized,1.0,,16oz Cold Cups - Compostable (Case of 50),9.66,9.66,2.0
+17644fec-1ccf-4d09-a79d-6bd969798318,0a9e8a27-0dcf-45b9-b7a5-afc47efb003f,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:8oz Hot Cups Compostable (Case,78.46,78.46,3.0
+494636ab-81f2-47fe-89bb-be707757d66e,0a9e8a27-0dcf-45b9-b7a5-afc47efb003f,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,4.0
+6f7971df-6aa3-4f52-8d9b-51cc27fd25aa,0a9e8a27-0dcf-45b9-b7a5-afc47efb003f,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:Bag Kraft Paper Duro - 20lbs (500,38.99,38.99,5.0
+bc520b52-e57f-4323-81a1-55dacf3ab81f,0a9e8a27-0dcf-45b9-b7a5-afc47efb003f,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:#25 Kraft Paper Bags Duro (500,34.43,34.43,6.0
+f091c3d3-52f5-4cc2-a9b6-0ac4843bbab0,eea74dad-c235-4158-bfc1-bdadd44e8655,Villa Jerada,Uncategorized,5.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+bcb9c24c-689c-4755-91e1-bd4d10ccd895,eea74dad-c235-4158-bfc1-bdadd44e8655,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Cold Cups - Compostable,133.53,133.53,2.0
+c2758c27-ba8e-47f3-b377-8e300689e091,eea74dad-c235-4158-bfc1-bdadd44e8655,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+ab3941c4-2ab0-4d8e-9a7f-62759fbf813a,eea74dad-c235-4158-bfc1-bdadd44e8655,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+3f6a99e2-4e11-4f85-a465-de34e7817b07,eea74dad-c235-4158-bfc1-bdadd44e8655,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+4ca28816-2710-41fc-b0f6-18c18a10b893,2bd15303-1c9d-42be-92bf-39c1ee42f04c,Villa Jerada,Uncategorized,5.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,109.95,1.0
+f034f490-dc03-461c-ad33-8e408d71321c,2bd15303-1c9d-42be-92bf-39c1ee42f04c,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Cold Cups - Compostable,133.53,133.53,2.0
+ff8df1e6-5ddf-4a58-83a7-a0f3cfbd5476,2bd15303-1c9d-42be-92bf-39c1ee42f04c,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,21.99,3.0
+6c41de43-f346-4cbd-9e19-3500acf21bc7,2bd15303-1c9d-42be-92bf-39c1ee42f04c,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves  - (Black),79.0,79.0,4.0
+bb1d2146-3dd9-47fb-8130-7d6983efce55,2bd15303-1c9d-42be-92bf-39c1ee42f04c,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,5.0
+781c499a-30c7-4b4a-8521-420694ea2ac6,4794b088-56c6-405d-9146-43cfbdb363d2,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Oat Milk Organic Califia - 32oz,21.99,21.99,1.0
+472ba141-999a-4635-9f94-8c58fac82d0d,4794b088-56c6-405d-9146-43cfbdb363d2,Villa Jerada,Uncategorized,1.0,,TAKE OUT PACKAGING:Lid for 8oz Paper Bowl -,55.58,55.58,2.0
+c0f43800-3934-499c-b0eb-32f4f20d5f1a,4794b088-56c6-405d-9146-43cfbdb363d2,Villa Jerada,Uncategorized,1.0,,"TO GO - CUTLERY:10"" Paper Straws - Kraft",110.96,110.96,3.0
+594d8358-cd20-447e-a3a5-fbbdc5414f85,4794b088-56c6-405d-9146-43cfbdb363d2,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,4.0
+c2631ed0-743b-4f9b-ab67-d01301ae4e04,d5da0c54-4fb9-4886-9fe2-bd31e1818e12,Villa Jerada,Uncategorized,1.0,,BEVERAGES:Oat Milk Organic Califia - 32oz,21.99,21.99,1.0
+90b8afb2-b66d-466c-b25e-154b86cad3e3,d5da0c54-4fb9-4886-9fe2-bd31e1818e12,Villa Jerada,Uncategorized,1.0,,TAKE OUT PACKAGING:Lid for 8oz Paper Bowl -,55.58,55.58,2.0
+23a12ea8-ec3c-4a42-a956-10dbbad97ca6,d5da0c54-4fb9-4886-9fe2-bd31e1818e12,Villa Jerada,Uncategorized,1.0,,"TO GO - CUTLERY:10"" Paper Straws - Kraft",110.96,110.96,3.0
+d78f00a7-1228-4841-a176-0af5ab87295c,d5da0c54-4fb9-4886-9fe2-bd31e1818e12,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,4.0
+88b17011-8a84-4548-85bd-f96e0a434952,aa4aeba1-b43e-4cb6-8b05-4e6530e42370,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:Sandwich,62.71,62.71,1.0
+acc1fc0b-20d7-46b8-bd66-93af8f70aefa,aa4aeba1-b43e-4cb6-8b05-4e6530e42370,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,2.0
+0b9d1a7b-e588-414f-a29d-9125f29b9e88,aa4aeba1-b43e-4cb6-8b05-4e6530e42370,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+7d84ec86-e858-47d4-b3d5-91eda4e9f58c,92ca6a8f-7f5d-492c-bf9f-701a98df723e,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:Sandwich,62.71,62.71,1.0
+9dfe5d6a-67f8-47f3-986a-9f64b125670c,92ca6a8f-7f5d-492c-bf9f-701a98df723e,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,2.0
+667a35e5-e21e-483f-a3c1-5b94eedc46eb,92ca6a8f-7f5d-492c-bf9f-701a98df723e,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+7a37afc2-88a1-4ff3-a699-b3a3e96b75da,b2d308bd-9e71-40fe-a35d-241de4f4f73f,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,1.0
+91d3e3a5-6462-4f76-9d9f-1dd136f1dd33,6b175d40-4618-4963-ba97-22f73d2df004,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,1.0
+df9e1c25-ee66-4e73-9e64-757b59436f6a,cd988a8d-6463-46c6-9940-0e459354df60,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,1.0
+e183a517-aaba-4838-a4f1-202cfb26dd37,37759f0b-53e1-49c6-b013-809904abdce9,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,1.0
+bf34e800-d36e-4020-9a5e-fb97bb2a47cb,b7685755-0dd7-452f-933e-c02a3f9657b4,Villa Jerada,Uncategorized,1.0,,"TO GO - NAPKINS:Interfold Dispenser Napkins 2-Ply, 6.5 x",64.0,64.0,1.0
+c6432a32-0194-449e-9d07-0e44999bf221,b7685755-0dd7-452f-933e-c02a3f9657b4,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Hot Cups - Paper - Compostable -,99.12,99.12,2.0
+5de9380e-f6ab-4e02-8e49-413e1d890965,b7685755-0dd7-452f-933e-c02a3f9657b4,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:16oz Hot Cups - Paper - Compostable (Case,113.65,113.65,3.0
+f0b98ec7-23db-40d2-a2b1-3d53f38b40d2,b7685755-0dd7-452f-933e-c02a3f9657b4,Villa Jerada,Uncategorized,4.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,87.96,4.0
+42476dfa-9d0f-4d22-91e2-41d4e912c7da,b7685755-0dd7-452f-933e-c02a3f9657b4,Villa Jerada,Uncategorized,1.0,,SPICES:Citric Acid - 1lb,6.5,6.5,5.0
+a5bef08d-5fd2-4059-9805-c39d16865038,b7685755-0dd7-452f-933e-c02a3f9657b4,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,6.0
+3de4d991-79b4-4fe1-bb4d-1ecaee789291,8a2aa2b8-0e6f-4ee3-8604-ee6d2df541b6,Villa Jerada,Uncategorized,1.0,,"TO GO - NAPKINS:Interfold Dispenser Napkins 2-Ply, 6.5 x",64.0,64.0,1.0
+7c57fb65-731e-48b1-8ed5-ce6180df69f9,8a2aa2b8-0e6f-4ee3-8604-ee6d2df541b6,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Hot Cups - Paper - Compostable -,99.12,99.12,2.0
+2a42363a-d601-4b74-89ec-4c00cf3fb2b7,8a2aa2b8-0e6f-4ee3-8604-ee6d2df541b6,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:16oz Hot Cups - Paper - Compostable (Case,113.65,113.65,3.0
+fb541782-7aa7-4874-aeb3-0e45224b09b3,8a2aa2b8-0e6f-4ee3-8604-ee6d2df541b6,Villa Jerada,Uncategorized,4.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,87.96,4.0
+ad3b5486-ad6f-430f-bbbb-49aa43fb30e1,8a2aa2b8-0e6f-4ee3-8604-ee6d2df541b6,Villa Jerada,Uncategorized,1.0,,SPICES:Citric Acid - 1lb,6.5,6.5,5.0
+c008d313-3cf0-4875-870e-d55d4a1b458d,8a2aa2b8-0e6f-4ee3-8604-ee6d2df541b6,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,6.0
+d699199f-e243-4e8e-8a06-d25f70b92e13,50040e1b-3804-4b87-b856-25d41e56e858,Villa Jerada,Uncategorized,1.0,,"TO GO - NAPKINS:Interfold Dispenser Napkins 2-Ply, 6.5 x",64.0,64.0,1.0
+b74a47e8-8746-4dec-994e-ff34bccf2076,50040e1b-3804-4b87-b856-25d41e56e858,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Hot Cups - Paper - Compostable -,99.12,99.12,2.0
+4414d680-f309-43da-b6f2-a10ac99ec125,50040e1b-3804-4b87-b856-25d41e56e858,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:16oz Hot Cups - Paper - Compostable (Case,113.65,113.65,3.0
+b8f2504b-7bad-44cb-b7f7-6b3418cf328e,50040e1b-3804-4b87-b856-25d41e56e858,Villa Jerada,Uncategorized,4.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,87.96,4.0
+dfde47d3-a8d2-4a54-8a94-ed0ba77586fb,50040e1b-3804-4b87-b856-25d41e56e858,Villa Jerada,Uncategorized,1.0,,SPICES:Citric Acid - 1lb,6.5,6.5,5.0
+bd14cbf3-06bf-47a1-bfec-da626cbf2a97,50040e1b-3804-4b87-b856-25d41e56e858,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,6.0
+4a24f65f-a928-4cf8-bb5b-61e2e530fba5,3815898e-70d1-4e8c-a8dc-32ff7b296052,Villa Jerada,Uncategorized,1.0,,"TO GO - NAPKINS:Interfold Dispenser Napkins 2-Ply, 6.5 x",64.0,64.0,1.0
+35de982f-e933-4d22-b902-d064cf204d28,3815898e-70d1-4e8c-a8dc-32ff7b296052,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:12oz Hot Cups - Paper - Compostable -,99.12,99.12,2.0
+08d18551-2c80-43fe-9d80-3aec797cba2f,3815898e-70d1-4e8c-a8dc-32ff7b296052,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:16oz Hot Cups - Paper - Compostable (Case,113.65,113.65,3.0
+200d0018-ca94-49d8-8737-c0a99d594aa1,3815898e-70d1-4e8c-a8dc-32ff7b296052,Villa Jerada,Uncategorized,4.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,87.96,4.0
+5ace7d6a-b821-4457-8200-86ced1bfdc56,3815898e-70d1-4e8c-a8dc-32ff7b296052,Villa Jerada,Uncategorized,1.0,,SPICES:Citric Acid - 1lb,6.5,6.5,5.0
+1f811099-792e-4f58-9f0c-75781ec7b87b,3815898e-70d1-4e8c-a8dc-32ff7b296052,Villa Jerada,Uncategorized,1.0,,SPICE BLENDS:Zaatar Palestinian (Organic),260.92,260.92,6.0
+07fbc265-f9cb-4918-a8ff-c2aa4257b95b,cd094c7e-1f0a-4a59-842f-30051c14db32,Villa Jerada,Uncategorized,3.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,65.97,1.0
+02fe0ebb-ac2a-4d57-b891-0c1294fc29e8,cd094c7e-1f0a-4a59-842f-30051c14db32,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,43.98,2.0
+f70a1943-5ee3-4ef7-9368-ceb1912332c3,cd094c7e-1f0a-4a59-842f-30051c14db32,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+686dd34c-d376-4962-871a-327bf6172cb4,7af319d3-9ea4-47bb-9cb9-fc5ca3ab194e,Villa Jerada,Uncategorized,3.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,65.97,1.0
+eef7af52-5fe7-4296-ba9a-3a19690700d3,7af319d3-9ea4-47bb-9cb9-fc5ca3ab194e,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,43.98,2.0
+a6e1c823-5f77-4b22-a061-45959dc3eb31,7af319d3-9ea4-47bb-9cb9-fc5ca3ab194e,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+e106dbaa-e9b9-4f2b-a268-a6e59c5fcea0,f6f4c31a-96d5-4dec-96c4-470fe5d30ebe,Villa Jerada,Uncategorized,3.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,65.97,1.0
+cd1562de-b9a2-46d2-be02-33224f1b1632,f6f4c31a-96d5-4dec-96c4-470fe5d30ebe,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,43.98,2.0
+725ea1dc-ab34-432e-8c91-79a3ea5023f7,f6f4c31a-96d5-4dec-96c4-470fe5d30ebe,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+f3752838-c8e6-41cc-bcfd-f20d5e8b2fda,d6dc2bea-b1d2-4ea6-b677-e8fc03d2b0b9,Villa Jerada,Uncategorized,3.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,65.97,1.0
+d7dd869a-419b-42b9-b0d7-f5a9032013a6,d6dc2bea-b1d2-4ea6-b677-e8fc03d2b0b9,Villa Jerada,Uncategorized,2.0,,BEVERAGES:Almond Milk Califia - 32oz (6pk),21.99,43.98,2.0
+8a43f4a2-2366-4ba0-ae25-dd0b0c2d26c7,d6dc2bea-b1d2-4ea6-b677-e8fc03d2b0b9,Villa Jerada,Uncategorized,1.0,,Shipping Cost,7.0,7.0,3.0
+0e594220-d171-4e78-bd71-87f2d8c24cbf,d20496be-b622-4cf4-afec-a4c7ab4cf467,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:10-20oz Hot Cup Lids - CPLA - (Case of 1000),73.74,73.74,1.0
+fcedb5f5-c726-4d13-9f94-134549962ac4,d20496be-b622-4cf4-afec-a4c7ab4cf467,Villa Jerada,Uncategorized,1.0,,Shipping Cost,10.0,10.0,2.0
+fd1ad58b-9cbc-4bb6-af46-09bcbcd12d8f,5d6b9a33-dbbb-4885-a420-7bf90de555a2,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:10-20oz Hot Cup Lids - CPLA - (Case of 1000),73.74,73.74,1.0
+c57d01b3-0306-417b-813d-f26e4d4b65fe,5d6b9a33-dbbb-4885-a420-7bf90de555a2,Villa Jerada,Uncategorized,1.0,,Shipping Cost,10.0,10.0,2.0
+19574f59-2f40-4def-bde4-1101bc7e81ce,3234abf0-b213-4b47-9754-0dac0a3d1d9a,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:10-20oz Hot Cup Lids - CPLA - (Case of 1000),73.74,73.74,1.0
+f68f7dc9-ad85-4d2a-8046-aacde74302fc,3234abf0-b213-4b47-9754-0dac0a3d1d9a,Villa Jerada,Uncategorized,1.0,,Shipping Cost,10.0,10.0,2.0
+70b60702-d1f2-471d-87f0-0a8a6b5520b5,befd0aff-a05d-4d67-97d1-7ba1fc4cabd5,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,1.0
+bfda29b4-72a5-4f8c-aa87-74af46a03648,befd0aff-a05d-4d67-97d1-7ba1fc4cabd5,Villa Jerada,Uncategorized,6.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+0cd93fd3-d66d-4c8e-86ec-d78db9dda29c,befd0aff-a05d-4d67-97d1-7ba1fc4cabd5,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:9Q-24oz Clear Cold Cup Lids - Strawless -,67.54,67.54,3.0
+4c5d1195-9c7a-40d3-83da-6ad350635cd2,befd0aff-a05d-4d67-97d1-7ba1fc4cabd5,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+9f05fc36-5931-4ff6-8bb5-f70cb7019219,befd0aff-a05d-4d67-97d1-7ba1fc4cabd5,Villa Jerada,Uncategorized,1.0,,TO GO - NAPKINS:Unbleached Multifold Towels - Recycled,44.55,44.55,5.0
+1c0743f8-df28-4328-afb8-62fa61da42cc,befd0aff-a05d-4d67-97d1-7ba1fc4cabd5,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:#12 Kraft Paper Bags Duro (500 units),24.68,24.68,6.0
+486a1133-7dab-414e-9b5b-1953efb31feb,befd0aff-a05d-4d67-97d1-7ba1fc4cabd5,Villa Jerada,Operating Expense,1.0,,Taxes,8.18,8.18,7.0
+862ff5ee-6a08-4073-8bd6-24349968a9a4,e6f67e27-eebb-4a83-9c41-327c74806d3e,Villa Jerada,Uncategorized,1.0,,FILM & FOIL:Sandwich Wrap,139.82,139.82,1.0
+959dfeed-7aeb-4383-8d58-7945eac273b8,e6f67e27-eebb-4a83-9c41-327c74806d3e,Villa Jerada,Uncategorized,6.0,,BEVERAGES:Oat Milk Organic Califia - 32oz (6pk),21.99,131.94,2.0
+5165bf66-e290-4b18-b4b4-50ea5e7e52ff,e6f67e27-eebb-4a83-9c41-327c74806d3e,Villa Jerada,Uncategorized,1.0,,TO GO - CUPS:9Q-24oz Clear Cold Cup Lids - Strawless -,67.54,67.54,3.0
+d1377ec3-6b71-4812-b32f-e6b76453ae07,e6f67e27-eebb-4a83-9c41-327c74806d3e,Villa Jerada,Uncategorized,1.0,,GLOVES:Derma2 Nitrile Gloves - (Black),79.0,79.0,4.0
+0c48d7bb-c2a6-42bf-ad4f-8590cfbad140,e6f67e27-eebb-4a83-9c41-327c74806d3e,Villa Jerada,Uncategorized,1.0,,TO GO - NAPKINS:Unbleached Multifold Towels - Recycled,44.55,44.55,5.0
+38428002-943f-48ee-a368-1a396abcd96f,e6f67e27-eebb-4a83-9c41-327c74806d3e,Villa Jerada,Uncategorized,1.0,,TO GO - BAGS:#12 Kraft Paper Bags Duro (500 units),24.68,24.68,6.0
+4d1342f4-20a7-47ff-aef4-ea109d43e646,e6f67e27-eebb-4a83-9c41-327c74806d3e,Villa Jerada,Operating Expense,1.0,None,Taxes,8.18,8.18,7.0

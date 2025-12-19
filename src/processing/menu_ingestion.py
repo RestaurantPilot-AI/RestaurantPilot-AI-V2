@@ -21,7 +21,7 @@ def build_menu_prompt() -> str:
     """
     Return the strict prompt text for menu extraction (no API call here).
 
-    This prompt is designed for visual menu understanding with conditional
+    This prompt is designed for visual menu understanding with deterministic
     group-title inheritance for item naming.
     """
     return (
@@ -45,32 +45,36 @@ def build_menu_prompt() -> str:
         "}\n\n"
 
         "FIELD DEFINITIONS:\n"
-        "- item_name: A complete, customer-facing menu item name.\n"
+        "- item_name: A complete, deterministic menu item name.\n"
         "- price: The numeric price for that specific item.\n\n"
 
-        "GROUP TITLE HANDLING (CRITICAL):\n"
+        "GROUP TITLE HANDLING (CRITICAL AND STRICT):\n"
         "- Menu group titles or section headers are NOT menu items by themselves.\n"
-        "- However, group titles MAY be used as a prefix to item_name when needed to make the item unambiguous or meaningful.\n\n"
+        "- Group titles provide CONTEXT and may be used ONLY as a prefix.\n"
+        "- When used, the item_name MUST follow this exact format:\n"
+        "  \"<Group Title> - <Item Label>\"\n"
+        "- Do NOT reorder, rephrase, pluralize, or grammatically adjust either part.\n\n"
 
-        "USE THE GROUP TITLE IN item_name IF AND ONLY IF:\n"
-        "- The listed item name is generic, incomplete, or meaningless on its own.\n"
-        "  Examples: Plain, 12 Pack, 20 Pack, Small, Large.\n"
-        "- The group title provides essential context for what is being sold.\n\n"
+        "YOU MUST USE THE GROUP TITLE IF:\n"
+        "- The item label alone does NOT uniquely describe what is being sold.\n"
+        "- The item could represent multiple business meanings without context.\n"
+        "  Examples: Plain, Tomato, Cheese, Extra, Add On, 12 Pack, Small, Large.\n\n"
 
-        "DO NOT USE THE GROUP TITLE IF:\n"
-        "- The item name already clearly identifies the product.\n"
-        "- The group title is a pure category label with no business meaning in the final name.\n\n"
+        "YOU MUST NOT USE THE GROUP TITLE IF:\n"
+        "- The item label alone clearly represents a sellable product.\n\n"
 
-        "EXAMPLES OF CORRECT BEHAVIOR:\n"
-        "- Group: \"Utensils\" with items \"12 Pack – 12.00\" → item_name: \"Utensils - 12 Pack\"\n"
-        "- Group: \"Bagels\" with items \"Plain – 2.75\" → item_name: \"Plain Bagel\"\n"
-        "- Group: \"Beverages\" with items \"Coke – 1.99\" → item_name: \"Beverages - Coke\"\n"
-        "- Group: \"Extras\" with items \"Plain – 0.50\" → item_name: \"Extras - Plain\"\n\n"
+        "CANONICAL NAMING EXAMPLES (FOLLOW EXACTLY):\n"
+        "- Group: \"Bagels\", Item: \"Plain\", Price: 2.75 → \"Bagels - Plain\"\n"
+        "- Group: \"Utensils\", Item: \"12 Pack\", Price: 12.00 → \"Utensils - 12 Pack\"\n"
+        "- Group: \"Extras\", Item: \"Plain\", Price: 0.50 → \"Extras - Plain\"\n"
+        "- Group: \"Add Ons\", Item: \"Tomato\", Price: 6.00 → \"Add Ons - Tomato\"\n"
+        "- Group: \"Toppings\", Item: \"Cheese\", Price: 1.25 → \"Toppings - Cheese\"\n"
+        "- Group: \"Beverages\", Item: \"Coke\", Price: 1.99 → \"Beverages - Coke\"\n\n"
 
-        "EXAMPLES OF INCORRECT BEHAVIOR (DO NOT DO THIS):\n"
-        "- Returning the group title alone as an item.\n"
-        "- Returning \"Bagels\" with a price when prices belong to variants.\n"
-        "- Returning \"Plain\" without context when it would be ambiguous.\n\n"
+        "STRICTLY FORBIDDEN:\n"
+        "- Returning \"Tomato\" alone when it is under Add Ons, Extras, or Toppings.\n"
+        "- Converting \"Bagels - Plain\" into \"Plain Bagel\" or similar rewrites.\n"
+        "- Using the group title as a standalone item.\n\n"
 
         "STRICT EXTRACTION RULES:\n"
         "- If an item does NOT have a clearly visible price, DO NOT include it.\n"
@@ -87,7 +91,8 @@ def build_menu_prompt() -> str:
         "- Discounts, coupons, or promotional text\n\n"
 
         "IMPORTANT CONSTRAINTS:\n"
-        "- Do NOT normalize spelling or rewrite creatively.\n"
+        "- Do NOT normalize spelling.\n"
+        "- Do NOT creatively rewrite names.\n"
         "- Do NOT output nulls, empty objects, or placeholders.\n"
         "- If no valid items with prices are found, return:\n"
         "{ \"menu_items\": [] }\n\n"

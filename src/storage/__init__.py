@@ -44,4 +44,9 @@ __all__ = [
     "upsert_menu_item_mapping",
     "get_all_menu_category_names",
     "insert_menu_category",
+    # menu CRUD helpers
+    "find_menu_items",
+    "delete_menu_items",
+    "insert_menu_item",
+    "update_menu_item_by_id",
 ]

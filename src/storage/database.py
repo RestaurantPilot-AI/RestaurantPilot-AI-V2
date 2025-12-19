@@ -53,7 +53,9 @@ def _generate_id() -> str:
 
 def _matches_query(row: pd.Series, query: Dict) -> bool:
     """Simple query matcher for find/find_one."""
-    if not query: return True
+    if not query:
+        return True
+
     for k, v in query.items():
         val = str(row.get(k, ""))
         
@@ -62,18 +64,24 @@ def _matches_query(row: pd.Series, query: Dict) -> bool:
             if "$in" in v:
                 # Convert list items to string for comparison
                 check_list = [str(x) for x in v["$in"]]
-                if val not in check_list: return False
+                if val not in check_list:
+                    return False
             elif "$gte" in v:
-                if not val >= str(v["$gte"]): return False
+                if not val >= str(v["$gte"]):
+                    return False
             elif "$lte" in v:
-                if not val <= str(v["$lte"]): return False
+                if not val <= str(v["$lte"]):
+                    return False
             elif "$lt" in v:
-                if not val < str(v["$lt"]): return False
+                if not val < str(v["$lt"]):
+                    return False
             elif "$gt" in v:
-                if not val > str(v["$gt"]): return False
+                if not val > str(v["$gt"]):
+                    return False
         else:
             # Direct Equality
-            if val != str(v): return False
+            if val != str(v):
+                return False
     return True
 
 # ---------------------------------------------------------
@@ -95,7 +103,7 @@ class Decimal128:
     def to_decimal(self):
         try:
             return float(self.value)
-        except:
+        except Exception:
             return 0.0
     def __str__(self): return self.value
     def __repr__(self): return f"Decimal128('{self.value}')"
@@ -106,7 +114,8 @@ class MockCursor:
         self._data = data
     
     def sort(self, key_or_list, direction=None):
-        if not self._data: return self
+        if not self._data:
+            return self
         # Handle list of tuples [(key, direction)] or single key
         key = key_or_list[0][0] if isinstance(key_or_list, list) else key_or_list
         reverse = (direction == -1) or (isinstance(key_or_list, list) and key_or_list[0][1] == -1)
@@ -144,7 +153,8 @@ class MockCollection:
 
     def find_one(self, query=None, projection=None):
         df = _read_table(self.name)
-        if df.empty: return None
+        if df.empty:
+            return None
         
         # Iterate to find match
         for _, row in df.iterrows():
@@ -230,8 +240,10 @@ class MockCollection:
         if "$set" in update:
             for k, v in update["$set"].items():
                 val = v
-                if isinstance(v, (ObjectId, Decimal128)): val = str(v)
-                elif isinstance(v, datetime.datetime): val = v.isoformat()
+                if isinstance(v, (ObjectId, Decimal128)):
+                    val = str(v)
+                elif isinstance(v, datetime.datetime):
+                    val = v.isoformat()
                 df.at[target_idx, k] = val
         
         _save_table(df, self.name)
@@ -264,8 +276,10 @@ class MockCollection:
         if "$set" in update:
             for k, v in update["$set"].items():
                 val = v
-                if isinstance(v, (ObjectId, Decimal128)): val = str(v)
-                elif isinstance(v, datetime.datetime): val = v.isoformat()
+                if isinstance(v, (ObjectId, Decimal128)):
+                    val = str(v)
+                elif isinstance(v, datetime.datetime):
+                    val = v.isoformat()
                 df.at[target_idx, k] = val
         
         _save_table(df, self.name)
@@ -273,7 +287,8 @@ class MockCollection:
 
     def delete_one(self, filter):
         df = _read_table(self.name)
-        if df.empty: return MockDeleteResult(0)
+        if df.empty:
+            return MockDeleteResult(0)
         
         target_idx = -1
         for idx, row in df.iterrows():
@@ -289,7 +304,8 @@ class MockCollection:
     
     def delete_many(self, filter):
         df = _read_table(self.name)
-        if df.empty: return MockDeleteResult(0)
+        if df.empty:
+            return MockDeleteResult(0)
         
         # Identify indices to drop
         drop_indices = []
@@ -336,16 +352,20 @@ def to_decimal128(val):
     if pd.isna(val) or val is None:
         return Decimal128("0.00")
     try:
-        if isinstance(val, str): val = val.replace(',', '')
+        if isinstance(val, str):
+            val = val.replace(',', '')
         return Decimal128(str(float(val)))
-    except:
+    except Exception:
         return Decimal128("0.00")
 
 def _get_float(val):
     """Internal helper to extract float from Decimal128 or string."""
-    if isinstance(val, Decimal128): return val.to_decimal()
-    try: return float(str(val).replace(',', ''))
-    except: return 0.0
+    if isinstance(val, Decimal128):
+        return val.to_decimal()
+    try:
+        return float(str(val).replace(',', ''))
+    except Exception:
+        return 0.0
 
 # --- Vendor Regex Methods ---
 def save_vendor_regex_template(new_vendor_id: str, new_regexes: Dict[str, Any]) -> None:
@@ -369,8 +389,10 @@ def save_vendor_regex_template(new_vendor_id: str, new_regexes: Dict[str, Any]) 
 def get_vendor_regex_patterns(vendor_id: str) -> List[str]:
     doc = db[COL_VENDOR_REGEXES].find_one({"vendor_id": str(vendor_id)})
     if doc and "regex_patterns" in doc:
-        try: return json.loads(doc["regex_patterns"])
-        except: return []
+        try:
+            return json.loads(doc["regex_patterns"])
+        except Exception:
+            return []
     return []
 
 # --- Vendor Methods ---
@@ -409,11 +431,20 @@ def _find_vid(query):
     doc = db[COL_VENDORS].find_one(query)
     return str(doc["_id"]) if doc else None
 
-def get_vendor_by_email(email: str) -> Optional[str]: return _find_vid({"contact_email": email})
-def get_vendor_by_website(website: str) -> Optional[str]: return _find_vid({"website": website})
-def get_vendor_by_address(address: str) -> Optional[str]: return _find_vid({"address": address})
-def get_vendor_by_phone(phone: str) -> Optional[str]: return _find_vid({"phone_number": phone})
-def get_vendor_by_name(name: str) -> Optional[str]: return _find_vid({"name": name})
+def get_vendor_by_email(email: str) -> Optional[str]:
+    return _find_vid({"contact_email": email})
+
+def get_vendor_by_website(website: str) -> Optional[str]:
+    return _find_vid({"website": website})
+
+def get_vendor_by_address(address: str) -> Optional[str]:
+    return _find_vid({"address": address})
+
+def get_vendor_by_phone(phone: str) -> Optional[str]:
+    return _find_vid({"phone_number": phone})
+
+def get_vendor_by_name(name: str) -> Optional[str]:
+    return _find_vid({"name": name})
 
 def get_vendor_name_by_id(vendor_id: str) -> Optional[str]:
     doc = db[COL_VENDORS].find_one({"_id": str(vendor_id)})
@@ -421,7 +452,8 @@ def get_vendor_name_by_id(vendor_id: str) -> Optional[str]:
 
 # --- Main Save Logic ---
 def save_inv_li_to_db(inv_df: pd.DataFrame, li_df: pd.DataFrame):
-    if inv_df.empty: return {"success": False, "message": "No data", "invoice_id": None}
+    if inv_df.empty:
+        return {"success": False, "message": "No data", "invoice_id": None}
     
     inv_data = inv_df.iloc[0].to_dict()
     
@@ -488,7 +520,8 @@ def update_invoice(invoice_id: str, update_data: Dict):
 
 def update_line_item(line_item_id: str, update_data: Dict):
     for f in ["unit_price", "line_total", "quantity"]:
-        if f in update_data: update_data[f] = to_decimal128(update_data[f])
+        if f in update_data:
+            update_data[f] = to_decimal128(update_data[f])
     db.line_items.update_one({"_id": str(line_item_id)}, {"$set": update_data})
     return {"success": True}
 
@@ -498,14 +531,17 @@ def delete_line_item(line_item_id: str):
 
 def add_line_item(invoice_id: str, line_item_data: Dict):
     inv = get_invoice_by_id(invoice_id)
-    if not inv: return {"success": False}
+    if not inv:
+        return {"success": False}
     
     # Simple max line logic via reading table
     items = list(db.line_items.find({"invoice_id": str(invoice_id)}))
     max_l = 0.0
     for i in items:
-        try: max_l = max(max_l, float(str(i.get("line_number", 0))))
-        except: pass
+        try:
+            max_l = max(max_l, float(str(i.get("line_number", 0))))
+        except Exception:
+            pass
         
     new_doc = {
         "invoice_id": str(invoice_id),
@@ -576,6 +612,35 @@ def insert_menu_category(category_name: str):
     if not db[COL_MENU_CATEGORIES].find_one({"_id": category_name}):
         db[COL_MENU_CATEGORIES].insert_one({"_id": category_name})
 
+# --- Menu helpers: CRUD convenience wrappers ---
+
+def find_menu_items(restaurant_id: str = None, menu_item: str = None) -> list:
+    """Return list of menu item dicts matching filters."""
+    q = {}
+    if restaurant_id is not None:
+        q["restaurant_id"] = str(restaurant_id)
+    if menu_item is not None:
+        q["menu_item"] = str(menu_item)
+    return list(db[COL_MENU_ITEMS].find(q))
+
+
+def delete_menu_items(restaurant_id: str, menu_item: str) -> int:
+    """Delete all menu items for restaurant/menu_item. Returns deleted count."""
+    res = db[COL_MENU_ITEMS].delete_many({"restaurant_id": str(restaurant_id), "menu_item": str(menu_item)})
+    return res.deleted_count if hasattr(res, "deleted_count") else 0
+
+
+def insert_menu_item(restaurant_id: str, menu_item: str, price: float, category: str = "Uncategorized") -> str:
+    doc = {"restaurant_id": str(restaurant_id), "menu_item": str(menu_item), "price": str(float(price)), "category": str(category)}
+    res = db[COL_MENU_ITEMS].insert_one(doc)
+    return str(res.inserted_id) if hasattr(res, "inserted_id") else None
+
+
+def update_menu_item_by_id(menu_id: str, update_data: Dict) -> int:
+    """Update a menu item document by _id. Returns modified_count."""
+    res = db[COL_MENU_ITEMS].update_one({"_id": str(menu_id)}, {"$set": update_data})
+    return res.modified_count if hasattr(res, "modified_count") else 0
+
 
 def save_menu_db(menu_df) -> Dict[str, Any]:
     """Save menu items into CSV-backed 'menu_items' table.
@@ -618,15 +683,9 @@ def save_menu_db(menu_df) -> Dict[str, Any]:
         price = row["price"]
         category = str(row.get("category") or "").strip()
 
-        # Resolve category if missing
+        # Resolve category if missing: do NOT call LLM or DB lookup here, just set default
         if not category:
-            from src.processing.categorization import clean_description
-            normalized = clean_description(menu_item)
-            mapped = get_menu_item_category(normalized)
-            if mapped:
-                category = mapped
-            else:
-                category = "Uncategorized"
+            category = "Uncategorized"
 
         # Skip if identical record exists
         existing = db[COL_MENU_ITEMS].find_one({
@@ -699,12 +758,14 @@ def get_invoice_line_items_joined(start_date=None, end_date=None, restaurant_ids
     vend_df = _read_table("vendors")
     
     empty = pd.DataFrame(columns=["invoice_id", "invoice_number", "invoice_date", "location", "vendor", "category", "item_name", "quantity", "unit", "unit_price", "line_total"])
-    if inv_df.empty: return empty
+    if inv_df.empty:
+        return empty
 
     inv_df["invoice_date"] = pd.to_datetime(inv_df["invoice_date"])
     
-    if start_date: inv_df = inv_df[inv_df["invoice_date"] >= start_date]
-    if end_date: 
+    if start_date:
+        inv_df = inv_df[inv_df["invoice_date"] >= start_date]
+    if end_date:
         e = end_date.replace(hour=23, minute=59, second=59)
         inv_df = inv_df[inv_df["invoice_date"] <= e]
     
@@ -715,7 +776,8 @@ def get_invoice_line_items_joined(start_date=None, end_date=None, restaurant_ids
         vids = [str(i) for i in vendor_ids]
         inv_df = inv_df[inv_df["vendor_id"].isin(vids)]
         
-    if inv_df.empty: return empty
+    if inv_df.empty:
+        return empty
     
     # Merges
     merged = pd.merge(inv_df, li_df, left_on="_id", right_on="invoice_id", suffixes=('_inv', '_li'))
@@ -739,11 +801,14 @@ def get_invoice_line_items_joined(start_date=None, end_date=None, restaurant_ids
 
 def get_sales_data(start_date=None, end_date=None, restaurant_ids=None):
     df = _read_table("sales")
-    if df.empty: return pd.DataFrame(columns=["date", "location", "revenue", "covers"])
+    if df.empty:
+        return pd.DataFrame(columns=["date", "location", "revenue", "covers"])
     
     df["date"] = pd.to_datetime(df["date"])
-    if start_date: df = df[df["date"] >= start_date]
-    if end_date: df = df[df["date"] <= end_date.replace(hour=23)]
+    if start_date:
+        df = df[df["date"] >= start_date]
+    if end_date:
+        df = df[df["date"] <= end_date.replace(hour=23)]
     
     rest = _read_table("restaurants")
     m = pd.merge(df, rest, left_on="restaurant_id", right_on="_id", how="left")
@@ -757,13 +822,17 @@ def get_sales_data(start_date=None, end_date=None, restaurant_ids=None):
 
 def get_spending_by_period(start_date, end_date, restaurant_ids=None, group_by="day"):
     inv = _read_table("invoices")
-    if inv.empty: return pd.DataFrame(columns=["period", "total_spend"])
+    if inv.empty:
+        return pd.DataFrame(columns=["period", "total_spend"])
     inv["invoice_date"] = pd.to_datetime(inv["invoice_date"])
     inv = inv[(inv["invoice_date"] >= start_date) & (inv["invoice_date"] <= end_date.replace(hour=23))]
     
-    if group_by == "day": fmt = "%Y-%m-%d"
-    elif group_by == "month": fmt = "%Y-%m"
-    else: fmt = "%Y-%m-%d"
+    if group_by == "day":
+        fmt = "%Y-%m-%d"
+    elif group_by == "month":
+        fmt = "%Y-%m"
+    else:
+        fmt = "%Y-%m-%d"
     
     inv["period"] = inv["invoice_date"].dt.strftime(fmt)
     inv["amt"] = inv["invoice_total_amount"].apply(_get_float)
@@ -771,7 +840,8 @@ def get_spending_by_period(start_date, end_date, restaurant_ids=None, group_by="
 
 def get_category_breakdown(start_date, end_date, restaurant_ids=None):
     df = get_invoice_line_items_joined(start_date, end_date, restaurant_ids)
-    if df.empty: return pd.DataFrame(columns=["category", "total_spend", "percentage"])
+    if df.empty:
+        return pd.DataFrame(columns=["category", "total_spend", "percentage"])
     
     g = df.groupby("category")["line_total"].sum().reset_index(name="total_spend")
     g["percentage"] = (g["total_spend"] / g["total_spend"].sum() * 100).round(2)
@@ -779,7 +849,8 @@ def get_category_breakdown(start_date, end_date, restaurant_ids=None):
 
 def get_vendor_spending(start_date, end_date, restaurant_ids=None):
     inv = _read_table("invoices")
-    if inv.empty: return pd.DataFrame(columns=["vendor", "total_spend", "invoice_count"])
+    if inv.empty:
+        return pd.DataFrame(columns=["vendor", "total_spend", "invoice_count"])
     inv["invoice_date"] = pd.to_datetime(inv["invoice_date"])
     inv = inv[(inv["invoice_date"] >= start_date) & (inv["invoice_date"] <= end_date.replace(hour=23))]
     
@@ -792,13 +863,15 @@ def get_vendor_spending(start_date, end_date, restaurant_ids=None):
 
 def get_top_items_by_spend(start_date, end_date, restaurant_ids=None, limit=20):
     df = get_invoice_line_items_joined(start_date, end_date, restaurant_ids)
-    if df.empty: return pd.DataFrame(columns=["item_name", "category", "total_spend", "avg_price"])
+    if df.empty:
+        return pd.DataFrame(columns=["item_name", "category", "total_spend", "avg_price"])
     g = df.groupby("item_name").agg(category=("category", "first"), total_spend=("line_total", "sum"), avg_price=("unit_price", "mean")).reset_index()
     return g.sort_values("total_spend", ascending=False).head(limit)
 
 def get_price_variations(item_name, start_date=None, end_date=None):
     df = get_invoice_line_items_joined(start_date, end_date)
-    if df.empty: return pd.DataFrame(columns=["date", "vendor", "unit_price", "quantity"])
+    if df.empty:
+        return pd.DataFrame(columns=["date", "vendor", "unit_price", "quantity"])
     df = df[df["item_name"] == item_name]
     return df[["invoice_date", "vendor", "unit_price", "quantity"]].rename(columns={"invoice_date": "date"}).sort_values("date")
 
@@ -875,9 +948,11 @@ def get_price_variations_overview(restaurant_id: str, start_date=None, end_date=
 def get_item_price_timeseries(restaurant_id: str, item_name: str, start_date=None, end_date=None, vendor_ids=None):
     """Return price history rows for a specific item name at a restaurant."""
     df = get_invoice_line_items_joined(start_date, end_date, restaurant_ids=[restaurant_id], vendor_ids=vendor_ids)
-    if df.empty: return pd.DataFrame(columns=["date", "invoice_id", "invoice_number", "vendor", "unit_price", "quantity", "category"])
+    if df.empty:
+        return pd.DataFrame(columns=["date", "invoice_id", "invoice_number", "vendor", "unit_price", "quantity", "category"])
     sub = df[df["item_name"] == item_name].copy()
-    if sub.empty: return pd.DataFrame(columns=["date", "invoice_id", "invoice_number", "vendor", "unit_price", "quantity", "category"])
+    if sub.empty:
+        return pd.DataFrame(columns=["date", "invoice_id", "invoice_number", "vendor", "unit_price", "quantity", "category"])
     sub = sub.sort_values("invoice_date")
     out = pd.DataFrame()
     out["date"] = sub["invoice_date"]
@@ -891,12 +966,14 @@ def get_item_price_timeseries(restaurant_id: str, item_name: str, start_date=Non
 
 def get_descriptions_for_restaurant(restaurant_id: str, start_date=None, end_date=None):
     df = get_invoice_line_items_joined(start_date, end_date, restaurant_ids=[restaurant_id])
-    if df.empty: return []
+    if df.empty:
+        return []
     return sorted(df["item_name"].dropna().unique().tolist())
 
 def get_recent_invoices(limit=10, restaurant_ids=None):
     inv = _read_table("invoices")
-    if inv.empty: return pd.DataFrame(columns=["invoice_number", "invoice_date", "vendor", "location", "total_amount"])
+    if inv.empty:
+        return pd.DataFrame(columns=["invoice_number", "invoice_date", "vendor", "location", "total_amount"])
     inv["invoice_date"] = pd.to_datetime(inv["invoice_date"])
     
     rest = _read_table("restaurants")

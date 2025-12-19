@@ -1,116 +1,116 @@
 _id,restaurant_id,menu_item,price,category
-0de80270-1536-4e24-8eb4-12f449bf3862,507f1f77bcf86cd799439011,Classic Box,120.0,Combos
-d1fdcb7e-ed71-4d5d-add6-b18299d3988f,507f1f77bcf86cd799439011,Savory Box,125.0,Combos
-473bbd91-a363-4c6c-8024-0c524fa4802f,507f1f77bcf86cd799439011,Black & White Box,118.0,Combos
-d80172d8-cba6-4c68-9bf4-5185fa30aee1,507f1f77bcf86cd799439011,Plain Box,110.0,Combos
-1904217b-0c8f-4232-a492-39178b48b1dc,507f1f77bcf86cd799439011,Everything Box,115.0,Combos
-4128c66a-30a0-4359-af8d-f14f967b7bdc,507f1f77bcf86cd799439011,Pick-Your-Own Box,125.0,Combos
-bbc5ab3b-26fe-4439-9339-fa8d65558017,507f1f77bcf86cd799439011,Extra Schmear Tubs - Plain,11.0,Uncategorized
-4f40b4e1-e3b3-4d62-a142-f08c2dabec59,507f1f77bcf86cd799439011,Extra Schmear Tubs - Seasonal Savory,14.0,Uncategorized
-68c27c95-fac0-468e-8b0b-e7e6f4256f2d,507f1f77bcf86cd799439011,Extra Schmear Tubs - Dill & Black Pepper,12.0,Uncategorized
-36c597fc-71e4-4f5e-88bc-614a1602f89b,507f1f77bcf86cd799439011,Extra Schmear Tubs - Vegan Plain,12.0,Uncategorized
-94653bca-04ed-43f8-aeb4-d78cee6ddb66,507f1f77bcf86cd799439011,Extra Schmear Tubs - Scallion,12.0,Uncategorized
-f1a87627-5af5-4eae-97d5-7ee48af785f3,507f1f77bcf86cd799439011,Extra Schmear Tubs - Seasonal Sweet,14.0,Uncategorized
-02285ed9-c810-4ed8-9cde-bc86c0167963,507f1f77bcf86cd799439011,Extra Schmear Tubs - Smoked Lox,17.0,Uncategorized
-b3c64706-e07b-46d9-b7b0-4cc46a655983,507f1f77bcf86cd799439011,Extra Schmear Tubs - Vegan Seasonal,14.0,Uncategorized
-52f4c2a6-877e-4e64-a4a2-4f06dfc97b04,507f1f77bcf86cd799439011,BEC Classic Box,75.0,Uncategorized
-6b0593ab-d110-4191-a325-28575500d340,507f1f77bcf86cd799439011,Egg & Cheese Box,70.0,Uncategorized
-3e6f9362-618a-4143-b6ab-2fc2a3b6864a,507f1f77bcf86cd799439011,Nova Lox Box,105.0,Uncategorized
-1b3e1aa6-4805-48db-8eab-df18df3cc26f,507f1f77bcf86cd799439011,Everyday Lox Box,85.0,Uncategorized
-89279a02-6b45-4bfc-a8e7-81260e35a2dd,507f1f77bcf86cd799439011,Rugelach & Cookie Box,60.0,Uncategorized
-daf80032-aa36-45ad-96c3-b1082948366f,507f1f77bcf86cd799439011,Cookie Box,30.0,Uncategorized
-1a058ad9-cef0-4039-8e57-cc4e0e3fb734,507f1f77bcf86cd799439011,Rugelach Box,30.0,Uncategorized
-95c38331-b337-404a-a521-4cd9dd6c282a,507f1f77bcf86cd799439011,Utensils - 12 Pack,12.0,Uncategorized
-70f97f50-19ef-41f2-944a-8ff343655920,507f1f77bcf86cd799439011,Utensils - 20 Pack,20.0,Uncategorized
-9c886d2a-5211-4cc0-ae87-763cb7ead0be,507f1f77bcf86cd799439011,Utensils - 30 Pack,30.0,Uncategorized
-64e93d96-7f56-433a-a658-c0ebb47cd058,507f1f77bcf86cd799439011,Drip Coffee Box,45.0,Uncategorized
-256d0f85-0565-43da-be8e-9c749ac3ad74,507f1f77bcf86cd799439011,Cold Brew Box,55.0,Uncategorized
-ac5272af-8abc-4b10-8515-06471ed32978,507f1f77bcf86cd799439011,B.E.C CLASSIC,13.0,Sandwiches
-6cd8ab3c-166f-400d-b22e-d7c898fcf7a0,507f1f77bcf86cd799439011,EGG & CHEESE,12.0,Combos
-7e2faca3-4167-4ee4-ae39-6d1050dc93a2,507f1f77bcf86cd799439011,EVERYDAY LOX,14.5,Appetizers
-b879dff1-83d3-457a-9cbd-6987f82a4ebd,507f1f77bcf86cd799439011,NOVA LOX,18.0,Appetizers
-8298991a-95ed-4811-9582-b6135585f146,507f1f77bcf86cd799439011,AVOCADO TOAST (V),13.0,Appetizers
-61e21a62-5ba2-4b45-aef9-0c16d6574037,507f1f77bcf86cd799439011,CARROT LOX (V),12.0,Appetizers
-cdf54af1-6876-4ec8-8f4e-4b7a5985c7ce,507f1f77bcf86cd799439011,Add Ons - 2 EGGS,4.0,Uncategorized
-40c7e650-5d3a-428b-ace3-e341295b138e,507f1f77bcf86cd799439011,Add Ons - LOX,8.0,Uncategorized
-259f08a8-99e7-46a7-b6cd-1bfc2fc3cc24,507f1f77bcf86cd799439011,Add Ons - CHEESE SLICES,2.5,Uncategorized
-b39b61d7-d7fa-42dc-a9db-97b2dea1f2d9,507f1f77bcf86cd799439011,Add Ons - TOMATO,2.25,Uncategorized
-8f3cdb1d-d917-4c23-af13-4cc21c064240,507f1f77bcf86cd799439011,Add Ons - CUCUMBER,1.75,Uncategorized
-37e37569-6729-44e3-95a7-7e08cab4dde5,507f1f77bcf86cd799439011,Add Ons - PICKLED ONION,1.5,Uncategorized
-7e09d37c-6e45-4b67-b448-601c3e52423e,507f1f77bcf86cd799439011,Add Ons - SLICED RED ONION,1.25,Uncategorized
-8cd3f110-bb1c-46d3-976a-e78cbca3a340,507f1f77bcf86cd799439011,Add Ons - AVOCADO SPREAD,3.5,Uncategorized
-2aedba9a-14ba-4cfc-8c42-4ac940d9f694,507f1f77bcf86cd799439011,Add Ons - HOT SAUCE,0.5,Uncategorized
-7719c269-b9f3-4409-a712-eea3f1d71900,507f1f77bcf86cd799439011,Add Ons - BUTTER,0.5,Uncategorized
-fb115032-0265-4c75-8fbc-9a6f414e760e,507f1f77bcf86cd799439011,Add Ons - SEASONAL JAM,2.5,Uncategorized
-6057cdd8-44da-4584-8659-76ce6a3da411,507f1f77bcf86cd799439011,Add Ons - HERB & CAPER DRESSING,0.75,Uncategorized
-9ca661cc-55c2-46a0-a3f6-583fb948c3ca,507f1f77bcf86cd799439011,Add Ons - EVERYTHING BAGEL SPICE,0.5,Uncategorized
-6b57ad1b-2c30-4d9e-81d3-dfee26db0a23,507f1f77bcf86cd799439011,Hot Cocoa 8oz,3.5,Uncategorized
-b7fd2d9f-1dcb-4f27-b80c-a2c725f5a64e,507f1f77bcf86cd799439011,Hot Cocoa 12oz,4.0,Uncategorized
-26986179-717c-4888-93fd-11902a75ba6b,507f1f77bcf86cd799439011,Hot Cocoa 16oz,4.5,Uncategorized
-c563d0a2-b121-4fda-9f9a-c0a2e0aa5e9b,507f1f77bcf86cd799439011,Chai 8oz,4.0,Uncategorized
-e390ef2b-3697-4d2b-b1f3-d178d0f47f35,507f1f77bcf86cd799439011,Chai 12oz,4.5,Uncategorized
-d247435c-da7c-4a54-b9dc-c878e1d5a1d9,507f1f77bcf86cd799439011,Chai 16oz,5.0,Uncategorized
-c772f4cb-d327-42c5-9fd0-2a7b78406447,507f1f77bcf86cd799439011,Orange Juice 12oz,3.25,Uncategorized
-81674306-3c9f-4c10-8e55-1dc2f1da1e62,507f1f77bcf86cd799439011,Orange Juice 16oz,3.5,Uncategorized
-28517304-ecc9-4a9b-9a82-148626d25ca3,507f1f77bcf86cd799439011,London Fog 8oz,4.25,Uncategorized
-7569de68-891f-406c-9c0c-47e09ffb0a1c,507f1f77bcf86cd799439011,London Fog 12oz,4.75,Uncategorized
-39a7f84d-ec0b-41c7-abb6-31e52373f85f,507f1f77bcf86cd799439011,London Fog 16oz,5.25,Uncategorized
-5faa4381-78c5-41ed-88f5-6d2cee020b17,507f1f77bcf86cd799439011,Matcha 8oz,5.5,Uncategorized
-7a4e4bf3-d2d3-46b8-b64e-bf126c9d3991,507f1f77bcf86cd799439011,Matcha 12oz,6.0,Uncategorized
-78700e02-28a3-4ce0-aba5-7765058011aa,507f1f77bcf86cd799439011,Matcha 16oz,6.5,Uncategorized
-01cfff6f-5551-42fd-955f-f77dfe358d59,507f1f77bcf86cd799439011,Egg Cream 16oz,6.0,Uncategorized
-07e561c7-0497-436d-8cae-4f6c460475d3,507f1f77bcf86cd799439011,Hot Tea 8oz,3.5,Uncategorized
-949b83b7-15b1-423c-984e-64543afe0d6c,507f1f77bcf86cd799439011,Hot Tea 12oz,3.5,Uncategorized
-d0b740d9-7f10-4210-ad49-7e86d0655780,507f1f77bcf86cd799439011,Hot Tea 16oz,3.5,Uncategorized
-b16cfd76-10d0-4afa-9019-86332732f227,507f1f77bcf86cd799439011,Iced Tea 12oz,3.75,Uncategorized
-0c7a6a28-99cd-4d09-9ed5-37dcb4729e3d,507f1f77bcf86cd799439011,Iced Tea 16oz,4.0,Uncategorized
-505cff19-33c3-48ac-a11c-34ac6bcb1357,507f1f77bcf86cd799439011,San Pellegrino,2.75,Uncategorized
-1a4947d0-56a7-499f-ab35-1ce7979b576d,507f1f77bcf86cd799439011,Bottled Water,2.0,Uncategorized
-20862288-628c-42d6-90a6-8576029cd4e8,507f1f77bcf86cd799439011,Coke/Diet Coke,2.5,Uncategorized
-cc74ff43-dbfb-4ef8-8937-1332f8265921,507f1f77bcf86cd799439011,Plain Bagel,2.25,Uncategorized
-5e911476-2057-4d74-9d25-f8028a9ea005,507f1f77bcf86cd799439011,Cinnamon Currant Bagel,2.25,Uncategorized
-9a71de94-6952-4ab8-a0e7-2d3355067cb6,507f1f77bcf86cd799439011,Maldon Salt Bagel,2.25,Uncategorized
-e97e208c-0710-438f-b197-61e2d9af5f78,507f1f77bcf86cd799439011,Sesame Bagel,2.25,Uncategorized
-d8127200-6743-4a28-adbd-e0659e8c1790,507f1f77bcf86cd799439011,Everything Bagel,2.25,Uncategorized
-f42a4f7d-d4fc-44ac-abf4-335373997645,507f1f77bcf86cd799439011,Poppy Bagel,2.25,Uncategorized
-236303ea-8354-4257-bb50-77b6a4ca4f61,507f1f77bcf86cd799439011,Pumpernickel Bagel,2.25,Uncategorized
-2c27871f-65f3-4750-935c-75bc8cdd3da3,507f1f77bcf86cd799439011,Pumperthing Bagel,2.25,Uncategorized
-b4aafb88-d442-4d1e-9db1-91ebf4860ac2,507f1f77bcf86cd799439011,ZA'ATAR Bagel,2.75,Uncategorized
-006ee5b2-eace-4894-a939-5623a7e0fbe9,507f1f77bcf86cd799439011,JALAPENO CHEDDAR Bagel,2.75,Uncategorized
-c840e045-2b84-4be1-a880-044657c88559,507f1f77bcf86cd799439011,Plain Schmear,2.75,Uncategorized
-c97f33c4-ed91-452a-9fd5-9036105b16cd,507f1f77bcf86cd799439011,Dill & Black Pepper Schmear,3.0,Uncategorized
-2248773a-3798-4dbd-b52e-21ae425004b0,507f1f77bcf86cd799439011,Scallion Schmear,3.0,Uncategorized
-e4685f38-64f3-48f1-b273-05ad57ea239f,507f1f77bcf86cd799439011,Smoked Lox Schmear,5.0,Uncategorized
-b8e739d9-9774-4833-a5b1-657c26ed86ac,507f1f77bcf86cd799439011,Seasonal Savory Schmear,3.5,Uncategorized
-4f02de5e-7c0a-4d09-833f-b47030c021e8,507f1f77bcf86cd799439011,Seasonal Sweet Schmear,3.5,Uncategorized
-45750f75-ae4d-4e61-acb2-5ee33c7b0089,507f1f77bcf86cd799439011,Vegan Plain (V) Schmear,3.0,Uncategorized
-4f78feb9-76c3-4955-a0ee-ce30a92c20eb,507f1f77bcf86cd799439011,Vegan Seasonal (V) Schmear,3.0,Uncategorized
-0411b3d6-0dbf-4795-af8b-58bda75dbe4c,507f1f77bcf86cd799439011,Latte 8oz,4.25,Uncategorized
-8d1cac95-515b-4d29-959c-6789078c8394,507f1f77bcf86cd799439011,Latte 12oz,5.0,Uncategorized
-b36864e0-3279-479b-8df2-91718882a0d9,507f1f77bcf86cd799439011,Latte 16oz,5.75,Uncategorized
-f510be98-b436-43e7-bc4f-29b827a23af9,507f1f77bcf86cd799439011,Mocha 8oz,4.75,Uncategorized
-1fe06d1b-1285-4f63-a07f-e7839546400f,507f1f77bcf86cd799439011,Mocha 12oz,5.5,Uncategorized
-83fba06e-05dc-4b03-9b84-d446c6738787,507f1f77bcf86cd799439011,Mocha 16oz,6.25,Uncategorized
-9c44a324-6022-4bdf-9d88-474e9d1c00fd,507f1f77bcf86cd799439011,Americano 8oz,3.75,Uncategorized
-80125d3b-64bc-4846-adfc-917e02a526b2,507f1f77bcf86cd799439011,Americano 12oz,3.75,Uncategorized
-b490a4ac-60b1-4979-ae0c-3509363f5603,507f1f77bcf86cd799439011,Americano 16oz,3.75,Uncategorized
-2be14ee8-1700-4077-abc2-3c8dfa3a62ad,507f1f77bcf86cd799439011,Cappuccino 8oz,4.25,Uncategorized
-b2b28561-83e4-4773-9dde-9322aa49f66b,507f1f77bcf86cd799439011,Cappuccino 12oz,4.75,Uncategorized
-7d458d5e-13d3-4f1d-86ca-3880f0056e65,507f1f77bcf86cd799439011,Drip Coffee 8oz,3.75,Uncategorized
-3f78f8ab-3b89-4559-a5e9-eea05ffdb423,507f1f77bcf86cd799439011,Drip Coffee 12oz,4.5,Uncategorized
-678461af-0baa-48f8-a056-3178e0da84be,507f1f77bcf86cd799439011,Drip Coffee 16oz,5.0,Uncategorized
-0997f585-ee52-4422-9418-12ab04ca247b,507f1f77bcf86cd799439011,Cold Brew 12oz,4.75,Uncategorized
-6ab08127-90dc-42ed-b5c6-26a24ff2e7ec,507f1f77bcf86cd799439011,Cold Brew 16oz,5.25,Uncategorized
-89799e00-a6e8-4025-ba02-cefd2bd943be,507f1f77bcf86cd799439011,Traditional Machiatto,4.0,Uncategorized
-9ad0de76-0893-42d6-9ea6-819282390e3e,507f1f77bcf86cd799439011,Cortado,4.0,Uncategorized
-02f90067-dcf3-4b5c-a09d-40c337b33083,507f1f77bcf86cd799439011,Espresso Shots (2),3.75,Uncategorized
-ed2674dc-b9f4-424f-ac2a-9251c937ed4b,507f1f77bcf86cd799439011,Coffee/Espresso - Add Syrup 8oz,0.5,Uncategorized
-a774085d-a0bc-4479-a427-17e18240b4ac,507f1f77bcf86cd799439011,Coffee/Espresso - Add Syrup 12oz,0.75,Uncategorized
-58a80735-cc88-4fc1-ba3e-e94074156b85,507f1f77bcf86cd799439011,Coffee/Espresso - Add Syrup 16oz,1.0,Uncategorized
-694f273a-4d6f-4c4e-9ee6-42c8100f89b7,507f1f77bcf86cd799439011,Coffee/Espresso - Alt Milk 8oz,0.5,Uncategorized
-9116d670-c46f-4fed-9f3a-96ad92545caa,507f1f77bcf86cd799439011,Coffee/Espresso - Alt Milk 12oz,0.75,Uncategorized
-d05e771d-f7b7-4c01-9039-0b51a5b6959b,507f1f77bcf86cd799439011,Coffee/Espresso - Alt Milk 16oz,1.0,Uncategorized
-3733636d-0fe9-4c69-8e24-6df79b72d926,507f1f77bcf86cd799439011,COOKIE,2.5,Uncategorized
-9c3051eb-8a44-42f3-9305-c3a49bf473fe,507f1f77bcf86cd799439011,RUGELACH (SEASONAL),2.5,Uncategorized
-5f54c77c-bae4-440d-99b1-ccee66f9a128,507f1f77bcf86cd799439011,1/2# WHOLE BEAN COFFEE,8.0,Uncategorized
-c669bdda-cf4c-4a9c-a8c9-ef179bbb332c,507f1f77bcf86cd799439011,1# WHOLE BEAN COFFEE,16.0,Uncategorized
+936839c9-84a0-4338-bcfe-4def381c351f,507f1f77bcf86cd799439011,B.E.C CLASSIC,13.0,Sandwiches
+3f0f9534-5aa8-4396-8da2-f10dd75b3000,507f1f77bcf86cd799439011,EGG & CHEESE,12.0,Combos
+7e10a2b1-a51a-428e-b83f-3a52c4ff8974,507f1f77bcf86cd799439011,EVERYDAY LOX,14.5,Appetizers
+f220ec14-10f2-434d-ada1-7c1979fa3d77,507f1f77bcf86cd799439011,NOVA LOX,18.0,Appetizers
+7cf8408d-982b-4f60-b45a-3e1c4f7fad8c,507f1f77bcf86cd799439011,AVOCADO TOAST (V),13.0,Appetizers
+675a1631-ba35-4c99-96c5-85b237331529,507f1f77bcf86cd799439011,CARROT LOX (V),12.0,Appetizers
+f07c9039-90c9-4a15-ac5a-277f32a0fb10,507f1f77bcf86cd799439011,ADD ONS - 2 EGGS,4.0,Uncategorized
+d5147eb9-585b-4801-a26d-3fe76e733801,507f1f77bcf86cd799439011,ADD ONS - LOX,8.0,Uncategorized
+41063d5b-a2b6-4d46-87d8-02a7e4686201,507f1f77bcf86cd799439011,ADD ONS - CHEESE SLICES,2.5,Uncategorized
+37a49aec-7ddc-4020-a199-0a886cba5836,507f1f77bcf86cd799439011,ADD ONS - TOMATO,2.25,Uncategorized
+c5c8b2ee-81fa-4b45-a634-d21b18ad6c1e,507f1f77bcf86cd799439011,ADD ONS - CUCUMBER,1.75,Uncategorized
+7bd2983f-d02e-48ba-a497-ff8b989c6729,507f1f77bcf86cd799439011,ADD ONS - PICKLED ONION,1.5,Uncategorized
+8c64acfa-7d9a-4622-b15d-e828a585b6c8,507f1f77bcf86cd799439011,ADD ONS - SLICED RED ONION,1.25,Uncategorized
+dd1ff794-e49d-4942-a233-020fe05928c3,507f1f77bcf86cd799439011,ADD ONS - AVOCADO SPREAD,3.5,Uncategorized
+4bf2caaf-041a-4aaa-b1f3-b699e9e3f2af,507f1f77bcf86cd799439011,ADD ONS - HOT SAUCE,0.5,Uncategorized
+11364b8b-9c65-4fe3-8e3e-e96ab512b5c6,507f1f77bcf86cd799439011,ADD ONS - BUTTER,0.5,Uncategorized
+835c9ba5-53d7-432d-bc40-3d95e1350af2,507f1f77bcf86cd799439011,ADD ONS - SEASONAL JAM,2.5,Uncategorized
+41fbef7b-f70c-4563-948e-8099f056453d,507f1f77bcf86cd799439011,ADD ONS - HERB & CAPER DRESSING,0.75,Uncategorized
+83d82875-e212-4185-b0ee-1b344da828b6,507f1f77bcf86cd799439011,ADD ONS - EVERYTHING BAGEL SPICE,0.5,Uncategorized
+6416e216-63ab-4375-b7cb-9b9b7bf28bec,507f1f77bcf86cd799439011,BAGELS - Plain,2.25,Uncategorized
+d9a92757-3f73-4b84-8e20-668e03c93a66,507f1f77bcf86cd799439011,BAGELS - Cinnamon Currant,2.25,Uncategorized
+0fdd1721-8191-4dc1-8c3c-5ce7b90ed0aa,507f1f77bcf86cd799439011,BAGELS - Maldon Salt,2.25,Uncategorized
+c944fb3f-3479-4243-9483-27bda5703dfa,507f1f77bcf86cd799439011,BAGELS - Sesame,2.25,Uncategorized
+8e41f7c8-0274-4216-b696-fef474d05efd,507f1f77bcf86cd799439011,BAGELS - Everything,2.25,Uncategorized
+84ec4f55-f905-487f-ab3c-e1cfa230f85e,507f1f77bcf86cd799439011,BAGELS - Poppy,2.25,Uncategorized
+727af752-2157-4b14-bdbe-c62f8a805f60,507f1f77bcf86cd799439011,BAGELS - Pumpernickel,2.25,Uncategorized
+63debab4-80b9-4261-a76d-7ba602bfa6cf,507f1f77bcf86cd799439011,BAGELS - Pumperthing,2.25,Uncategorized
+bc3405f5-dacb-4189-b54e-c210dca931f8,507f1f77bcf86cd799439011,BAGELS - Za'Atar,2.75,Uncategorized
+1cbc102e-60ac-40e6-a3a9-a990152bb760,507f1f77bcf86cd799439011,BAGELS - Jalapeno Cheddar,2.75,Uncategorized
+e37b4b5e-6499-4ee0-975b-5f7d071058a0,507f1f77bcf86cd799439011,SCHMEARS - Plain,2.75,Uncategorized
+1df5f874-d7a3-45e3-991d-3100b7481b4b,507f1f77bcf86cd799439011,SCHMEARS - Dill & Black Pepper,3.0,Uncategorized
+16291ec9-b240-4530-ac7b-b397afe6487d,507f1f77bcf86cd799439011,SCHMEARS - Scallion,3.0,Uncategorized
+112aae18-b323-47cb-9e2d-b3b4a50edaef,507f1f77bcf86cd799439011,SCHMEARS - Smoked Lox,5.0,Uncategorized
+db59dce4-e644-43d2-b50a-8f3d3e7dec7f,507f1f77bcf86cd799439011,SCHMEARS - Seasonal Savory,3.5,Uncategorized
+3e637caa-1bc1-4a11-91b5-764060bfe344,507f1f77bcf86cd799439011,SCHMEARS - Seasonal Sweet,3.5,Uncategorized
+d7112c28-1419-4bf2-8c7f-30dbfa888833,507f1f77bcf86cd799439011,SCHMEARS - Vegan Plain (V),3.0,Uncategorized
+4fed10f1-1ecd-4c1e-a6e4-b1233b3354ec,507f1f77bcf86cd799439011,SCHMEARS - Vegan Seasonal (V),3.0,Uncategorized
+b71cd39a-1e54-409b-8d36-7a0d6b6f79d8,507f1f77bcf86cd799439011,Hot Cocoa - 8oz,3.5,Uncategorized
+4fdcff24-12aa-4fdd-894e-b9e61424b5e9,507f1f77bcf86cd799439011,Hot Cocoa - 12oz,4.0,Uncategorized
+ec9ff105-3d64-4844-8d84-1532302c8937,507f1f77bcf86cd799439011,Hot Cocoa - 16oz,4.5,Uncategorized
+617a5d7b-31ae-4d46-9b17-a075c27a6d60,507f1f77bcf86cd799439011,Chai - 8oz,4.0,Uncategorized
+0c67a783-76d2-4e04-ba7d-b0d9b54bdd9d,507f1f77bcf86cd799439011,Chai - 12oz,4.5,Uncategorized
+7cae561e-0e8d-45c6-8a32-ff0071f172de,507f1f77bcf86cd799439011,Chai - 16oz,5.0,Uncategorized
+056a6282-b5ec-4693-85f0-7382f229b6e2,507f1f77bcf86cd799439011,Orange Juice - 12oz,3.25,Uncategorized
+06147bd7-f721-4c70-b08d-da0f0e3a0767,507f1f77bcf86cd799439011,Orange Juice - 16oz,3.5,Uncategorized
+9fd75fe3-986c-4769-b964-397d639d5614,507f1f77bcf86cd799439011,London Fog - 8oz,4.25,Uncategorized
+4bbf30d5-d3c4-410e-b5a6-3ad281ee9ccd,507f1f77bcf86cd799439011,London Fog - 12oz,4.75,Uncategorized
+b40b1429-bfb4-4487-9eaa-27d6f11a96c3,507f1f77bcf86cd799439011,London Fog - 16oz,5.25,Uncategorized
+cb7b024e-e39b-458b-8580-ecebf31f16f5,507f1f77bcf86cd799439011,Matcha - 8oz,5.5,Uncategorized
+bdca79b4-b44f-4078-b256-ea33cbb469c0,507f1f77bcf86cd799439011,Matcha - 12oz,6.0,Uncategorized
+a1ebdd9e-4762-4159-bc38-1e1abee13b29,507f1f77bcf86cd799439011,Matcha - 16oz,6.5,Uncategorized
+8cc9f021-a59b-4e0e-880b-008e3cf509fe,507f1f77bcf86cd799439011,Egg Cream - 16oz,6.0,Uncategorized
+9d7d39e1-09d7-464f-bc63-219b2c7c5dee,507f1f77bcf86cd799439011,Hot Tea - 8oz,3.5,Uncategorized
+5a56999a-5644-4aa6-bccd-2a58ff182afd,507f1f77bcf86cd799439011,Hot Tea - 12oz,3.5,Uncategorized
+7783d260-62c9-4d04-a1a7-5e8013b41990,507f1f77bcf86cd799439011,Hot Tea - 16oz,3.5,Uncategorized
+39c5a5ec-ded2-4cef-8c1f-c64c8e98a84a,507f1f77bcf86cd799439011,Iced Tea - 12oz,3.75,Uncategorized
+04eb7734-befa-42df-a599-a80bc895824b,507f1f77bcf86cd799439011,Iced Tea - 16oz,4.0,Uncategorized
+76b01e00-66de-47ac-8aba-ee946f47845b,507f1f77bcf86cd799439011,San Pellegrino,2.75,Uncategorized
+ae2a4dd5-dc95-41ea-8a7f-fab7895caa54,507f1f77bcf86cd799439011,Bottled Water,2.0,Uncategorized
+66d2cba5-d641-461f-b38e-1f14c247b6cc,507f1f77bcf86cd799439011,Coke/Diet Coke,2.5,Uncategorized
+f762729d-3ae8-4bc2-9b5f-32e0bc7c3ef5,507f1f77bcf86cd799439011,Latte - 8oz,4.25,Uncategorized
+d45607b1-92af-49b9-aa3f-221cbbf8476f,507f1f77bcf86cd799439011,Latte - 12oz,5.0,Uncategorized
+16f55586-c650-4900-9860-b123b0f94625,507f1f77bcf86cd799439011,Latte - 16oz,5.75,Uncategorized
+82f52c9f-f8b3-438e-a80c-974f3a444280,507f1f77bcf86cd799439011,Mocha - 8oz,4.75,Uncategorized
+53b6322f-bac7-4efd-b9b0-52df4c541529,507f1f77bcf86cd799439011,Mocha - 12oz,5.5,Uncategorized
+b4d25c7a-3ac3-4874-87aa-b3c3e803648d,507f1f77bcf86cd799439011,Mocha - 16oz,6.25,Uncategorized
+40cc9bb9-c85b-463b-a742-41811f1c6858,507f1f77bcf86cd799439011,Americano - 8oz,3.75,Uncategorized
+c06926fc-c61d-4003-a01c-92c8c82b4c2d,507f1f77bcf86cd799439011,Americano - 12oz,3.75,Uncategorized
+eae58a34-b4b7-47d8-a387-c661d1ce81cc,507f1f77bcf86cd799439011,Americano - 16oz,3.75,Uncategorized
+6b944b6a-fc6a-4070-9e86-26b7614aabfc,507f1f77bcf86cd799439011,Cappuccino - 8oz,4.25,Uncategorized
+1e9858a3-3d03-46b8-971d-5ffb833a3183,507f1f77bcf86cd799439011,Cappuccino - 12oz,4.75,Uncategorized
+f2870e13-5ede-47ae-970d-76bd8fb83b87,507f1f77bcf86cd799439011,Drip Coffee - 8oz,3.75,Uncategorized
+7649563c-48ca-4872-8deb-04aa4142f302,507f1f77bcf86cd799439011,Drip Coffee - 12oz,4.5,Uncategorized
+810713f4-8456-4842-b7ea-3c2233ccc888,507f1f77bcf86cd799439011,Drip Coffee - 16oz,5.0,Uncategorized
+5a1ae16d-c41a-4a12-a608-f0b028ae0d14,507f1f77bcf86cd799439011,Cold Brew - 12oz,4.75,Uncategorized
+64473054-9ad2-4928-aef0-af9bd8269f9f,507f1f77bcf86cd799439011,Cold Brew - 16oz,5.25,Uncategorized
+ddc81af4-1c54-4aea-a5e7-e45724fa2152,507f1f77bcf86cd799439011,COFFEE/ESPRESSO - Add Syrup - 8oz,0.5,Uncategorized
+c45220d8-733a-40b8-9032-25e7343ec15b,507f1f77bcf86cd799439011,COFFEE/ESPRESSO - Add Syrup - 12oz,0.75,Uncategorized
+5c5cb2d9-2e83-473d-a346-1fd51e9b1f86,507f1f77bcf86cd799439011,COFFEE/ESPRESSO - Add Syrup - 16oz,1.0,Uncategorized
+1d5d489a-0c8b-4b40-94bc-eb04e0d73570,507f1f77bcf86cd799439011,COFFEE/ESPRESSO - Alt Milk - 8oz,0.5,Uncategorized
+2c76fe7e-2660-48f4-90be-5aaa796112e7,507f1f77bcf86cd799439011,COFFEE/ESPRESSO - Alt Milk - 12oz,0.75,Uncategorized
+e6c65e59-1c8b-48a0-93e3-1d20c8581675,507f1f77bcf86cd799439011,COFFEE/ESPRESSO - Alt Milk - 16oz,1.0,Uncategorized
+5927fa7e-5fab-4a3f-9a34-7e3096aeabee,507f1f77bcf86cd799439011,Traditional Machiatto,4.0,Uncategorized
+b66096b0-c572-406d-80e6-c1877c5df965,507f1f77bcf86cd799439011,Cortado,4.0,Uncategorized
+629aaea5-9fdd-421a-82fb-0bbd084fe803,507f1f77bcf86cd799439011,Espresso Shots (2),3.75,Uncategorized
+2ecab8f2-e246-48ee-bb37-ac044b149bce,507f1f77bcf86cd799439011,COOKIE,2.5,Uncategorized
+ec5793ce-5746-403e-a173-fcdc36094fc2,507f1f77bcf86cd799439011,RUGELACH (SEASONAL),2.5,Uncategorized
+559ec810-48f5-4938-8e12-f93c16b6fd59,507f1f77bcf86cd799439011,1/2# WHOLE BEAN COFFEE,8.0,Uncategorized
+0d46de84-d2ce-424d-a497-ad0dcae20726,507f1f77bcf86cd799439011,1# WHOLE BEAN COFFEE,16.0,Uncategorized
+db3e81bd-b9bd-45c1-bf86-1f145c5f201d,507f1f77bcf86cd799439011,BAGEL & SCHMEAR BOXES - CLASSIC BOX,120.0,Uncategorized
+0162db36-1d4c-4220-936d-61a52c60932d,507f1f77bcf86cd799439011,BAGEL & SCHMEAR BOXES - SAVORY BOX,125.0,Uncategorized
+bc0064f5-64d3-457e-89b3-9295e2535ca0,507f1f77bcf86cd799439011,BAGEL & SCHMEAR BOXES - BLACK & WHITE BOX,118.0,Uncategorized
+124d92d5-5707-4de3-986a-9edcd431710b,507f1f77bcf86cd799439011,BAGEL & SCHMEAR BOXES - PLAIN BOX,110.0,Uncategorized
+b37a6e08-2ee1-4607-9880-7a0ec1c5191a,507f1f77bcf86cd799439011,BAGEL & SCHMEAR BOXES - EVERYTHING BOX,115.0,Uncategorized
+8ea4f6e6-3723-4f0f-92cb-f544e266641b,507f1f77bcf86cd799439011,BAGEL & SCHMEAR BOXES - PICK-YOUR-OWN BOX,125.0,Uncategorized
+08319ffe-f3cb-43ce-8316-6dbe427e3c0e,507f1f77bcf86cd799439011,EXTRA SCHMEAR TUBS - PLAIN,11.0,Uncategorized
+d2b59bd8-59e6-4607-b9e4-1739fd27f307,507f1f77bcf86cd799439011,EXTRA SCHMEAR TUBS - SEASONAL SAVORY,14.0,Uncategorized
+b4d132a1-1c8f-4f9c-8244-188ba361372a,507f1f77bcf86cd799439011,EXTRA SCHMEAR TUBS - DILL & BLACK PEPPER,12.0,Uncategorized
+99842348-d454-4d0f-91ad-eccb0874cf0c,507f1f77bcf86cd799439011,EXTRA SCHMEAR TUBS - VEGAN PLAIN (V),12.0,Uncategorized
+99ba0a02-f642-4b6d-8ff6-90547955773f,507f1f77bcf86cd799439011,EXTRA SCHMEAR TUBS - SCALLION,12.0,Uncategorized
+1e8bfee9-f50e-4048-af76-e9b3f6d9c5c1,507f1f77bcf86cd799439011,EXTRA SCHMEAR TUBS - SEASONAL SWEET,14.0,Uncategorized
+5da9b030-da01-4439-a73a-bd9da5cd102e,507f1f77bcf86cd799439011,EXTRA SCHMEAR TUBS - SMOKED LOX,17.0,Uncategorized
+592d22d6-5025-47b0-9c83-3c18c4a840f2,507f1f77bcf86cd799439011,EXTRA SCHMEAR TUBS - VEGAN SEASONAL (V),14.0,Uncategorized
+94afd0fe-87cb-4bff-8428-ab49e1367879,507f1f77bcf86cd799439011,SANDWICH BOXES - BEC CLASSIC BOX,75.0,Uncategorized
+597d1847-1ad1-4436-8ac3-e8ba955ed6ff,507f1f77bcf86cd799439011,SANDWICH BOXES - EGG & CHEESE BOX,70.0,Uncategorized
+35bb0afa-512b-42d7-8080-81a3c69d1d06,507f1f77bcf86cd799439011,SANDWICH BOXES - NOVA LOX BOX,105.0,Uncategorized
+4f87e6db-26f3-4871-9741-d0c7e27d7a62,507f1f77bcf86cd799439011,SANDWICH BOXES - EVERYDAY LOX BOX,85.0,Uncategorized
+08e1f97c-3b31-4ff7-9956-87e4ab5dac75,507f1f77bcf86cd799439011,DESSERT BOXES - RUGELACH & COOKIE BOX,60.0,Uncategorized
+6b961b9a-4eac-49bb-9f65-0fb4cb46b1b7,507f1f77bcf86cd799439011,DESSERT BOXES - COOKIE BOX,30.0,Uncategorized
+cb126716-ab5f-4865-91ec-8e1d14f7f6a7,507f1f77bcf86cd799439011,DESSERT BOXES - RUGELACH BOX,30.0,Uncategorized
+1e47e58a-36be-44da-b269-9fb9b6111f4a,507f1f77bcf86cd799439011,UTENSILS - 12 PACK,12.0,Uncategorized
+90031ad3-1521-48d5-bb5e-b5a3b5f19581,507f1f77bcf86cd799439011,UTENSILS - 20 PACK,20.0,Uncategorized
+354bb7d9-abb5-43c3-96f5-dfb11bfe2317,507f1f77bcf86cd799439011,UTENSILS - 30 PACK,30.0,Uncategorized
+3aba5dbf-597d-424c-ab7c-45f9ecbdf0a5,507f1f77bcf86cd799439011,BEVERAGES - DRIP COFFEE BOX,45.0,Uncategorized
+6c4ae579-a1fe-4b64-a2b6-0efda3773085,507f1f77bcf86cd799439011,BEVERAGES - COLD BREW BOX,55.0,Uncategorized

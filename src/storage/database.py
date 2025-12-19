@@ -1,13 +1,11 @@
-import os
 import re
-import csv
 import json
 import uuid
 import datetime
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from typing import Optional, List, Dict, Any, Tuple
+from typing import Optional, List, Dict, Any
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -546,6 +544,116 @@ def upsert_item_mapping(description: str, category_name: str):
         {"$set": {"category": category_name}}, 
         upsert=True
     )
+
+# ---------------------------------------------------------
+# Menu storage helpers (CSV-backed)
+# ---------------------------------------------------------
+COL_MENU_ITEMS = "menu_items"
+COL_MENU_ITEM_MAP = "menu_item_lookup_map"
+COL_MENU_CATEGORIES = "menu_categories"
+
+
+def get_menu_item_category(normalized_name: str) -> Optional[str]:
+    """Lookup menu item category by normalized name in menu_item_lookup_map."""
+    doc = db[COL_MENU_ITEM_MAP].find_one({"_id": normalized_name})
+    return doc.get("category") if doc else None
+
+
+def upsert_menu_item_mapping(description: str, category_name: str):
+    db[COL_MENU_ITEM_MAP].update_one(
+        {"_id": description},
+        {"$set": {"category": category_name}},
+        upsert=True
+    )
+
+
+def get_all_menu_category_names() -> List[str]:
+    cats = list(db[COL_MENU_CATEGORIES].find())
+    return [c["_id"] for c in cats if "_id" in c]
+
+
+def insert_menu_category(category_name: str):
+    if not db[COL_MENU_CATEGORIES].find_one({"_id": category_name}):
+        db[COL_MENU_CATEGORIES].insert_one({"_id": category_name})
+
+
+def save_menu_db(menu_df) -> Dict[str, Any]:
+    """Save menu items into CSV-backed 'menu_items' table.
+
+    Usage:
+      - save_menu_db(menu_df)  # df contains restaurant_id, menu_item, price, category
+
+    Strict behaviour: expects columns `restaurant_id`, `menu_item`, and `price`.
+    If category is missing it will try to resolve via `menu_item_lookup_map`; if still
+    missing it will be set to 'Uncategorized'.
+
+    Raises:
+      - TypeError if input is not a DataFrame
+      - ValueError if required columns are missing or DataFrame is empty
+      - RuntimeError for unexpected insertion errors
+
+    Returns:
+      dict: {"inserted": <number_of_rows_inserted>}
+    """
+    if not isinstance(menu_df, pd.DataFrame):
+        raise TypeError("menu_df must be a pandas DataFrame")
+
+    df = menu_df.copy()
+    if df.empty:
+        raise ValueError("menu_df is empty")
+
+    required = {"restaurant_id", "menu_item", "price"}
+    if not required.issubset(set(df.columns)):
+        raise ValueError(f"menu_df must contain columns: {sorted(list(required))}")
+
+    # Normalize types and deduplicate
+    df["menu_item"] = df["menu_item"].astype(str)
+    df["price"] = df["price"].astype(float)
+    df = df.drop_duplicates(subset=["restaurant_id", "menu_item", "price"]).reset_index(drop=True)
+
+    records = []
+    for _, row in df.iterrows():
+        restaurant_id = str(row["restaurant_id"])
+        menu_item = str(row["menu_item"]).strip()
+        price = row["price"]
+        category = str(row.get("category") or "").strip()
+
+        # Resolve category if missing
+        if not category:
+            from src.processing.categorization import clean_description
+            normalized = clean_description(menu_item)
+            mapped = get_menu_item_category(normalized)
+            if mapped:
+                category = mapped
+            else:
+                category = "Uncategorized"
+
+        # Skip if identical record exists
+        existing = db[COL_MENU_ITEMS].find_one({
+            "restaurant_id": restaurant_id,
+            "menu_item": menu_item,
+            "price": str(price)
+        })
+        if existing:
+            continue
+
+        doc = {
+            "restaurant_id": restaurant_id,
+            "menu_item": menu_item,
+            "price": str(price),
+            "category": category
+        }
+        records.append(doc)
+
+    if not records:
+        return {"inserted": 0}
+
+    try:
+        res = db[COL_MENU_ITEMS].insert_many(records)
+        inserted = len(res.inserted_ids) if hasattr(res, "inserted_ids") else len(records)
+        return {"inserted": inserted}
+    except Exception as e:
+        raise RuntimeError(f"Failed to insert menu records: {e}")
 
 # --- Temp Uploads ---
 def save_temp_upload(session_id: str, upload_data: Dict):

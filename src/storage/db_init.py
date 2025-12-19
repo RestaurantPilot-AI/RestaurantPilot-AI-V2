@@ -1,7 +1,5 @@
-import os
 import csv
 import datetime
-import uuid
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -28,6 +26,13 @@ def start_connection(create_dummy=False):
         else:
             DB_PATH.mkdir(parents=True, exist_ok=True)
             print(f"[INFO] Database Folder '{DB_PATH}' created. Connected.")
+
+        # Ensure all expected table files exist and have headers
+        try:
+            create_validation_rules(DB_PATH)
+            create_indexes(DB_PATH)
+        except Exception as e:
+            print(f"[WARNING] Validation/index creation failed during start: {e}")
 
         restaurant_id = None
 
@@ -128,6 +133,16 @@ def create_validation_rules(db):
         "categories.csv": [
             "_id"
         ],
+        # Menu-related tables
+        "menu_items.csv": [
+            "_id", "restaurant_id", "menu_item", "price", "category"
+        ],
+        "menu_item_lookup_map.csv": [
+            "_id", "category"
+        ],
+        "menu_categories.csv": [
+            "_id"
+        ],
         "temp_uploads.csv": [
             "session_id", "created_at", "updated_at", "data"
         ],
@@ -151,7 +166,8 @@ def create_validation_rules(db):
                     try:
                         existing_headers = next(reader)
                         if existing_headers == headers:
-                            print(f"[UPDATED] Validator (Headers OK): {filename}")
+                            # print(f"[UPDATED] Validator (Headers OK): {filename}")
+                            pass
                         else:
                             print(f"[WARNING] Header Mismatch in {filename}. Expected {headers}")
                     except StopIteration:
@@ -173,7 +189,7 @@ def create_indexes(db):
     required_files = [
         "restaurants.csv", "vendors.csv", "vendor_regex_templates.csv",
         "invoices.csv", "sales.csv", "line_items.csv", 
-        "item_lookup_map.csv", "temp_uploads.csv"
+        "item_lookup_map.csv", "menu_items.csv", "menu_item_lookup_map.csv", "menu_categories.csv", "temp_uploads.csv"
     ]
     
     missing_files = []

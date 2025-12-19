@@ -8,7 +8,12 @@ from src.storage.database import (
     get_all_category_names, 
     get_stored_category, 
     insert_master_category, 
-    upsert_item_mapping
+    upsert_item_mapping,
+    # menu specific DB helpers
+    get_all_menu_category_names,
+    get_menu_item_category as db_get_menu_item_category,
+    insert_menu_category as db_insert_menu_category,
+    upsert_menu_item_mapping as db_upsert_menu_item_mapping,
 )
 
 # Setup Gemini
@@ -121,7 +126,7 @@ def build_categorization_prompt(description: str, existing_categories: List[str]
 
 def predict_category_with_llm(description: str, existing_categories: List[str]) -> str:
     """
-    Interacts with the Gemini API to predict a category.
+    Interacts with the Gemini API to predict a category for line-items.
     Does NOT interact with the database.
     """
     # 1. Build Prompt
@@ -140,6 +145,94 @@ def predict_category_with_llm(description: str, existing_categories: List[str]) 
         # print(f"[ERROR] LLM Prediction failed: {e}")
         print("[ERROR] LLM Prediction failed: API Key limit")
         return "Uncategorized"
+
+
+# -----------------------------
+# Menu-specific categorization
+# -----------------------------
+def build_menu_categorization_prompt(description: str, existing_categories: List[str]) -> str:
+    """
+    Build a strict prompt tailored to menu item categorization.
+    This differs from invoice-item prompts by emphasizing "menu" context (sections, food/beverage domains)
+    and avoiding inventory / vendor language.
+    """
+    categories_str = ", ".join(existing_categories)
+    return (
+        "You are a precise menu categorization assistant for restaurant MENU ITEMS.\n"
+        f"Existing Categories: [{categories_str}]\n"
+        f"Menu Item Name: '{description}'\n\n"
+        "Rules:\n"
+        "- Assign the item to one of the Existing Categories if it clearly fits.\n"
+        "- If it clearly does not fit any, invent a short, human-friendly category name (e.g., 'Sandwiches', 'Bakery', 'Beverages').\n"
+        "- Prefer short single-token or short-phrase categories.\n"
+        "- Do NOT return explanations or extra text.\n"
+        "- Return ONLY the category name as plain text."
+    )
+
+
+def predict_menu_category_with_llm(description: str, existing_categories: List[str]) -> str:
+    """
+    Calls Gemini to predict a menu category. Returns the category string (or 'Uncategorized').
+    """
+    prompt = build_menu_categorization_prompt(description, existing_categories)
+    try:
+        model = genai.GenerativeModel(LIGHT_MODEL_NAME)
+        response = model.generate_content(prompt)
+        predicted = response.text.strip().replace("```", "").replace("**", "")
+        return predicted
+    except Exception:
+        print("[ERROR] Menu LLM Prediction failed: API Key limit")
+        return "Uncategorized"
+
+
+def save_menu_category_result(description: str, predicted_category: str, existing_categories: List[str]) -> None:
+    """
+    Save menu-specific category and mapping to DB if it's new.
+    """
+    if not predicted_category or predicted_category == "Uncategorized":
+        return
+
+    existing_lower = {c.lower() for c in existing_categories}
+    if predicted_category.lower() not in existing_lower:
+        print(f"[INFO] New menu master category detected: {predicted_category}")
+        db_insert_menu_category(predicted_category)
+
+    db_upsert_menu_item_mapping(description, predicted_category)
+
+
+def get_menu_item_category(description: str) -> str:
+    """
+    Menu-specific category resolution:
+      1) Clean description (menu-focused) -> normalized
+      2) Check `menu_item_lookup_map` for existing mapping
+      3) If missing, fetch existing menu categories and call LLM to predict
+      4) Persist mapping and new category if needed
+
+    Returns: category string (or 'Uncategorized')
+    """
+    if not description:
+        print("[INFO] Menu description empty.")
+        return "Uncategorized"
+
+    cleaned_description = clean_description(description)
+    if not cleaned_description:
+        print("[INFO] Menu cleaned description empty.")
+        return "Uncategorized"
+
+    # 1. Check menu-specific mapping table
+    stored = db_get_menu_item_category(cleaned_description)
+    if stored:
+        return stored
+
+    # 2. Predict via LLM
+    existing = get_all_menu_category_names()
+    predicted = predict_menu_category_with_llm(cleaned_description, existing)
+
+    # 3. Save mapping and possibly new master category
+    save_menu_category_result(cleaned_description, predicted, existing)
+
+    print(f"[INFO] Menu LLM mapping: '{description}' -> '{cleaned_description}' -> '{predicted}'")
+    return predicted
 
 def save_category_result(description: str, predicted_category: str, existing_categories: List[str]) -> None:
     """

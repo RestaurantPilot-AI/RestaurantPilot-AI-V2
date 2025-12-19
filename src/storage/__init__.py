@@ -14,6 +14,12 @@ from .database import (
     insert_master_category,
     upsert_item_mapping,
     save_inv_li_to_db,
+    # Menu specific
+    save_menu_db,
+    get_menu_item_category,
+    upsert_menu_item_mapping,
+    get_all_menu_category_names,
+    insert_menu_category,
 )
 
 __all__ = [
@@ -32,4 +38,10 @@ __all__ = [
     "insert_master_category",
     "upsert_item_mapping",
     "save_inv_li_to_db",
+    # Menu API
+    "save_menu_db",
+    "get_menu_item_category",
+    "upsert_menu_item_mapping",
+    "get_all_menu_category_names",
+    "insert_menu_category",
 ]

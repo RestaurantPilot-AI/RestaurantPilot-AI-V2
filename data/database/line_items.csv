@@ -1713,4 +1713,78 @@ a565915d-69ae-498d-9b86-8c15c668ba99,a6a17c5f-5d17-4ce0-9529-70c82104a86c,Tomlin
 1085ae62-da72-492a-84b7-9f374c17d02e,a6a17c5f-5d17-4ce0-9529-70c82104a86c,Tomlinson Linen Service,Uniforms & Linens,1.0,,LAUNDRY BAG,0.55,0.55,4.0
 0357c9e5-a264-4b7e-88c6-db51c3103201,a6a17c5f-5d17-4ce0-9529-70c82104a86c,Tomlinson Linen Service,Equipment & Tools,1.0,,LAUNDRY BAG RACK,0.25,0.25,5.0
 95489dc2-7617-4d13-9653-c5e26aa35775,a6a17c5f-5d17-4ce0-9529-70c82104a86c,Tomlinson Linen Service,Cleaning Supplies,1.0,,MOP HANDLE WET,0.55,0.55,6.0
-b8c80462-13db-4f0e-bc9e-e03b43e18db5,a6a17c5f-5d17-4ce0-9529-70c82104a86c,Tomlinson Linen Service,Cleaning Supplies,2.0,None,MOP WET,2.75,5.5,7.0
+b8c80462-13db-4f0e-bc9e-e03b43e18db5,a6a17c5f-5d17-4ce0-9529-70c82104a86c,Tomlinson Linen Service,Cleaning Supplies,2.0,,MOP WET,2.75,5.5,7.0
+29dfdf70-869c-4c85-b8c3-7a717a9b239e,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Produce,3.0,3 lbs,Yucatan Avocado Halves,13.59,40.77,1.0
+88d5cab1-83a5-4c60-81d8-6218e6d12f03,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Produce,1.0,6 ct,"Cucumbers, 6 ct",8.19,8.19,2.0
+1c36f044-139c-400f-862a-1bcbe084da0a,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Paper Goods,1.0,3000 ct,"Marathon Interfold Dispenser Napkins, 2-Ply, White, 3000 ct",33.59,33.59,3.0
+a8467e5e-8b92-4344-9a56-ced89632d8b5,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Paper Goods,1.0,12 ct,"Marathon Recycled Dispenser Roll Towels, 1-Ply, Non-perforated, Brown, 12 ct",35.99,35.99,4.0
+8e294799-601c-48b5-a2df-d549daad1e36,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Dairy,5.0,"1 Gallon, 2 ct",Kirkland Signature Whole Milk,7.79,38.95,5.0
+dad5e588-c634-4a7f-a510-aec4b78c8a89,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Operating Expense,1.0,48 ct,"Kirkland Signature Alkaline AAA Batteries, 48 ct",18.19,18.19,6.0
+139b6f25-c0d7-4d7b-be89-c833567bdfce,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Dairy,2.0,30 lbs,"PHILADELPHIA Cream Cheese, Original",104.99,209.98,7.0
+0c272252-5c06-42d5-a075-d47df2f525ba,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Paper Goods,2.0,200 ct,"World Centric Compostable Plastic Hot Cup Lids, 12-24 oz, 200 ct",14.79,29.58,8.0
+8540ca44-f61b-491a-abfa-f9df83b1a465,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Dairy,15.0,1.5 lbs,"CA Select Farms Mild Cheddar Cheese, 30 Slices",5.49,82.35,9.0
+dad18739-e191-4fdc-8f2d-1809f01def3d,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Meat,1.0,10 lbs,"Daily's 3/8"" Fully-Cooked Diced Bacon Bits",73.99,73.99,10.0
+d987d023-a526-4cd5-97a3-4dab0b8378ab,6d332b89-7e8a-4974-bd60-c6118997c250,Costco Business Center,Cooking Aids,1.0,35 lbs,Master Chef Canola Frying Oil,39.09,39.09,11.0
+d193c27f-eb5d-44eb-942d-f3ecc502e0b8,acc4f800-18bb-4840-9c7d-ba8285b2f0ce,Costco Business Center,Uncategorized,2.0,"32 ﬂ oz, 6 ct","Caliﬁa Farms Cafe Oatmilk, Dairy Free",17.19,34.38,1.0
+2f14eaae-998b-4738-bd22-2d70679cb7f0,acc4f800-18bb-4840-9c7d-ba8285b2f0ce,Costco Business Center,Dairy,4.0,"1 Gallon, 2 ct",Kirkland Signature Whole Milk,7.79,31.16,2.0
+c3c4c342-2a9a-43ab-be82-bb5c550f335e,acc4f800-18bb-4840-9c7d-ba8285b2f0ce,Costco Business Center,Produce,1.0,"16 oz, 4 ct","House Foods Organic Tofu, Firm",7.99,7.99,3.0
+ccaa905d-07ef-4f33-bb1a-949ebd0ed916,acc4f800-18bb-4840-9c7d-ba8285b2f0ce,Costco Business Center,Produce,0.0,2 lbs,Foodservice Green Onions,5.99,0.0,4.0
+bdd29795-bfb7-4bdc-a27a-869455d7712f,acc4f800-18bb-4840-9c7d-ba8285b2f0ce,Costco Business Center,Produce,1.0,10 lbs,Red Onions,8.09,8.09,5.0
+67e42a4e-e324-4680-806d-fb826c16d5b2,acc4f800-18bb-4840-9c7d-ba8285b2f0ce,Costco Business Center,Dairy,2.0,5 lbs,"Schreiber American Cheese, 160 Slices",15.19,30.38,6.0
+177d4932-1e8f-4333-ae75-94c622c5a64e,acc4f800-18bb-4840-9c7d-ba8285b2f0ce,Costco Business Center,Dairy,3.0,30 lbs,"PHILADELPHIA Cream Cheese, Original",104.99,314.97,7.0
+2a973c3f-0ab7-476e-ae4f-6f7b736670f3,acc4f800-18bb-4840-9c7d-ba8285b2f0ce,Costco Business Center,Dairy,3.0,20 lbs,"Wilcox Liquid Egg Product, Cage Free",52.79,158.37,8.0
+ff9f18c3-5d79-43e6-89b4-d2fbc4b07d70,87aca748-8168-4efd-a710-3188dfd75747,Costco Business Center,Spices,1.0,4 lb,Olde Thompson Granulated Ginger,20.89,20.89,1.0
+81d75493-b90c-4808-9cb7-dd1578a26fbf,87aca748-8168-4efd-a710-3188dfd75747,Costco Business Center,Spices,1.0,20.1 oz,Olde Thompson Nutmeg,12.19,12.19,2.0
+2af49563-42cf-46be-8e2e-8fbd567acff7,87aca748-8168-4efd-a710-3188dfd75747,Costco Business Center,Baking Ingredients,2.0,7.5 lbs,"Organic Pure Cane Sugar, Brown",11.59,23.18,3.0
+5616b8d6-e8bc-428e-ba6f-99a488593cbc,87aca748-8168-4efd-a710-3188dfd75747,Costco Business Center,Uncategorized,2.0,64 ﬂ oz,Darigold Classic Cage Free Egg Nog,6.99,13.98,4.0
+93213438-0cb4-4fb4-ac42-b2da839196b4,87aca748-8168-4efd-a710-3188dfd75747,Costco Business Center,Produce,1.0,5 lbs,Organic Sweet Potatoes,6.19,6.19,5.0
+53998464-c2e9-486d-a8de-59aafdb7479c,87aca748-8168-4efd-a710-3188dfd75747,Costco Business Center,Dry Goods,2.0,"14.4 oz, 4 ct","Honey Maid Graham Crackers, Honey",11.59,23.18,6.0
+157a3da7-77d1-4dae-bfdf-9f5d63a96145,9956fb06-117b-47f2-a543-5b579c9bcb41,Costco Business Center,Produce,0.0,2 lbs,Foodservice Green Onions,5.99,0.0,1.0
+09d7a21a-8bdc-4e0e-b9ac-4e7ff3352740,9956fb06-117b-47f2-a543-5b579c9bcb41,Costco Business Center,Dairy,0.0,"1 Gallon, 2 ct",Kirkland Signature Whole Milk,7.79,0.0,2.0
+1fb89c81-f5f9-4b0a-9d79-bbe64b03e8f2,9956fb06-117b-47f2-a543-5b579c9bcb41,Costco Business Center,Dairy,0.0,30 lbs,"PHILADELPHIA Cream Cheese, Original",104.99,0.0,3.0
+8644d053-de9d-4ef0-a9d9-4772761662be,9956fb06-117b-47f2-a543-5b579c9bcb41,Costco Business Center,Dairy,0.0,5 lbs,"Schreiber American Cheese, 160 Slices",15.19,0.0,4.0
+7210795b-0c0c-4d3a-a1b4-3a31eb52eed8,498982eb-5215-4468-b0e8-1878aabeb417,Costco Business Center,Produce,2.0,3 lbs,Yucatan Avocado Halves,13.59,27.18,1.0
+b96152dc-2025-4afa-9170-a6cc15f68540,498982eb-5215-4468-b0e8-1878aabeb417,Costco Business Center,Paper Goods,1.0,1120 ct,"Kirkland Signature Casual Dining Paper Napkins, White, 1120 ct",14.99,14.99,2.0
+462f253a-7af8-4e28-97ce-27d599e4099e,498982eb-5215-4468-b0e8-1878aabeb417,Costco Business Center,Dairy,4.0,"1 Gallon, 2 ct",Kirkland Signature Whole Milk,7.79,31.16,3.0
+b6709873-17b3-4c30-bfc2-4772d45a30ac,498982eb-5215-4468-b0e8-1878aabeb417,Costco Business Center,Dairy,3.0,30 lbs,"PHILADELPHIA Cream Cheese, Original",104.99,314.97,4.0
+8e78aa18-3213-423e-9978-bc9731025491,498982eb-5215-4468-b0e8-1878aabeb417,Costco Business Center,Meat,1.0,10 lbs,"Daily's 3/8"" Fully-Cooked Diced Bacon Bits",73.99,73.99,5.0
+bfe35e20-7f93-4dc4-ae4c-82d66b41ccb5,498982eb-5215-4468-b0e8-1878aabeb417,Costco Business Center,Dairy,3.0,5 lbs,"Schreiber American Cheese, 160 Slices",15.19,45.57,6.0
+b60ed9c2-d34c-4ec9-9961-f618152d240b,498982eb-5215-4468-b0e8-1878aabeb417,Costco Business Center,Dairy,3.0,20 lbs,"Wilcox Liquid Egg Product, Cage Free",52.79,158.37,7.0
+ae44837f-6e1a-4726-9128-604065c046c2,04fac610-1a2b-4665-aa56-b1b6134d82a7,Costco Business Center,Uncategorized,3.0,"32 ﬂ oz, 6 ct","Caliﬁa Farms Cafe Oatmilk, Dairy Free",17.19,51.57,1.0
+7117ad67-ecbe-46d4-9069-f38bff267174,04fac610-1a2b-4665-aa56-b1b6134d82a7,Costco Business Center,Dairy,2.0,"1 Gallon, 2 ct",Kirkland Signature Whole Milk,7.79,15.58,2.0
+65d7c75e-9b22-487d-9a8e-aed8c88e5863,04fac610-1a2b-4665-aa56-b1b6134d82a7,Costco Business Center,Dairy,1.0,30 lbs,"PHILADELPHIA Cream Cheese, Original",104.99,104.99,3.0
+105891d9-91ed-4ba9-9f5e-5e4389288952,04fac610-1a2b-4665-aa56-b1b6134d82a7,Costco Business Center,Meat,2.0,10 lbs,"Daily's 3/8"" Fully-Cooked Diced Bacon Bits",73.99,147.98,4.0
+74043789-cd98-4de2-bd18-d59e76548e2d,04fac610-1a2b-4665-aa56-b1b6134d82a7,Costco Business Center,Dairy,2.0,20 lbs,"Wilcox Liquid Egg Product, Cage Free",52.79,105.58,5.0
+8c7742b1-f7a1-4b87-9599-6f7f7ec0bdaf,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Produce,1.0,2 lbs,Foodservice Green Onions,5.99,5.99,1.0
+616f8fd0-2fde-48b2-bf72-b3a683cb8a1b,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Condiments,1.0,5 lbs,Kirkland Signature Wildﬂower Honey,14.79,14.79,2.0
+a4767d61-c01a-482a-89c3-d22fbe854273,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Produce,1.0,6 lbs,Organic Carrots,7.59,7.59,3.0
+b4ed3d4b-b7d3-4de5-af4b-1cb787b25f40,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Baking Ingredients,1.0,4 lb 8 oz,Nestle Toll House Semi-Sweet Chocolate Chip Morsels,16.79,16.79,4.0
+97da57be-8e3b-4f8f-b117-bed9f11d5a01,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Paper Goods,2.0,200 ct,"World Centric Compostable Plastic Cold Cup Lids, 9-24 oz, 200 ct",9.79,19.58,5.0
+0013b137-9fb5-4e60-bd79-a330b388445f,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Dairy,3.0,"1 Gallon, 2 ct",Kirkland Signature Whole Milk,7.79,23.37,6.0
+5b54fa80-d17d-4012-b2fe-bf963adedfc5,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Dairy,2.0,30 lbs,"PHILADELPHIA Cream Cheese, Original",104.99,209.98,7.0
+b4f61554-4936-43bc-bff0-ec13ce29eade,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Baking Ingredients,1.0,32 oz,Bake Believe Dark Chocolate Chips,16.79,16.79,8.0
+245a2732-1054-4a6f-a45f-7dc4dd61798b,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Dairy,1.0,5 lbs,"Schreiber American Cheese, 160 Slices",15.19,15.19,9.0
+c970d333-7761-4a51-a00a-eafb54fb4ba8,3e483fb9-0d45-49f7-87fd-528efad7e026,Costco Business Center,Uncategorized,0.0,1 Gallon,Del Sol Sliced Jalapeno Peppers,8.06,0.0,10.0
+410524fe-3513-4f33-800c-feb09f735f2f,905aba04-a56f-432f-9a0c-30db4cf50e4a,Costco Business Center,Produce,2.0,"16 oz, 4 ct","House Foods Organic Tofu, Firm",7.99,15.98,1.0
+2535f23a-af02-4fc5-888f-ff6a17b85392,905aba04-a56f-432f-9a0c-30db4cf50e4a,Costco Business Center,Dairy,3.0,"1 Gallon, 2 ct",Kirkland Signature Whole Milk,7.79,23.37,2.0
+79883f01-37fc-44d9-b250-83a1a759b426,905aba04-a56f-432f-9a0c-30db4cf50e4a,Costco Business Center,Dairy,3.0,64 ﬂ oz,Darigold Half & Half,5.29,15.87,3.0
+613b6b2b-edcd-41b1-997d-cfa935c94eea,905aba04-a56f-432f-9a0c-30db4cf50e4a,Costco Business Center,Meat,1.0,10 lbs,"Daily's 3/8"" Fully-Cooked Diced Bacon Bits",73.99,73.99,4.0
+eead0dcb-c7b9-49ba-99c0-baa8988d7e5b,905aba04-a56f-432f-9a0c-30db4cf50e4a,Costco Business Center,Uncategorized,4.0,"32 ﬂ oz, 6 ct","Caliﬁa Farms Cafe Oatmilk, Dairy Free",17.19,68.76,5.0
+76392f66-207e-4def-8bae-6639ea130bc6,905aba04-a56f-432f-9a0c-30db4cf50e4a,Costco Business Center,Dairy,3.0,20 lbs,"Wilcox Liquid Egg Product, Cage Free",52.79,158.37,6.0
+b5c0abc2-3e6a-42d8-8011-84d94c94f604,6bc63f78-32cd-4a0d-afa2-c7067ad25b53,Costco Business Center,Uncategorized,2.0,"32 ﬂ oz, 6 ct","Caliﬁa Farms Cafe Oatmilk, Dairy Free",17.19,34.38,1.0
+ecdcc917-349e-4633-b1c0-062d94181e07,6bc63f78-32cd-4a0d-afa2-c7067ad25b53,Costco Business Center,Dairy,4.0,5 lbs,"Schreiber American Cheese, 160 Slices",15.19,60.76,2.0
+c18d7338-792c-4822-918c-e31ecd94ea3b,6bc63f78-32cd-4a0d-afa2-c7067ad25b53,Costco Business Center,Dairy,2.0,30 lbs,"PHILADELPHIA Cream Cheese, Original",104.99,209.98,3.0
+9e33447e-b027-4073-80e7-b0b62814ce6e,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Produce,1.0,2 lbs,Foodservice Green Onions,5.99,5.99,1.0
+e923890c-fc80-4833-bce2-4f6cc9097708,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Produce,3.0,3 lbs,Yucatan Avocado Halves,13.59,40.77,2.0
+162e430e-3764-4272-a7e0-0301604ed15f,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Uncategorized,2.0,"32 ﬂ oz, 6 ct","Caliﬁa Farms Cafe Oatmilk, Dairy Free",17.19,34.38,3.0
+3ba377fd-26e0-4de7-af1b-04b39ec11aac,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Paper Goods,1.0,3000 ct,"Marathon Interfold Dispenser Napkins, 2-Ply, White, 3000 ct",33.59,33.59,4.0
+a2d6490a-56ed-4f4c-a3f3-91512c2ad519,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Dairy,3.0,30 lbs,"PHILADELPHIA Cream Cheese, Original",104.99,314.97,5.0
+44cc65cf-3216-4be2-a122-61194fd6d5e8,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Paper Goods,2.0,200 ct,"World Centric Compostable Plastic Hot Cup Lids, 12-24 oz, 200 ct",14.79,29.58,6.0
+a4a53721-1298-40a7-ab89-90e136328d93,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Produce,1.0,25 lbs,Roma Tomatoes,24.79,24.79,7.0
+020d7495-6221-49e0-9347-813884489395,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Paper Goods,1.0,500 ct,"Duro Bag #8 Recycled Paper Bag, Kraft, 500 ct",17.39,17.39,8.0
+befce8b2-9300-450d-9fb2-a598dddbe378,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Dairy,2.0,5 lbs,"Schreiber American Cheese, 160 Slices",15.19,30.38,9.0
+7e5ac991-cc2a-4b64-8a4b-1184d622662f,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Dairy,2.0,20 lbs,"Wilcox Liquid Egg Product, Cage Free",52.79,105.58,10.0
+199d7e77-81f6-4f89-a745-2c0334ad028b,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Paper Goods,1.0,"8 oz, 600 ct","Graphic Packaging Paper Hot Cups, Carte Blanc White",36.19,36.19,11.0
+740b0bb8-69ee-4b33-bec0-2ca737b42206,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Paper Goods,1.0,"16 oz, 600 ct","Graphic Packaging Paper Hot Cups, Carte Blanc White",56.89,56.89,12.0
+15aa153f-0c4e-40ad-a0bd-efe006521460,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Paper Goods,1.0,600 ct,"Curad Durable Nitrile Exam Gloves, Medium, 600 ct",31.59,31.59,13.0
+673e6582-adb7-4011-8a19-91c7b56eb8c3,796f41e8-3f4e-4955-834f-fccb353e17a4,Costco Business Center,Paper Goods,1.0,"8 oz, 600 ct","Graphic Packaging Poly Hot Cup Dome Lids, Black",23.69,23.69,14.0

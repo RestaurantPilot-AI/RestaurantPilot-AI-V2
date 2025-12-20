@@ -787,7 +787,7 @@ def render_upload_section():
         st.info(f"📁 {num_files} file(s) selected")
         
         # Process button
-        if st.button("🚀 Process Invoices", type="primary", use_container_width=True):
+        if st.button("Process Invoices", type="primary", use_container_width=True):
             # Check if demo mode is active
             if True:
                 with st.spinner("Processing invoices..."):

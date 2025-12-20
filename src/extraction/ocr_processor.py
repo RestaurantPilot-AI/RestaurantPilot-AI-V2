@@ -1,6 +1,7 @@
 import easyocr
 import os
 import sys
+from pathlib import Path
 from typing import Tuple, Optional
 import cv2
 from datetime import datetime
@@ -87,16 +88,16 @@ class OCRRouter:
             reader = easyocr.Reader(
                 CONFIG['easyocr_languages'],
                 gpu=CONFIG['easyocr_gpu'],  # False for 8GB RAM
-                model_storage_directory=os.path.join(os.path.dirname(__file__), 'easyocr_models')
+                model_storage_directory=str(Path(__file__).parent / 'easyocr_models')
             )
             
             if CONFIG['enable_logging']:
-                print("EasyOCR initialized (CPU mode)")
+                print("✓ EasyOCR initialized (CPU mode)")
             
             return reader
         
         except Exception as e:
-            print(f"EasyOCR initialization failed: {e}")
+            print(f"✗ EasyOCR initialization failed: {e}")
             sys.exit(1)
     
     def route_image(self, image_path):
@@ -107,10 +108,10 @@ class OCRRouter:
         """
         try:
             if CONFIG['enable_logging']:
-                print("Route: EASYOCR (Accuracy Path)")
-            text = self._run_easyocr(image_path)
-            self.routing_stats['easyocr'] += 1
-            route = 'easyocr'
+                print("✓ Route: EASYOCR (Accuracy Path)")
+                text = self._run_easyocr(image_path)
+                self.routing_stats['easyocr'] += 1
+                route = 'easyocr'
             return text, route
         
         except Exception as e:
@@ -151,7 +152,7 @@ class OCRRouter:
         total = sum(self.routing_stats.values())
         if total > 0:
             print("\n" + "="*60)
-            print("ROUTING STATISTICS")
+            print("📊 ROUTING STATISTICS")
             print("="*60)
             print(f"  EasyOCR (Accurate): {self.routing_stats['easyocr']} images")
             print(f"  Total:             {total} images")
@@ -173,7 +174,7 @@ def extract_text_from_ocr(image_path: str) -> Optional[Tuple[str, str, int, int,
     """
     try:
         # Pre-calculate metadata
-        filename = os.path.basename(image_path)
+        filename = Path(image_path).name
         extraction_timestamp = datetime.now().isoformat()
         
         extracted_text, route = ocr_router_instance.route_image(image_path)

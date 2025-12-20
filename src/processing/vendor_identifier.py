@@ -2,6 +2,7 @@ import os
 import re
 import time
 import json
+import traceback
 from typing import Optional, Dict, Any, Tuple, List, Union
 from dotenv import load_dotenv
 
@@ -1022,12 +1023,19 @@ def apply_regex_extraction(
     # ---------------------------------------------------
     # 1. INVOICE LEVEL EXTRACTION
     # ---------------------------------------------------
-    def extract_val(pattern: str, txt: str):
-        if pattern and pattern.strip():
-            m = re.search(pattern, txt)
-            if m:
-                return m.group(1).strip()
-        return None
+    def extract_val(pattern, txt):
+        if not pattern or not txt:
+            return None
+
+        m = re.search(pattern, txt)
+        if not m:
+            return None
+
+        val = m.group(1)
+        if not val:
+            return None
+
+        return val.strip()
 
     inv_data = {
         "invoice_number": extract_val(p_inv_num, text),
@@ -1070,33 +1078,45 @@ def apply_regex_extraction(
     # ---------------------------------------------------
     if is_block_mode and p_li_split:
         # Split block into item chunks using index 6
-        chunks = re.split(p_li_split, block_text)
+        try:
+            chunks = re.split(p_li_split, block_text)
 
-        for chunk in chunks:
-            chunk = chunk.strip()
-            if not chunk:
-                continue
-            
-            # print(f"Chunk: {chunk}\n")
-            # Normalize wrapped lines AFTER splitting
-            # chunk = re.sub(r"\s*\n\s*", " ", chunk)
+            for idx, chunk in enumerate(chunks):
+                try:
+                    chunk = chunk.strip()
+                    if not chunk:
+                        continue
 
-            description = extract_val(p_li_desc, chunk)
+                    print(f"Chunk[{idx}]: {chunk}\n")
 
-            if description:
-                description = re.sub(r"\s*\n\s*", " ", description).strip()    
-                
-            item = {
-                "quantity": extract_val(p_li_qty, chunk),
-                "description": description,
-                "unit": extract_val(p_li_unit, chunk),
-                "unit_price": extract_val(p_li_price, chunk),
-                "line_total": extract_val(p_li_total, chunk),
-            }
-            # print(f"Item: {item}\n")
+                    description = extract_val(p_li_desc, chunk)
+                    if description:
+                        description = re.sub(r"\s*\n\s*", " ", description).strip()
 
-            if item["description"] and (item["line_total"] or item["unit_price"]):
-                line_items.append(item)
+                    item = {
+                        "quantity": extract_val(p_li_qty, chunk),
+                        "description": description,
+                        "unit": extract_val(p_li_unit, chunk),
+                        "unit_price": extract_val(p_li_price, chunk),
+                        "line_total": extract_val(p_li_total, chunk),
+                    }
+
+                    if item["description"] and (item["line_total"] or item["unit_price"]):
+                        line_items.append(item)
+
+                except Exception as e:
+                    print(
+                        f"[ERROR] Failed processing chunk index={idx}\n"
+                        f"Chunk preview: {chunk[:200]}\n"
+                        f"Exception: {e}"
+                    )
+                    traceback.print_exc()
+                    raise
+
+        except Exception as e:
+            print("[ERROR] Line-item split stage failed")
+            traceback.print_exc()
+            raise
 
     # ---------------------------------------------------
     # 4B. LINE-WISE PARSING (single-line items)
@@ -1142,7 +1162,10 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     """
     # 1. Extract signals using the new corrected method
     signals = extract_vendor_signals(text)
-    # print(signals)
+    # The above code is a Python script that contains a commented-out line `# print(signals)`. This
+    # line is not executed when the script runs because it is commented out. It appears that the
+    # script is intended to print the variable `signals`, but it is currently disabled.
+    print(signals)
 
     # 2. Search for existing vendor
     search_result = search_vendor_by_signals(signals)

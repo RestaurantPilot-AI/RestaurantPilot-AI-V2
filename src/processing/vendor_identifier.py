@@ -3,6 +3,7 @@ import re
 import time
 import json
 import traceback
+import mimetypes
 from typing import Optional, Dict, Any, Tuple, List, Union
 from dotenv import load_dotenv
 
@@ -314,13 +315,32 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
 # ----------------------------
 # LLM helpers (isolated)
 # ----------------------------
-def call_llm_api(prompt: str) -> Dict[str, Any]:
+def call_llm_api(prompt: str, file_path: Optional[str] = None) -> Dict[str, Any]:
     """
-    Calls Gemini API with automatic retry on Rate Limit (429) errors.
+    Calls Gemini API with optional multimodal file upload and automatic retry on Rate Limit (429) errors.
+    If `file_path` is provided, the file will be uploaded and passed to the model alongside the prompt.
     Returns parsed JSON dictionary.
     """
     _setup_environment()
     model = genai.GenerativeModel(MODEL_NAME)
+
+    # Prepare optional file upload for multimodal inputs
+    file_obj = None
+    if file_path:
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"File not found or invalid: {file_path}")
+        mime_type, _ = mimetypes.guess_type(file_path)
+        if mime_type is None:
+            # Fallback based on extension
+            if file_path.lower().endswith(".pdf"):
+                mime_type = "application/pdf"
+            else:
+                mime_type = "image/jpeg"
+        try:
+            file_obj = genai.upload_file(file_path, mime_type=mime_type)
+        except Exception as e:
+            print(f"[ERROR] Failed to upload file to Gemini: {e}")
+            raise
 
     max_retries = 3
     base_wait = 30  # Start waiting 30 seconds
@@ -328,22 +348,30 @@ def call_llm_api(prompt: str) -> Dict[str, Any]:
     for attempt in range(max_retries):
         try:
             # --- Call Gemini model ---
-            response = model.generate_content(prompt)
-            
-            # --- Clean & parse JSON ---
-            # Return immediately if successful
-            return parse_llm_json(response.text)
+            if file_obj:
+                response = model.generate_content([prompt, file_obj])
+            else:
+                response = model.generate_content(prompt)
 
-        except ResourceExhausted as e:
+            raw_text = response.text.strip() if response and getattr(response, "text", None) else ""
+            # Use existing robust parser
+            return parse_llm_json(raw_text)
+
+        except ResourceExhausted:
             # This catches the 429 Quota Exceeded error
             wait_time = base_wait * (attempt + 1)
             print(f"\n[WARN] Gemini Quota Exceeded. Waiting {wait_time}s before retry ({attempt + 1}/{max_retries})...")
             time.sleep(wait_time)
-        
+
+        except ValueError as e:
+            # JSON parsing / content errors from the model
+            print(f"[ERROR] Gemini returned invalid JSON: {e}")
+            raise
+
         except Exception as e:
             # Other errors (auth, network) should crash immediately
             print(f"[ERROR] Gemini API Failed: {e}")
-            raise e
+            raise
 
     # If we run out of retries
     raise RuntimeError("Gemini API Quota Exceeded after multiple retries. Please check your billing/limits.")
@@ -497,7 +525,7 @@ def _coerce_none_values(obj: Any) -> Any:
     return obj
 
 
-def llm_phase1_extract(text: str) -> Dict[str, Any]:
+def llm_phase1_extract(text: str, file_path: str) -> Dict[str, Any]:
     """
     Phase 1: ask LLM to extract key fields as JSON.
 
@@ -512,7 +540,7 @@ def llm_phase1_extract(text: str) -> Dict[str, Any]:
     prompt = make_phase1_prompt(text)
     
     # FIX: call_llm_api now returns the parsed JSON dict directly
-    parsed = call_llm_api(prompt)
+    parsed = call_llm_api(prompt, file_path)
 
     # 1) Try to extract JSON (Validation)
     # Note: We skip _safe_extract_json_from_llm because 'parsed' is already a dict
@@ -605,7 +633,7 @@ def _count_capture_groups(pattern: str) -> int:
     # find '(' that are not escaped and not followed by '?:'
     return len(re.findall(r'(?<!\\)\((?!\?:)', pattern))
 
-def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[str, Any]:
+def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any], file_path: Optional[str] = None) -> Dict[str, Any]:
     """
     Phase 2: ask LLM to generate strict regex templates (invoice_level & line_item_level).
     Returns parsed template dict on success.
@@ -617,11 +645,11 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
     print("\n[INFO] Starting Phase 2: Generating Regex Patterns...")
     prompt = make_phase2_prompt(text, phase1_json)
     
-    # FIX: call_llm_api now returns the parsed JSON dict directly
-    parsed = call_llm_api(prompt)
+    # FIX: call_llm_api now supports multimodal uploads via file_path
+    parsed = call_llm_api(prompt, file_path)
 
     # DEBUG: Print the raw output to see what the LLM actually gave us
-    print(f"[DEBUG] Phase 2 Raw LLM Output:\n{json.dumps(parsed, indent=2)}")
+    # print(f"[DEBUG] Phase 2 Raw LLM Output:\n{json.dumps(parsed, indent=2)}")
 
     # =========================================================
     # 0. ROOT VALIDATION
@@ -722,10 +750,6 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any]) -> Dict[st
         "line_total",
     }
 
-    marker_fields = {
-        "line_item_block_start",
-        "line_item_block_end",
-    }
 
     # Fields that must NEVER be capture-group validated
     non_capture_fields = {
@@ -1113,7 +1137,7 @@ def apply_regex_extraction(
                     traceback.print_exc()
                     raise
 
-        except Exception as e:
+        except Exception:
             print("[ERROR] Line-item split stage failed")
             traceback.print_exc()
             raise
@@ -1199,17 +1223,19 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     # --- CASE B: Vendor NOT Found (Create New) ---
     else:
         # Phase 1: Extract clean master data
-        phase1 = llm_phase1_extract(text)
+        phase1 = llm_phase1_extract(text,file_path)
         if phase1:
                 # Merge new LLM data with existing signals
                 vendor = phase1["vendor_master_data"]
                 
                 # Phase 2: Generate Regex
-                new_regexes = llm_phase2_generate_regex(text, phase1)
+                new_regexes = llm_phase2_generate_regex(text, phase1, file_path)
                 
                 # Create Vendor
                 new_vendor_id = save_vendor_details(vendor)
                 vendor_name = find_vendor_name_by_id(vendor_id)
+                print(f"[DEBUG] vendor_identifier.py regex:\n{json.dumps(new_regexes, indent=2)}")
+
                 
                 if new_regexes:
                     save_regex_for_vendor(new_vendor_id, new_regexes)

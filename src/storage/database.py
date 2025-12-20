@@ -373,11 +373,18 @@ def save_vendor_regex_template(new_vendor_id: str, new_regexes: Dict[str, Any]) 
     li = new_regexes.get("line_item_level", {})
     
     flattened = [
-        inv.get("invoice_number", ""), inv.get("invoice_date", ""),
-        inv.get("invoice_total_amount", ""), inv.get("order_date", ""),
-        li.get("line_item_block_start", ""), li.get("line_item_block_end", ""),
-        li.get("quantity", ""), li.get("description", ""),
-        li.get("unit", ""), li.get("unit_price", ""), li.get("line_total", "")
+        inv.get("invoice_number", ""),          # 0
+        inv.get("invoice_date", ""),            # 1
+        inv.get("invoice_total_amount", ""),    # 2
+        inv.get("order_date", ""),              # 3
+        li.get("line_item_block_start", ""),    # 4
+        li.get("line_item_block_end", ""),      # 5
+        li.get("line_item_split", ""),          # 6
+        li.get("quantity", ""),                 # 7
+        li.get("description", ""),              # 8
+        li.get("unit", ""),                     # 9
+        li.get("unit_price", ""),               # 10
+        li.get("line_total", "")                # 11
     ]
     
     db[COL_VENDOR_REGEXES].update_one_no_id(

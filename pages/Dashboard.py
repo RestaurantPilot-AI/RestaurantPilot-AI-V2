@@ -1,4 +1,4 @@
-# streamlit_app.py
+# Dashboard.py
 
 import streamlit as st
 import pandas as pd
@@ -101,12 +101,12 @@ def load_data_from_db(start_date, end_date, restaurant_ids=None, vendor_ids=None
     except Exception as e:
         print("Failed to load data from database:")
         traceback.print_exc()  # full traceback with file & line numbers
-
+        
         st.error(f"Failed to load data from database: {e}")
-
+        # Return empty DataFrames with expected columns
         empty_invoices = pd.DataFrame(columns=[
-            "invoice_id", "invoice_number", "invoice_date", "location",
-            "vendor", "category", "item_name", "quantity", "unit",
+            "invoice_id", "invoice_number", "invoice_date", "location", 
+            "vendor", "category", "item_name", "quantity", "unit", 
             "unit_price", "line_total"
         ])
         empty_sales = pd.DataFrame(columns=["date", "location", "revenue", "covers"])

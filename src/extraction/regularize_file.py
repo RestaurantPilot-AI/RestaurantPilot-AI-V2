@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import logging
 from pathlib import Path
 from PyPDF2 import PdfReader, PdfWriter
 from PyPDF2.generic import DictionaryObject, NameObject
@@ -9,8 +10,11 @@ import re
 import pdfplumber
 from typing import Tuple, List, Optional
 
-STAGING_DIR = Path("data\staging_area")
-PROCESSED_DIR = Path("data\processed_area")
+# Configure logger
+logger = logging.getLogger(__name__)
+
+STAGING_DIR = Path("data") / "staging_area"
+PROCESSED_DIR = Path("data") / "processed_area"
 
 
 def detect_invoice_page_groups(p: str, reader: pdfplumber.PDF) -> Tuple[Tuple[int, ...], ...]:
@@ -187,7 +191,8 @@ def split_pdf_by_page_groups(p, reader, groups):
     if orig_info_obj:
         try:
             orig_info_resolved = orig_info_obj.get_object()
-        except Exception:
+        except Exception as e:
+            logger.debug(f"Could not resolve PDF /Info object: {e}")
             orig_info_resolved = orig_info_obj
 
     # build a DictionaryObject copy that preserves PDF object types
@@ -198,7 +203,8 @@ def split_pdf_by_page_groups(p, reader, groups):
             key = NameObject(k) if not isinstance(k, NameObject) else k
             try:
                 val = v.get_object()
-            except Exception:
+            except Exception as e:
+                logger.debug(f"Could not resolve PDF object for key '{k}': {e}")
                 val = v
             info_copy[key] = val
 
@@ -248,9 +254,10 @@ def split_pdf_by_page_groups(p, reader, groups):
         for f in created:
             try:
                 f.unlink()
-            except Exception:
-                pass
-        print(f"Error splitting {p}: {exc}")
+            except OSError as cleanup_err:
+                logger.warning(f"Could not clean up partial file {f}: {cleanup_err}")
+        logger.error(f"Error splitting {p}: {exc}")
+        raise  # Re-raise to propagate the error
 
 
 def process_multi_page_pdf(p, reader):

@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 from datetime import datetime
 from pypdf import PdfReader
 
@@ -13,7 +13,7 @@ def extract_text_from_pdf(file_path):
         tuple: (extracted_text, filename, text_length, page_count, extraction_timestamp)
     """
     # 1. Get the filename from the path
-    filename = os.path.basename(file_path)
+    filename = Path(file_path).name
 
     # 2. Generate the timestamp
     extraction_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

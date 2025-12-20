@@ -428,16 +428,9 @@ RAW INVOICE TEXT BELOW:
 def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
     """
     Construct a single-shot prompt that asks the model to return strict,
-    reusable regex patterns for this invoice layout.
-
-    The model will receive:
-      - RAW INVOICE TEXT (the full invoice as plain text)
-      - VERIFIED JSON (the ground-truth extraction for that invoice)
-
-    The model must return only a JSON object (no explanations, no markdown).
+    reusable, POSITION-LOCKED regex patterns for this invoice layout.
     """
 
-    # Schema to match 'vendor_regex_templates' requirements
     schema = {
         "invoice_level": {
             "invoice_number": "",
@@ -458,48 +451,110 @@ def make_phase2_prompt(raw_text: str, verified_json: Dict[str, Any]) -> str:
     }
 
     return f"""
-You are given two inputs below: 1) RAW INVOICE TEXT and 2) VERIFIED JSON that contains the correct extracted values for that invoice.
+You are given two inputs:
+1) RAW INVOICE TEXT (plain text extracted from a PDF; line order is preserved but visual alignment is NOT)
+2) VERIFIED JSON (the correct extracted values for this invoice)
 
-Task: Produce reusable, strict regex patterns for this invoice layout so that future invoices with the same layout can be parsed without calling an LLM.
+Your task is NOT to extract values.
+Your task is to GENERATE REUSABLE, STRICT REGEX TEMPLATES that will extract the same fields
+from future invoices with the SAME LAYOUT but DIFFERENT VALUES.
 
-OUTPUT RULES:
-- Return ONLY one JSON object and nothing else (no prose, no markdown, no code fences).
-- The JSON MUST match this exact structure (keys and nesting).
-- Do NOT include delimiters or flags (no /.../, no (?i), etc.).
-- Regexes must be as STRICT as reasonable: use surrounding labels, punctuation, and layout.
+The layout is assumed to be stable. Values change. Positions do not.
 
-CRITICAL REGEX RULES (STRICT ENFORCEMENT):
-1. EXACTLY ONE CAPTURING GROUP: Every regex that extracts a value MUST contain exactly one capturing group (...) that isolates the target data.
-2. USE NON-CAPTURING GROUPS: If you need to group tokens for logic, you MUST use non-capturing groups (?:...).
-   - BAD: (CS|EA)
-   - GOOD: (?:CS|EA)
-3. MANDATORY FIELDS: 'invoice_number', 'invoice_date', and 'invoice_total_amount' MUST HAVE A REGEX. Do not return empty strings for these.
+========================
+ABSOLUTE OUTPUT RULES
+========================
+- Return ONLY one JSON object and nothing else.
+- JSON keys and nesting MUST match the required schema exactly.
+- Do NOT include regex delimiters or flags (no /.../, no (?i), etc.).
+- Do NOT explain anything. No comments. No markdown.
 
-FIELD GUIDANCE:
-[Invoice Level]
-- invoice_number, invoice_date, invoice_total_amount: Regex should capture the exact value shown in VERIFIED JSON.
-- order_date: Capture the date the order was placed. Distinct from Invoice Date.
+========================
+CRITICAL REGEX RULES (HARD)
+========================
+1. EXACTLY ONE CAPTURING GROUP:
+   - Every regex that extracts a value MUST contain exactly ONE capturing group (...).
+   - All other grouping MUST be non-capturing (?:...).
 
-[Line Item Level]
-- line_item_block_start: Regex that matches the first line or header of the line item section (e.g., "Description   Qty   Price"). No capture group required.
-- line_item_block_end: Regex that matches the line immediately AFTER the final line item (e.g., "Subtotal", "Tax", footer text). No capture group required.
-- line_item_split: Regex used to split the extracted line item block into individual line item strings.
-  - SHOULD identify full line item rows.
-  - MAY be empty if line items are already naturally separated.
-  - No capture group required.
-- description, quantity, unit, unit_price, line_total: Regexes that extract fields from a SINGLE line item row.
+2. POSITIONAL, NOT SEMANTIC:
+   - Regexes MUST rely on layout position, labels, and fixed offsets.
+   - Do NOT "search" for values using .*?, [\\s\\S]*?, or loose patterns.
+   - If a value appears N lines below its label, the regex MUST encode those exact \\n jumps.
 
-REQUIRED JSON STRUCTURE:
+3. NO GLOBAL MATCHING:
+   - A value regex MUST FAIL if applied to the wrong section of the invoice.
+   - Invoice-level regexes must rely on their labels.
+   - Line-item regexes must ONLY work inside a single line-item string.
+
+4. MANDATORY FIELDS:
+   - invoice_number
+   - invoice_date
+   - invoice_total_amount
+   These MUST NOT be empty.
+
+========================
+LABEL PRIORITY RULES
+========================
+- Prefer "Invoice Number" over "Order Number" if both exist.
+- Prefer "Invoice Date" over "Order Date".
+- Only fall back if the preferred label is completely absent from RAW TEXT.
+
+========================
+INVOICE-LEVEL RULES
+========================
+- Labels and values may NOT be on the same line.
+- If the VERIFIED JSON value appears X lines below its label, encode that offset explicitly.
+- Do NOT assume visual alignment implies same-line text.
+
+========================
+LINE ITEM RULES (VERY IMPORTANT)
+========================
+Line item parsing MUST be MECHANICAL and POSITIONAL.
+
+1. line_item_block_start:
+   - Match the header or first marker that indicates line items begin.
+   - No capturing group.
+
+2. line_item_block_end:
+   - Match the first line immediately AFTER the final line item
+     (e.g., Subtotal, Tax, Total, footer).
+   - No capturing group.
+
+3. line_item_split:
+   - Regex used to split the line-item block into INDIVIDUAL LINE ITEM STRINGS.
+   - Each split result represents ONE item only.
+   - No capturing group.
+
+4. Field extraction (description, quantity, unit, unit_price, line_total):
+   - These regexes MUST assume they are applied to ONE line-item string only.
+   - They MUST rely on FIXED POSITION / ORDER within that string.
+   - Do NOT infer meaning from words.
+   - Do NOT search the full invoice.
+
+========================
+INTERNAL REASONING REQUIREMENT (DO NOT OUTPUT)
+========================
+Before writing each regex, you MUST determine:
+1. The anchor label or structural marker
+2. The exact number of \\n jumps to the value (if any)
+3. The minimal strict pattern that matches ONLY the VERIFIED value
+
+========================
+REQUIRED JSON STRUCTURE
+========================
 {json.dumps(schema, indent=2)}
 
-RAW INVOICE TEXT:
-------------------
+========================
+RAW INVOICE TEXT
+========================
 {raw_text}
 
-VERIFIED JSON (correct extraction for this invoice):
----------------------------------------------------
+========================
+VERIFIED JSON (GROUND TRUTH)
+========================
 {json.dumps(verified_json, indent=2)}
 """
+
 
 
 
@@ -1225,11 +1280,22 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
         # Phase 1: Extract clean master data
         phase1 = llm_phase1_extract(text,file_path)
         if phase1:
-                # Merge new LLM data with existing signals
+                # Get new Vendor data from llm Phase 1 output
                 vendor = phase1["vendor_master_data"]
                 
+                # Extract the specific pieces of data
+                invoice_data = phase1.get("invoice_details")
+                line_items = phase1.get("line_items")
+                
+                # Create a filtered context for Phase 2 
+                # This ensures "vendor_master_data" is NOT included
+                phase2_input = {
+                    "invoice_details": invoice_data,
+                    "line_items": line_items
+                }
+                
                 # Phase 2: Generate Regex
-                new_regexes = llm_phase2_generate_regex(text, phase1, file_path)
+                new_regexes = llm_phase2_generate_regex(text, phase2_input, file_path)
                 
                 # Create Vendor
                 new_vendor_id = save_vendor_details(vendor)

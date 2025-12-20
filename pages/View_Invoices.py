@@ -177,7 +177,7 @@ def render_invoice_list(invoices: List[Dict[str, Any]]):
     # Display as interactive table
     selected_indices = st.dataframe(
         invoices_df,
-        use_container_width=True,
+        width='stretch',
         hide_index=True,
         on_select="rerun",
         selection_mode="single-row"
@@ -217,7 +217,7 @@ def render_invoice_detail():
     with col2:
         if st.button(
             "✏️ Edit" if not st.session_state.edit_invoice_mode else "👁️ View",
-            use_container_width=True
+            width='stretch'
         ):
             st.session_state.edit_invoice_mode = not st.session_state.edit_invoice_mode
             st.rerun()
@@ -322,7 +322,7 @@ def render_invoice_detail():
             edited_df = st.data_editor(
                 line_items_df,
                 num_rows="dynamic",
-                use_container_width=True,
+                width='stretch',
                 key="edit_line_items",
                 column_config={
                     "Description": st.column_config.TextColumn("Description", width="large"),
@@ -383,7 +383,7 @@ def render_invoice_detail():
             line_items_df = convert_line_items_to_df(line_items)
             st.dataframe(
                 line_items_df,
-                use_container_width=True,
+                width='stretch',
                 hide_index=True
             )
         

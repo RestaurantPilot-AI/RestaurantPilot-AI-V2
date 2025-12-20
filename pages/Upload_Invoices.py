@@ -335,14 +335,14 @@ def render_main_menu():
     with col1:
         st.markdown("### 📤 Upload New Invoices")
         st.markdown("Upload and process new invoice files (PDF, images)")
-        if st.button("📤 Upload New Invoices", type="primary", use_container_width=True):
+        if st.button("📤 Upload New Invoices", type="primary", width='stretch'):
             st.session_state.current_step = "upload"
             st.rerun()
     
     with col2:
         st.markdown("### 📝 Edit Saved Invoices")
         st.markdown("Browse and edit invoices already in the database")
-        if st.button("📝 Edit Saved Invoices", use_container_width=True):
+        if st.button("📝 Edit Saved Invoices", width='stretch'):
             st.session_state.current_step = "browse"
             st.rerun()
 
@@ -458,7 +458,7 @@ def render_browse_invoices():
         edited_df = st.data_editor(
             results_df,
             hide_index=True,
-            use_container_width=True,
+            width='stretch',
             disabled=["Invoice #", "Date", "Vendor", "Total", "_id"],
             column_config={
                 "Select": st.column_config.CheckboxColumn("Select", default=False),
@@ -475,13 +475,13 @@ def render_browse_invoices():
             
             col1, col2, col3 = st.columns([1, 1, 2])
             with col1:
-                if st.button("✏️ Edit Selected Invoice", type="primary", use_container_width=True):
+                if st.button("✏️ Edit Selected Invoice", type="primary", width='stretch'):
                     # Load the invoice for editing
                     load_invoice_for_editing(selected_id)
                     st.rerun()
             
             with col2:
-                if st.button("🗑️ Delete Selected Invoice", use_container_width=True):
+                if st.button("🗑️ Delete Selected Invoice", width='stretch'):
                     st.session_state.confirm_delete_id = selected_id
             
             # Handle delete confirmation
@@ -495,7 +495,7 @@ def render_browse_invoices():
                 
                 col_a, col_b = st.columns(2)
                 with col_a:
-                    if st.button("✅ Yes, Delete", type="primary", use_container_width=True):
+                    if st.button("✅ Yes, Delete", type="primary", width='stretch'):
                         # Delete line items first
                         db.line_items.delete_many({"invoice_id": ObjectId(selected_id)})
                         # Delete invoice
@@ -506,7 +506,7 @@ def render_browse_invoices():
                         st.rerun()
                 
                 with col_b:
-                    if st.button("❌ Cancel", use_container_width=True):
+                    if st.button("❌ Cancel", width='stretch'):
                         del st.session_state.confirm_delete_id
                         st.rerun()
         
@@ -514,7 +514,7 @@ def render_browse_invoices():
         st.divider()
         col1, col2 = st.columns([3, 1])
         with col2:
-            if st.button("📥 Export to CSV", use_container_width=True):
+            if st.button("📥 Export to CSV", width='stretch'):
                 export_df = results_df.drop(columns=["Select", "_id"])
                 csv = export_df.to_csv(index=False)
                 st.download_button(
@@ -522,7 +522,7 @@ def render_browse_invoices():
                     data=csv,
                     file_name=f"invoices_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                     mime="text/csv",
-                    use_container_width=True
+                    width='stretch'
                 )
     
     except Exception as e:
@@ -646,7 +646,7 @@ def render_saved_invoice_editor():
         edited_li_df = st.data_editor(
             li_df,
             num_rows="dynamic",
-            use_container_width=True,
+            width='stretch',
             hide_index=True,
             column_config={
                 "_id": None,  # Hide ID column
@@ -663,7 +663,7 @@ def render_saved_invoice_editor():
         col1, col2 = st.columns(2)
         
         with col1:
-            if st.button("💾 Save Line Item Changes", type="primary", use_container_width=True):
+            if st.button("💾 Save Line Item Changes", type="primary", width='stretch'):
                 try:
                     # Compare original and edited dataframes
                     original_ids = set(li_df["_id"].tolist())
@@ -701,7 +701,7 @@ def render_saved_invoice_editor():
                     st.error(f"Error updating line items: {str(e)}")
         
         with col2:
-            if st.button("➕ Add New Line Item", use_container_width=True):
+            if st.button("➕ Add New Line Item", width='stretch'):
                 try:
                     new_item = {
                         "description": "New Item",
@@ -787,7 +787,7 @@ def render_upload_section():
         st.info(f"📁 {num_files} file(s) selected")
         
         # Process button
-        if st.button("Process Invoices", type="primary", use_container_width=True):
+        if st.button("Process Invoices", type="primary", width='stretch'):
             # Check if demo mode is active
             if True:
                 with st.spinner("Processing invoices..."):
@@ -1013,7 +1013,7 @@ def render_invoice_editor(invoice_data: Dict[str, Any], idx: int):
                 edited_df = st.data_editor(
                     line_items_df,
                     num_rows="dynamic",
-                    use_container_width=True,
+                    width='stretch',
                     key=f"line_items_{idx}",
                     column_config={
                         "description": st.column_config.TextColumn("Description", width="large"),
@@ -1028,7 +1028,7 @@ def render_invoice_editor(invoice_data: Dict[str, Any], idx: int):
                 # Display only
                 st.dataframe(
                     line_items_df,
-                    use_container_width=True,
+                    width='stretch',
                     hide_index=True
                 )
             
@@ -1103,7 +1103,7 @@ def render_review_section():
     col1, col2, col3 = st.columns([1, 1, 1])
     
     with col1:
-        if st.button("⬅️ Back to Upload", use_container_width=True):
+        if st.button("⬅️ Back to Upload", width='stretch'):
             st.session_state.current_step = "upload"
             st.session_state.uploaded_files_data = []
             st.session_state.processing_complete = False
@@ -1111,12 +1111,12 @@ def render_review_section():
             st.rerun()
     
     with col2:
-        if st.button("💾 Save Draft", use_container_width=True):
+        if st.button("💾 Save Draft", width='stretch'):
             save_session_to_db()
             st.success("✅ Draft saved successfully!")
     
     with col3:
-        if st.button("✅ Save All to Database", type="primary", use_container_width=True):
+        if st.button("✅ Save All to Database", type="primary", width='stretch'):
             st.session_state.current_step = "saving"
             st.rerun()
 
@@ -1212,7 +1212,7 @@ def render_save_section():
     # Detailed results table
     st.markdown("### 📊 Detailed Results")
     results_df = pd.DataFrame(results)
-    st.dataframe(results_df, use_container_width=True, hide_index=True)
+    st.dataframe(results_df, width='stretch', hide_index=True)
     
     # Clean up session
     delete_temp_upload(st.session_state.session_id)
@@ -1221,7 +1221,7 @@ def render_save_section():
     # Action buttons
     col1, col2, col3 = st.columns(3)
     with col1:
-        if st.button("📤 Upload More Invoices", use_container_width=True, type="primary"):
+        if st.button("📤 Upload More Invoices", width='stretch', type="primary"):
             # Reset session
             st.session_state.uploaded_files_data = []
             st.session_state.processing_complete = False
@@ -1231,7 +1231,7 @@ def render_save_section():
             st.rerun()
     
     with col2:
-        if st.button("📝 Edit Saved Invoices", use_container_width=True):
+        if st.button("📝 Edit Saved Invoices", width='stretch'):
             st.session_state.uploaded_files_data = []
             st.session_state.processing_complete = False
             st.session_state.save_complete = False
@@ -1240,7 +1240,7 @@ def render_save_section():
             st.rerun()
     
     with col3:
-        if st.button("👁️ View Invoices Page", use_container_width=True):
+        if st.button("👁️ View Invoices Page", width='stretch'):
             st.switch_page("pages/View_Invoices.py")
 
 

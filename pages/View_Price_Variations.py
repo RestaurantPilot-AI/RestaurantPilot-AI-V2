@@ -210,7 +210,7 @@ else:
         display_cols = ["Item", "Min Price", "Max Price", "Price Change", "Price Change%", "Occurrences", "Vendors"]
         display_cols = [c for c in display_cols if c in display_out.columns]
         st.subheader("Summary Table")
-        st.dataframe(display_out[display_cols].reset_index(drop=True), use_container_width=True, hide_index=True)
+        st.dataframe(display_out[display_cols].reset_index(drop=True), width='stretch', hide_index=True)
 
 # Item selection for timeseries
 st.markdown("---")
@@ -255,9 +255,9 @@ if selected_item and selected_item != "-- Select an item --":
         display_ts = display_ts[["Date", "Invoice Number", "Vendor", "Unit Price", "Quantity", "Category"]].reset_index(drop=True)
         # Hide the dataframe index for clarity and display
         try:
-            st.dataframe(display_ts.style.hide_index(), use_container_width=True, hide_index=True)
+            st.dataframe(display_ts.style.hide_index(), width='stretch', hide_index=True)
         except Exception:
-            st.dataframe(display_ts, use_container_width=True, hide_index=True)
+            st.dataframe(display_ts, width='stretch', hide_index=True)
 
 # Category-specific variation view
 st.markdown("---")

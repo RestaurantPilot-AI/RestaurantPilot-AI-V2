@@ -61,9 +61,9 @@ st.header("⚙️ Step 2: Structure Data")
 
 col1, col2 = st.columns([1, 1])
 with col1:
-    process_button = st.button("🚀 Extract & Structure Data", type="primary", use_container_width=True)
+    process_button = st.button("🚀 Extract & Structure Data", type="primary", width='stretch')
 with col2:
-    if st.button("🔄 Reset All", use_container_width=True):
+    if st.button("🔄 Reset All", width='stretch'):
         st.session_state.inv_df = None
         st.session_state.li_df = None
         st.session_state.error_message = None
@@ -120,7 +120,7 @@ if st.session_state.inv_df is not None:
         
         edited_inv_df = st.data_editor(
             inv_df_display,
-            use_container_width=True,
+            width='stretch',
             num_rows="fixed",
             key="edit_inv_df",
             column_config={
@@ -137,7 +137,7 @@ if st.session_state.inv_df is not None:
             st.success("✅ Invoice data updated in memory!")
             st.rerun()
     else:
-        st.dataframe(st.session_state.inv_df, use_container_width=True)
+        st.dataframe(st.session_state.inv_df, width='stretch')
     
     # Display key invoice metrics
     if not st.session_state.inv_df.empty:
@@ -166,7 +166,7 @@ if st.session_state.inv_df is not None:
             
             edited_li_df = st.data_editor(
                 li_df_display,
-                use_container_width=True,
+                width='stretch',
                 num_rows="dynamic",
                 key="edit_li_df",
                 column_config={
@@ -180,12 +180,12 @@ if st.session_state.inv_df is not None:
             
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("💾 Update Line Items", type="primary", use_container_width=True):
+                if st.button("💾 Update Line Items", type="primary", width='stretch'):
                     st.session_state.li_df = edited_li_df
                     st.success(f"✅ Line items updated! Total items: {len(edited_li_df)}")
                     st.rerun()
             with col2:
-                if st.button("➕ Add Blank Row", use_container_width=True):
+                if st.button("➕ Add Blank Row", width='stretch'):
                     # Add a blank row with default values
                     new_row = pd.DataFrame([{
                         "description": "New Item",
@@ -199,7 +199,7 @@ if st.session_state.inv_df is not None:
                     st.success("➕ Blank row added!")
                     st.rerun()
         else:
-            st.dataframe(st.session_state.li_df, use_container_width=True, hide_index=True)
+            st.dataframe(st.session_state.li_df, width='stretch', hide_index=True)
         
         st.info(f"📦 Total line items: {len(st.session_state.li_df)}")
     else:
@@ -227,7 +227,7 @@ if st.session_state.inv_df is not None:
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        if st.button("💾 CREATE - Save to DB", type="primary", use_container_width=True):
+        if st.button("💾 CREATE - Save to DB", type="primary", width='stretch'):
             try:
                 with st.spinner("💾 Saving to database..."):
                     result = save_inv_li_to_db(st.session_state.inv_df, st.session_state.li_df, TEMP_RESTAURANT_ID)
@@ -243,7 +243,7 @@ if st.session_state.inv_df is not None:
                 st.error(f"❌ Error saving to DB: {str(e)}")
     
     with col2:
-        if st.button("📖 READ - View from DB", use_container_width=True):
+        if st.button("📖 READ - View from DB", width='stretch'):
             if st.session_state.saved_invoice_id:
                 st.info(f"📖 READ: Invoice ID {st.session_state.saved_invoice_id}")
                 st.write("Use the **View Invoices** page to read from database")
@@ -251,7 +251,7 @@ if st.session_state.inv_df is not None:
                 st.warning("⚠️ No invoice saved yet. Save first to get an ID.")
     
     with col3:
-        if st.button("🗑️ DELETE - Remove from DB", use_container_width=True):
+        if st.button("🗑️ DELETE - Remove from DB", width='stretch'):
             st.warning("🗑️ DELETE operations available in **View Invoices** page")
 
     # Show saved invoice ID if available

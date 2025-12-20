@@ -205,7 +205,7 @@ vendors_selected_names = st.sidebar.multiselect(
 vendors_selected_ids = [vendor_options[v] for v in vendors_selected_names] if vendors_selected_names else None
 
 # Refresh button
-if st.sidebar.button("🔄 Refresh Data", use_container_width=True):
+if st.sidebar.button("🔄 Refresh Data", width='stretch'):
     st.cache_data.clear()
     st.rerun()
 
@@ -393,7 +393,7 @@ with tab_overview:
             )
             .properties(height=260)
         )
-        st.altair_chart(chart, use_container_width=True)
+        st.altair_chart(chart, width='stretch')
 
     st.markdown("---")
 
@@ -424,7 +424,7 @@ with tab_overview:
                 )
                 .properties(height=280)
             )
-            st.altair_chart(cat_chart, use_container_width=True)
+            st.altair_chart(cat_chart, width='stretch')
             st.dataframe(cat_df.rename(columns={"line_total": "Total Spend"}))
 
     # Top cost drivers
@@ -450,7 +450,7 @@ with tab_overview:
                 )
                 .properties(height=280)
             )
-            st.altair_chart(bar_chart, use_container_width=True)
+            st.altair_chart(bar_chart, width='stretch')
 
     st.markdown("")
 
@@ -604,7 +604,7 @@ with tab_vendors:
                 )
                 .properties(height=300)
             )
-            st.altair_chart(v_chart, use_container_width=True)
+            st.altair_chart(v_chart, width='stretch')
 
         with col2:
             st.caption("Vendor Stats (Selected Period)")
@@ -648,7 +648,7 @@ with tab_vendors:
             )
             .properties(height=280)
         )
-        st.altair_chart(cmp_chart, use_container_width=True)
+        st.altair_chart(cmp_chart, width='stretch')
 
         st.dataframe(
             cmp_df.rename(
@@ -700,7 +700,7 @@ with tab_planning:
                 )
                 .properties(height=320)
             )
-            st.altair_chart(season_chart, use_container_width=True)
+            st.altair_chart(season_chart, width='stretch')
         else:
             st.info("Select at least one item to see seasonal trends.")
 
@@ -730,7 +730,7 @@ with tab_planning:
                 )
                 .properties(height=320)
             )
-            st.altair_chart(mix_chart, use_container_width=True)
+            st.altair_chart(mix_chart, width='stretch')
         else:
             st.info("Not enough data for category mix over time.")
 
@@ -806,7 +806,7 @@ with tab_ops:
             )
             .properties(height=320)
         )
-        st.altair_chart(weekday_chart, use_container_width=True)
+        st.altair_chart(weekday_chart, width='stretch')
 
         st.markdown("---")
 
@@ -854,6 +854,6 @@ with tab_ops:
                 )
                 .properties(height=320)
             )
-            st.altair_chart(loc_chart, use_container_width=True)
+            st.altair_chart(loc_chart, width='stretch')
         else:
             st.info("Location comparison is available when more than one location is selected/present.")

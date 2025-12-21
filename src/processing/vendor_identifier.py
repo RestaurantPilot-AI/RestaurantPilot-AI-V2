@@ -87,6 +87,7 @@ def save_vendor_details(vendor_master_data: Dict[str, Any]) -> None:
     if not vendor_master_data.get("vendor_name"):
         raise ValueError("vendor_name required to save vendor.")
     
+    print(f"[INFO] Vendor info to save [vendor_identifier.py]: {vendor_master_data}")
     return create_vendor(vendor_master_data)
 
 def normalize_item_block(block: str) -> str:
@@ -1257,6 +1258,7 @@ def identify_vendor_and_get_regex(text: str, file_path: str) -> Dict[str, Any]:
     # print(f"Matched by: ", matched_by)
     # --- CASE A: Vendor Found in DB ---
     if vendor_id:
+        print(f"[INFO] Vendor ID: {vendor_id}")
         vendor_name = find_vendor_name_by_id(vendor_id)
         # A1. Existing Regex
         # print(vendor_name)

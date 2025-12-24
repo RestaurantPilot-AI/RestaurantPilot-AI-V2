@@ -1,11 +1,15 @@
 import streamlit as st
 import pandas as pd
 import uuid
+import logging
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 import sys
 import os
+
+# Configure logger
+logger = logging.getLogger(__name__)
 
 # Add parent directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent))
@@ -57,8 +61,13 @@ if "selected_invoice_id" not in st.session_state:
 if "loaded_invoice_data" not in st.session_state:
     st.session_state.loaded_invoice_data = None
 
-# Load from database if session exists
-if not st.session_state.uploaded_files_data and st.session_state.current_step in ["review"]:
+if "manual_line_items" not in st.session_state:
+    st.session_state.manual_line_items = []
+
+# Load from database if session exists (but NOT if save was already completed)
+if (not st.session_state.uploaded_files_data 
+    and st.session_state.current_step in ["review"] 
+    and not st.session_state.save_complete):
     saved_session = get_temp_upload(st.session_state.session_id)
     if saved_session and "invoices" in saved_session:
         st.session_state.uploaded_files_data = saved_session["invoices"]
@@ -134,8 +143,8 @@ def process_single_file(uploaded_file, temp_dir: Path) -> Dict[str, Any]:
             file_path=file_path
         )
         
-        # print(f"\n[INFO] Invoice DF (Upload_invoices.py) {inv_df}")
-        # print(f"\n[INFO] Line item DF (Upload_invoices.py) {li_df}")
+        print(f"\n[INFO] Invoice DF (Upload_invoices.py) {inv_df}")
+        print(f"\n[INFO] Line item DF (Upload_invoices.py) {li_df}")
 
         if inv_df is None or inv_df.empty:
             result["status"] = "partial"
@@ -194,141 +203,141 @@ def process_single_file(uploaded_file, temp_dir: Path) -> Dict[str, Any]:
     return result
 
 
-# def generate_demo_data():
-#     """Generate dummy invoice data for demonstration."""
-#     from bson import ObjectId
+def generate_demo_data():
+    """Generate dummy invoice data for demonstration."""
+    from bson import ObjectId
     
-#     # Get vendor IDs from database
-#     vendors = list(db["vendors"].find({}, {"_id": 1, "name": 1}).limit(3))
-#     if not vendors:
-#         # Create placeholder vendor IDs
-#         vendors = [
-#             {"_id": ObjectId(), "name": "Demo Vendor 1"},
-#             {"_id": ObjectId(), "name": "Demo Vendor 2"},
-#         ]
+    # Get vendor IDs from database
+    vendors = list(db["vendors"].find({}, {"_id": 1, "name": 1}).limit(3))
+    if not vendors:
+        # Create placeholder vendor IDs
+        vendors = [
+            {"_id": ObjectId(), "name": "Demo Vendor 1"},
+            {"_id": ObjectId(), "name": "Demo Vendor 2"},
+        ]
     
-#     demo_invoices = [
-#         {
-#             "filename": "demo_invoice_001.pdf",
-#             "status": "success",
-#             "message": "Extraction successful",
-#             "invoice_df": pd.DataFrame({
-#                 "filename": ["demo_invoice_001.pdf"],
-#                 "invoice_number": ["INV-2024-001"],
-#                 "invoice_date": [datetime(2024, 12, 1)],
-#                 "invoice_total_amount": [1245.80],
-#                 "vendor_id": [str(vendors[0]["_id"])],
-#                 "vendor_name": [vendors[0]["name"]],
-#                 "text_length": [1523],
-#                 "page_count": [2]
-#             }),
-#             "line_items_df": pd.DataFrame({
-#                 "description": ["Fresh Organic Tomatoes", "Premium Lettuce Mix", "Yellow Onions"],
-#                 "quantity": [25.0, 10.0, 50.0],
-#                 "unit": ["lb", "case", "lb"],
-#                 "unit_price": [3.49, 18.99, 0.89],
-#                 "line_total": [87.25, 189.90, 44.50]
-#             }),
-#             "extracted_text": "INVOICE\n\nBill To: Demo Restaurant\nInvoice Number: INV-2024-001\nDate: 12/01/2024\n\nITEM DESCRIPTION    QTY    UNIT    PRICE    TOTAL\nFresh Organic Tomatoes    25    lb    $3.49    $87.25\nPremium Lettuce Mix    10    case    $18.99    $189.90\nYellow Onions    50    lb    $0.89    $44.50\n\nSubtotal: $321.65\nTax: $25.73\nTOTAL: $1,245.80",
-#             "vendor_id": str(vendors[0]["_id"]),
-#             "vendor_name": vendors[0]["name"],
-#             "is_duplicate": False,
-#             "duplicate_id": None,
-#             "extraction_failed": False
-#         },
-#         {
-#             "filename": "demo_invoice_002.pdf",
-#             "status": "success",
-#             "message": "Extraction successful",
-#             "invoice_df": pd.DataFrame({
-#                 "filename": ["demo_invoice_002.pdf"],
-#                 "invoice_number": ["INV-2024-002"],
-#                 "invoice_date": [datetime(2024, 12, 3)],
-#                 "invoice_total_amount": [875.45],
-#                 "vendor_id": [str(vendors[1]["_id"]) if len(vendors) > 1 else str(vendors[0]["_id"])],
-#                 "vendor_name": [vendors[1]["name"] if len(vendors) > 1 else vendors[0]["name"]],
-#                 "text_length": [1342],
-#                 "page_count": [1]
-#             }),
-#             "line_items_df": pd.DataFrame({
-#                 "description": ["Prime Ribeye Steak", "Chicken Breast", "Pork Tenderloin"],
-#                 "quantity": [15.0, 20.0, 10.0],
-#                 "unit": ["lb", "lb", "lb"],
-#                 "unit_price": [24.99, 6.99, 8.99],
-#                 "line_total": [374.85, 139.80, 89.90]
-#             }),
-#             "extracted_text": "INVOICE\n\nInvoice #: INV-2024-002\nDate: 12/03/2024\nVendor: Quality Meats Co.\n\nPrime Ribeye Steak    15 lb    $24.99    $374.85\nChicken Breast    20 lb    $6.99    $139.80\nPork Tenderloin    10 lb    $8.99    $89.90\n\nTotal Due: $875.45",
-#             "vendor_id": str(vendors[1]["_id"]) if len(vendors) > 1 else str(vendors[0]["_id"]),
-#             "vendor_name": vendors[1]["name"] if len(vendors) > 1 else vendors[0]["name"],
-#             "is_duplicate": False,
-#             "duplicate_id": None,
-#             "extraction_failed": False
-#         },
-#         {
-#             "filename": "demo_invoice_003.pdf",
-#             "status": "partial",
-#             "message": "Data extraction incomplete - manual review required",
-#             "invoice_df": pd.DataFrame({
-#                 "filename": ["demo_invoice_003.pdf"],
-#                 "invoice_number": [""],
-#                 "invoice_date": [datetime.now()],
-#                 "invoice_total_amount": [0.0],
-#                 "vendor_id": [str(vendors[2]["_id"]) if len(vendors) > 2 else str(vendors[0]["_id"])],
-#                 "vendor_name": [vendors[2]["name"] if len(vendors) > 2 else vendors[0]["name"]],
-#                 "text_length": [892],
-#                 "page_count": [1]
-#             }),
-#             "line_items_df": pd.DataFrame({
-#                 "description": ["Whole Milk", "Cheddar Cheese"],
-#                 "quantity": [12.0, 8.0],
-#                 "unit": ["gal", "lb"],
-#                 "unit_price": [4.49, 7.99],
-#                 "line_total": [53.88, 63.92]
-#             }),
-#             "extracted_text": "INVOICE - Dairy Delight\n\nWhole Milk (Gallon)    12 gal    @ $4.49    $53.88\nCheddar Cheese Block    8 lb    @ $7.99    $63.92\n\nPlease remit payment within 30 days.",
-#             "vendor_id": str(vendors[2]["_id"]) if len(vendors) > 2 else str(vendors[0]["_id"]),
-#             "vendor_name": vendors[2]["name"] if len(vendors) > 2 else vendors[0]["name"],
-#             "is_duplicate": False,
-#             "duplicate_id": None,
-#             "extraction_failed": True
-#         },
-#         {
-#             "filename": "demo_invoice_004_duplicate.pdf",
-#             "status": "duplicate",
-#             "message": "Duplicate found: Invoice #INV-2024-001 already exists",
-#             "invoice_df": pd.DataFrame({
-#                 "filename": ["demo_invoice_004_duplicate.pdf"],
-#                 "invoice_number": ["INV-2024-001"],
-#                 "invoice_date": [datetime(2024, 12, 1)],
-#                 "invoice_total_amount": [1245.80],
-#                 "vendor_id": [str(vendors[0]["_id"])],
-#                 "vendor_name": [vendors[0]["name"]],
-#                 "text_length": [1523],
-#                 "page_count": [2]
-#             }),
-#             "line_items_df": pd.DataFrame({
-#                 "description": ["Fresh Organic Tomatoes", "Premium Lettuce Mix"],
-#                 "quantity": [25.0, 10.0],
-#                 "unit": ["lb", "case"],
-#                 "unit_price": [3.49, 18.99],
-#                 "line_total": [87.25, 189.90]
-#             }),
-#             "extracted_text": "INVOICE (DUPLICATE DEMO)\n\nThis is a duplicate invoice for demonstration purposes.",
-#             "vendor_id": str(vendors[0]["_id"]),
-#             "vendor_name": vendors[0]["name"],
-#             "is_duplicate": True,
-#             "duplicate_id": "demo_duplicate_id",
-#             "extraction_failed": False
-#         }
-#     ]
+    demo_invoices = [
+        {
+            "filename": "demo_invoice_001.pdf",
+            "status": "success",
+            "message": "Extraction successful",
+            "invoice_df": pd.DataFrame({
+                "filename": ["demo_invoice_001.pdf"],
+                "invoice_number": ["INV-2024-001"],
+                "invoice_date": [datetime(2024, 12, 1)],
+                "invoice_total_amount": [1245.80],
+                "vendor_id": [str(vendors[0]["_id"])],
+                "vendor_name": [vendors[0]["name"]],
+                "text_length": [1523],
+                "page_count": [2]
+            }),
+            "line_items_df": pd.DataFrame({
+                "description": ["Fresh Organic Tomatoes", "Premium Lettuce Mix", "Yellow Onions"],
+                "quantity": [25.0, 10.0, 50.0],
+                "unit": ["lb", "case", "lb"],
+                "unit_price": [3.49, 18.99, 0.89],
+                "line_total": [87.25, 189.90, 44.50]
+            }),
+            "extracted_text": "INVOICE\n\nBill To: Demo Restaurant\nInvoice Number: INV-2024-001\nDate: 12/01/2024\n\nITEM DESCRIPTION    QTY    UNIT    PRICE    TOTAL\nFresh Organic Tomatoes    25    lb    $3.49    $87.25\nPremium Lettuce Mix    10    case    $18.99    $189.90\nYellow Onions    50    lb    $0.89    $44.50\n\nSubtotal: $321.65\nTax: $25.73\nTOTAL: $1,245.80",
+            "vendor_id": str(vendors[0]["_id"]),
+            "vendor_name": vendors[0]["name"],
+            "is_duplicate": False,
+            "duplicate_id": None,
+            "extraction_failed": False
+        },
+        {
+            "filename": "demo_invoice_002.pdf",
+            "status": "success",
+            "message": "Extraction successful",
+            "invoice_df": pd.DataFrame({
+                "filename": ["demo_invoice_002.pdf"],
+                "invoice_number": ["INV-2024-002"],
+                "invoice_date": [datetime(2024, 12, 3)],
+                "invoice_total_amount": [875.45],
+                "vendor_id": [str(vendors[1]["_id"]) if len(vendors) > 1 else str(vendors[0]["_id"])],
+                "vendor_name": [vendors[1]["name"] if len(vendors) > 1 else vendors[0]["name"]],
+                "text_length": [1342],
+                "page_count": [1]
+            }),
+            "line_items_df": pd.DataFrame({
+                "description": ["Prime Ribeye Steak", "Chicken Breast", "Pork Tenderloin"],
+                "quantity": [15.0, 20.0, 10.0],
+                "unit": ["lb", "lb", "lb"],
+                "unit_price": [24.99, 6.99, 8.99],
+                "line_total": [374.85, 139.80, 89.90]
+            }),
+            "extracted_text": "INVOICE\n\nInvoice #: INV-2024-002\nDate: 12/03/2024\nVendor: Quality Meats Co.\n\nPrime Ribeye Steak    15 lb    $24.99    $374.85\nChicken Breast    20 lb    $6.99    $139.80\nPork Tenderloin    10 lb    $8.99    $89.90\n\nTotal Due: $875.45",
+            "vendor_id": str(vendors[1]["_id"]) if len(vendors) > 1 else str(vendors[0]["_id"]),
+            "vendor_name": vendors[1]["name"] if len(vendors) > 1 else vendors[0]["name"],
+            "is_duplicate": False,
+            "duplicate_id": None,
+            "extraction_failed": False
+        },
+        {
+            "filename": "demo_invoice_003.pdf",
+            "status": "partial",
+            "message": "Data extraction incomplete - manual review required",
+            "invoice_df": pd.DataFrame({
+                "filename": ["demo_invoice_003.pdf"],
+                "invoice_number": [""],
+                "invoice_date": [datetime.now()],
+                "invoice_total_amount": [0.0],
+                "vendor_id": [str(vendors[2]["_id"]) if len(vendors) > 2 else str(vendors[0]["_id"])],
+                "vendor_name": [vendors[2]["name"] if len(vendors) > 2 else vendors[0]["name"]],
+                "text_length": [892],
+                "page_count": [1]
+            }),
+            "line_items_df": pd.DataFrame({
+                "description": ["Whole Milk", "Cheddar Cheese"],
+                "quantity": [12.0, 8.0],
+                "unit": ["gal", "lb"],
+                "unit_price": [4.49, 7.99],
+                "line_total": [53.88, 63.92]
+            }),
+            "extracted_text": "INVOICE - Dairy Delight\n\nWhole Milk (Gallon)    12 gal    @ $4.49    $53.88\nCheddar Cheese Block    8 lb    @ $7.99    $63.92\n\nPlease remit payment within 30 days.",
+            "vendor_id": str(vendors[2]["_id"]) if len(vendors) > 2 else str(vendors[0]["_id"]),
+            "vendor_name": vendors[2]["name"] if len(vendors) > 2 else vendors[0]["name"],
+            "is_duplicate": False,
+            "duplicate_id": None,
+            "extraction_failed": True
+        },
+        {
+            "filename": "demo_invoice_004_duplicate.pdf",
+            "status": "duplicate",
+            "message": "Duplicate found: Invoice #INV-2024-001 already exists",
+            "invoice_df": pd.DataFrame({
+                "filename": ["demo_invoice_004_duplicate.pdf"],
+                "invoice_number": ["INV-2024-001"],
+                "invoice_date": [datetime(2024, 12, 1)],
+                "invoice_total_amount": [1245.80],
+                "vendor_id": [str(vendors[0]["_id"])],
+                "vendor_name": [vendors[0]["name"]],
+                "text_length": [1523],
+                "page_count": [2]
+            }),
+            "line_items_df": pd.DataFrame({
+                "description": ["Fresh Organic Tomatoes", "Premium Lettuce Mix"],
+                "quantity": [25.0, 10.0],
+                "unit": ["lb", "case"],
+                "unit_price": [3.49, 18.99],
+                "line_total": [87.25, 189.90]
+            }),
+            "extracted_text": "INVOICE (DUPLICATE DEMO)\n\nThis is a duplicate invoice for demonstration purposes.",
+            "vendor_id": str(vendors[0]["_id"]),
+            "vendor_name": vendors[0]["name"],
+            "is_duplicate": True,
+            "duplicate_id": "demo_duplicate_id",
+            "extraction_failed": False
+        }
+    ]
     
-#     return demo_invoices
+    return demo_invoices
 
 
 def render_main_menu():
-    """Render the main menu with options to upload new or edit existing invoices."""
+    """Render the main menu with options to upload new invoices or enter manually."""
     st.title("📤 Invoice Upload & Management")
-    st.markdown("Upload new invoices or edit existing ones from the database")
+    st.markdown("Upload new invoices or enter them manually")
     
     col1, col2 = st.columns(2)
     
@@ -340,401 +349,263 @@ def render_main_menu():
             st.rerun()
     
     with col2:
-        st.markdown("### 📝 Edit Saved Invoices")
-        st.markdown("Browse and edit invoices already in the database")
-        if st.button("📝 Edit Saved Invoices", width='stretch'):
-            st.session_state.current_step = "browse"
+        st.markdown("### ✍️ Enter Manually")
+        st.markdown("Type in invoice data directly without uploading files")
+        if st.button("✍️ Enter Manually", width='stretch'):
+            st.session_state.current_step = "manual"
             st.rerun()
 
 
-def render_browse_invoices():
-    """Render the interface to browse and edit saved invoices from database."""
-    st.title("📝 Browse & Edit Saved Invoices")
+
+def render_manual_entry():
+    """Render the manual invoice entry interface."""
+    st.title("✍️ Manual Invoice Entry")
+    st.markdown("Enter invoice data manually without uploading a file")
     
     # Back button
-    if st.button("⬅️ Back to Main Menu"):
-        st.session_state.current_step = "main"
-        st.session_state.selected_invoice_id = None
-        st.session_state.loaded_invoice_data = None
-        st.rerun()
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        if st.button("⬅️ Back to Main Menu"):
+            st.session_state.current_step = "main"
+            st.session_state.manual_line_items = []
+            st.rerun()
     
     st.divider()
     
-    # If an invoice is selected, show the editor
-    if st.session_state.selected_invoice_id and st.session_state.loaded_invoice_data:
-        render_saved_invoice_editor()
+    # Get all vendors for dropdown
+    vendors = get_all_vendors()
+    vendor_options = {v["name"]: str(v["_id"]) for v in vendors}
+    
+    if not vendor_options:
+        st.error("⚠️ No vendors found in database. Please add vendors first in Database Admin page.")
         return
     
-    # Search filters
-    st.markdown("### 🔍 Search Filters")
+    # Invoice Header Section
+    st.markdown("### 📋 Invoice Information")
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     
     with col1:
-        # Date range filter
-        date_preset = st.selectbox(
-            "Date Range",
-            ["Last 7 Days", "Last 30 Days", "Last 90 Days", "Custom Range", "All Time"]
+        selected_vendor_name = st.selectbox(
+            "Vendor *",
+            options=list(vendor_options.keys()),
+            help="Select the vendor for this invoice"
+        )
+        vendor_id = vendor_options[selected_vendor_name]
+        
+        invoice_number = st.text_input(
+            "Invoice Number *",
+            placeholder="INV-12345",
+            help="Enter the invoice number"
         )
         
-        if date_preset == "Custom Range":
-            start_date = st.date_input("Start Date", value=datetime.now() - timedelta(days=30))
-            end_date = st.date_input("End Date", value=datetime.now())
-        elif date_preset == "Last 7 Days":
-            start_date = datetime.now() - timedelta(days=7)
-            end_date = datetime.now()
-        elif date_preset == "Last 30 Days":
-            start_date = datetime.now() - timedelta(days=30)
-            end_date = datetime.now()
-        elif date_preset == "Last 90 Days":
-            start_date = datetime.now() - timedelta(days=90)
-            end_date = datetime.now()
-        else:  # All Time
-            start_date = None
-            end_date = None
+        invoice_date = st.date_input(
+            "Invoice Date *",
+            value=datetime.now(),
+            help="Select the invoice date"
+        )
     
     with col2:
-        # Vendor filter
-        vendors = get_all_vendors()
-        vendor_names = ["All Vendors"] + [v["name"] for v in vendors]
-        selected_vendor = st.selectbox("Vendor", vendor_names)
+        # Add filename (optional)
+        filename = st.text_input(
+            "Reference Filename (Optional)",
+            placeholder="manual_entry.pdf",
+            value="manual_entry.pdf",
+            help="Optional filename for reference"
+        )
+    
+    st.divider()
+    
+    # Line Items Section
+    st.markdown("### 📦 Line Items")
+    st.markdown("Add items to the invoice. Total amount will be calculated automatically.")
+    
+    # Initialize line items if empty
+    if not st.session_state.manual_line_items:
+        st.session_state.manual_line_items = [{
+            "description": "",
+            "quantity": 1.0,
+            "unit": "ea",
+            "unit_price": 0.0,
+            "line_total": 0.0
+        }]
+    
+    # Convert to DataFrame for editing
+    line_items_df = pd.DataFrame(st.session_state.manual_line_items)
+    
+    # Editable table
+    edited_df = st.data_editor(
+        line_items_df,
+        num_rows="dynamic",
+        width='stretch',
+        hide_index=False,
+        column_config={
+            "description": st.column_config.TextColumn(
+                "Description *",
+                width="large",
+                required=True,
+                help="Item description"
+            ),
+            "quantity": st.column_config.NumberColumn(
+                "Quantity *",
+                min_value=0.0,
+                format="%.3f",
+                required=True,
+                help="Item quantity"
+            ),
+            "unit": st.column_config.TextColumn(
+                "Unit *",
+                width="small",
+                required=True,
+                help="Unit of measurement (e.g., ea, lb, kg)"
+            ),
+            "unit_price": st.column_config.NumberColumn(
+                "Unit Price *",
+                min_value=0.0,
+                format="$%.2f",
+                required=True,
+                help="Price per unit"
+            ),
+            "line_total": st.column_config.NumberColumn(
+                "Line Total",
+                min_value=0.0,
+                format="$%.2f",
+                help="Auto-calculated from quantity × unit_price. You can override this value."
+            )
+        }
+    )
+    
+    # Auto-calculate line_total ONLY for rows where user hasn't manually set a value
+    # This preserves user overrides while suggesting values for new/unchanged rows
+    for idx in edited_df.index:
+        qty = edited_df.at[idx, "quantity"] if pd.notna(edited_df.at[idx, "quantity"]) else 0
+        price = edited_df.at[idx, "unit_price"] if pd.notna(edited_df.at[idx, "unit_price"]) else 0
+        current_total = edited_df.at[idx, "line_total"]
+        calculated_total = qty * price
         
-        if selected_vendor != "All Vendors":
-            vendor_id = next((str(v["_id"]) for v in vendors if v["name"] == selected_vendor), None)
-        else:
-            vendor_id = None
+        # Only set line_total if it's empty/zero/NaN (suggesting initial value)
+        # Once user edits it, we preserve their value
+        if pd.isna(current_total) or current_total == 0:
+            edited_df.at[idx, "line_total"] = calculated_total
+    
+    # Update session state
+    st.session_state.manual_line_items = edited_df.to_dict('records')
+    
+    # Calculate total
+    total_amount = edited_df["line_total"].sum()
+    
+    st.divider()
+    
+    # Summary and Save Section
+    col1, col2, col3 = st.columns([2, 1, 1])
+    
+    with col1:
+        st.metric("💰 Total Amount", f"${total_amount:,.2f}")
+        st.metric("📦 Line Items", len(edited_df))
     
     with col3:
-        # Invoice number search
-        invoice_search = st.text_input("Invoice Number (contains)", "")
-    
-    # Build query
-    query = {}
-    if start_date and end_date:
-        query["invoice_date"] = {
-            "$gte": datetime.combine(start_date, datetime.min.time()),
-            "$lte": datetime.combine(end_date, datetime.max.time())
-        }
-    if vendor_id:
-        query["vendor_id"] = ObjectId(vendor_id)
-    if invoice_search:
-        query["invoice_number"] = {"$regex": invoice_search, "$options": "i"}
-    
-    # Execute search
+        st.markdown("###")  # Spacer
+        
+        # Validation
+        can_save = True
+        validation_messages = []
+        
+        if not invoice_number.strip():
+            can_save = False
+            validation_messages.append("⚠️ Invoice number is required")
+        
+        if len(edited_df) == 0:
+            can_save = False
+            validation_messages.append("⚠️ At least one line item is required")
+        
+        # Check for empty descriptions
+        if edited_df["description"].str.strip().eq("").any():
+            can_save = False
+            validation_messages.append("⚠️ All line items must have descriptions")
+        
+        # Check for duplicates
+        if can_save:
+            duplicate_doc = check_duplicate_invoice(vendor_id, invoice_number)
+            if duplicate_doc:
+                st.warning(f"⚠️ Duplicate found: Invoice #{invoice_number} for this vendor already exists (ID: {duplicate_doc['_id']})")
+                st.info("💡 You can still save this invoice, but it will be marked as a duplicate.")
+        
+        # Display validation errors
+        if validation_messages:
+            for msg in validation_messages:
+                st.error(msg)
+        
+        # Save button
+        if st.button("💾 Save Invoice", type="primary", disabled=not can_save, width='stretch'):
+            save_manual_invoice(
+                vendor_id=vendor_id,
+                vendor_name=selected_vendor_name,
+                invoice_number=invoice_number,
+                invoice_date=invoice_date,
+                filename=filename,
+                line_items_df=edited_df,
+                total_amount=total_amount
+            )
+
+
+def save_manual_invoice(vendor_id, vendor_name, invoice_number, invoice_date, filename, line_items_df, total_amount):
+    """Save manually entered invoice to database."""
     try:
-        invoices = list(db.invoices.find(query).sort("invoice_date", -1).limit(100))
+        # Get default restaurant_id from database
+        restaurant = db["restaurants"].find_one({}, {"_id": 1})
+        restaurant_id = str(restaurant["_id"]) if restaurant else "000000000000000000000000"
         
-        if not invoices:
-            st.info("No invoices found matching the filters.")
-            return
+        # Prepare invoice DataFrame with all required fields for save_inv_li_to_db
+        invoice_data = {
+            "filename": filename,
+            "restaurant_id": restaurant_id,
+            "vendor_id": vendor_id,
+            "invoice_number": invoice_number,
+            "invoice_date": invoice_date,
+            "invoice_total_amount": total_amount,
+            "order_date": None,
+            "text_length": len("Manual Entry"),
+            "page_count": 1,
+            "extraction_timestamp": datetime.now()
+        }
+        invoice_df = pd.DataFrame([invoice_data])
         
-        # Display results
-        st.markdown(f"### 📊 Found {len(invoices)} invoice(s)")
+        # Convert line items for saving
+        line_items_for_save = line_items_df.copy()
         
-        # Create display dataframe
-        display_data = []
-        for inv in invoices:
-            # Get vendor name
-            vendor = db.vendors.find_one({"_id": inv.get("vendor_id")})
-            vendor_name = vendor["name"] if vendor else "Unknown"
-            
-            # Convert Decimal128 to float
-            total_amount = inv.get("invoice_total_amount", 0)
-            if isinstance(total_amount, Decimal128):
-                total_amount = float(total_amount.to_decimal())
-            
-            display_data.append({
-                "Select": False,
-                "Invoice #": inv.get("invoice_number", ""),
-                "Date": inv.get("invoice_date", "").strftime("%Y-%m-%d") if isinstance(inv.get("invoice_date"), datetime) else str(inv.get("invoice_date", "")),
-                "Vendor": vendor_name,
-                "Total": f"${total_amount:,.2f}",
-                "_id": str(inv["_id"])
-            })
-        
-        results_df = pd.DataFrame(display_data)
-        
-        # Show dataframe with selection
-        edited_df = st.data_editor(
-            results_df,
-            hide_index=True,
-            width='stretch',
-            disabled=["Invoice #", "Date", "Vendor", "Total", "_id"],
-            column_config={
-                "Select": st.column_config.CheckboxColumn("Select", default=False),
-                "_id": None  # Hide the ID column
-            },
-            key="invoice_results"
+        # Save to database using the correct signature
+        result = save_inv_li_to_db(
+            inv_df=invoice_df,
+            li_df=line_items_for_save
         )
         
-        # Handle selection
-        selected_rows = edited_df[edited_df["Select"] == True]
-        
-        if len(selected_rows) > 0:
-            selected_id = selected_rows.iloc[0]["_id"]
+        if result["success"]:
+            st.success(f"✅ Invoice saved successfully! Invoice ID: {result['invoice_id']}")
+            st.balloons()
             
-            col1, col2, col3 = st.columns([1, 1, 2])
+            # Action buttons
+            col1, col2, col3 = st.columns(3)
+            
             with col1:
-                if st.button("✏️ Edit Selected Invoice", type="primary", width='stretch'):
-                    # Load the invoice for editing
-                    load_invoice_for_editing(selected_id)
+                if st.button("✍️ Create Another Invoice", width='stretch'):
+                    st.session_state.manual_line_items = []
                     st.rerun()
             
             with col2:
-                if st.button("🗑️ Delete Selected Invoice", width='stretch'):
-                    st.session_state.confirm_delete_id = selected_id
+                if st.button("⬅️ Back to Main Menu", width='stretch'):
+                    st.session_state.current_step = "main"
+                    st.session_state.manual_line_items = []
+                    st.rerun()
             
-            # Handle delete confirmation
-            if "confirm_delete_id" in st.session_state and st.session_state.confirm_delete_id == selected_id:
-                st.warning("⚠️ **Confirm Deletion**")
-                st.markdown(f"Are you sure you want to delete invoice **{selected_rows.iloc[0]['Invoice #']}**?")
-                
-                # Count line items
-                line_item_count = db.line_items.count_documents({"invoice_id": ObjectId(selected_id)})
-                st.markdown(f"This will also delete **{line_item_count}** associated line items.")
-                
-                col_a, col_b = st.columns(2)
-                with col_a:
-                    if st.button("✅ Yes, Delete", type="primary", width='stretch'):
-                        # Delete line items first
-                        db.line_items.delete_many({"invoice_id": ObjectId(selected_id)})
-                        # Delete invoice
-                        db.invoices.delete_one({"_id": ObjectId(selected_id)})
-                        
-                        st.success(f"✅ Invoice deleted successfully (including {line_item_count} line items)")
-                        del st.session_state.confirm_delete_id
-                        st.rerun()
-                
-                with col_b:
-                    if st.button("❌ Cancel", width='stretch'):
-                        del st.session_state.confirm_delete_id
-                        st.rerun()
-        
-        # Export functionality
-        st.divider()
-        col1, col2 = st.columns([3, 1])
-        with col2:
-            if st.button("📥 Export to CSV", width='stretch'):
-                export_df = results_df.drop(columns=["Select", "_id"])
-                csv = export_df.to_csv(index=False)
-                st.download_button(
-                    label="💾 Download CSV",
-                    data=csv,
-                    file_name=f"invoices_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                    mime="text/csv",
-                    width='stretch'
-                )
+            with col3:
+                if st.button("👁️ View Invoice", width='stretch'):
+                    st.switch_page("pages/View_Invoices.py")
+        else:
+            st.error(f"❌ Error saving invoice: {result['message']}")
     
     except Exception as e:
-        st.error(f"Error searching invoices: {str(e)}")
+        st.error(f"❌ Unexpected error: {str(e)}")
 
-
-def load_invoice_for_editing(invoice_id: str):
-    """Load an invoice from database for editing."""
-    try:
-        invoice = get_invoice_by_id(invoice_id)
-        
-        if not invoice:
-            st.error("Invoice not found")
-            return
-        
-        # Convert to DataFrame format
-        inv_data = {
-            "invoice_number": invoice.get("invoice_number", ""),
-            "invoice_date": invoice.get("invoice_date", datetime.now()),
-            "invoice_total_amount": float(invoice.get("invoice_total_amount").to_decimal()) if isinstance(invoice.get("invoice_total_amount"), Decimal128) else invoice.get("invoice_total_amount", 0),
-            "order_number": invoice.get("order_number", ""),
-            "vendor_id": str(invoice.get("vendor_id", ""))
-        }
-        
-        # Get vendor name
-        vendor = db.vendors.find_one({"_id": invoice.get("vendor_id")})
-        inv_data["vendor_name"] = vendor["name"] if vendor else "Unknown"
-        
-        inv_df = pd.DataFrame([inv_data])
-        
-        # Load line items
-        line_items = invoice.get("line_items", [])
-        li_data = []
-        for li in line_items:
-            li_data.append({
-                "_id": str(li["_id"]),
-                "line_number": li.get("line_number", 0),
-                "description": li.get("description", ""),
-                "quantity": float(li.get("quantity").to_decimal()) if isinstance(li.get("quantity"), Decimal128) else li.get("quantity", 0),
-                "unit": li.get("unit", ""),
-                "unit_price": float(li.get("unit_price").to_decimal()) if isinstance(li.get("unit_price"), Decimal128) else li.get("unit_price", 0),
-                "line_total": float(li.get("line_total").to_decimal()) if isinstance(li.get("line_total"), Decimal128) else li.get("line_total", 0)
-            })
-        
-        li_df = pd.DataFrame(li_data) if li_data else pd.DataFrame(columns=["description", "quantity", "unit", "unit_price", "line_total"])
-        
-        # Store in session state
-        st.session_state.selected_invoice_id = invoice_id
-        st.session_state.loaded_invoice_data = {
-            "invoice_df": inv_df,
-            "line_items_df": li_df,
-            "original_invoice": invoice
-        }
-        
-    except Exception as e:
-        st.error(f"Error loading invoice: {str(e)}")
-
-
-def render_saved_invoice_editor():
-    """Render editor for a saved invoice from database."""
-    st.markdown("### ✏️ Edit Invoice")
-    
-    if st.button("⬅️ Back to Search"):
-        st.session_state.selected_invoice_id = None
-        st.session_state.loaded_invoice_data = None
-        st.rerun()
-    
-    st.divider()
-    
-    invoice_data = st.session_state.loaded_invoice_data
-    inv_df = invoice_data["invoice_df"]
-    li_df = invoice_data["line_items_df"]
-    
-    # Invoice header editing
-    st.markdown("#### 📄 Invoice Details")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        new_inv_num = st.text_input("Invoice Number", value=inv_df.iloc[0]["invoice_number"])
-    with col2:
-        new_inv_date = st.date_input("Invoice Date", value=pd.to_datetime(inv_df.iloc[0]["invoice_date"]))
-    with col3:
-        new_total = st.number_input("Total Amount", value=float(inv_df.iloc[0]["invoice_total_amount"]), format="%.2f")
-    
-    col4, col5, col6 = st.columns(3)
-    with col4:
-        new_order_num = st.text_input("Order Number", value=inv_df.iloc[0].get("order_number", ""))
-    with col5:
-        st.metric("Vendor", inv_df.iloc[0]["vendor_name"])
-    
-    # Update invoice button
-    if st.button("💾 Update Invoice Header", type="primary"):
-        try:
-            update_data = {
-                "invoice_number": new_inv_num,
-                "invoice_date": datetime.combine(new_inv_date, datetime.min.time()),
-                "invoice_total_amount": Decimal128(str(new_total)),
-                "order_number": new_order_num
-            }
-            
-            result = update_invoice(st.session_state.selected_invoice_id, update_data)
-            
-            if result.get("success"):
-                st.success("✅ Invoice header updated successfully!")
-                # Reload the invoice
-                load_invoice_for_editing(st.session_state.selected_invoice_id)
-                st.rerun()
-            else:
-                st.error(f"Error updating invoice: {result.get('message')}")
-        except Exception as e:
-            st.error(f"Error: {str(e)}")
-    
-    st.divider()
-    
-    # Line items editing
-    st.markdown("#### 📦 Line Items")
-    
-    if not li_df.empty:
-        # Editable data editor
-        edited_li_df = st.data_editor(
-            li_df,
-            num_rows="dynamic",
-            width='stretch',
-            hide_index=True,
-            column_config={
-                "_id": None,  # Hide ID column
-                "line_number": None,  # Hide line number
-                "description": st.column_config.TextColumn("Description", width="large"),
-                "quantity": st.column_config.NumberColumn("Quantity", format="%.2f"),
-                "unit": st.column_config.TextColumn("Unit"),
-                "unit_price": st.column_config.NumberColumn("Unit Price", format="$%.2f"),
-                "line_total": st.column_config.NumberColumn("Line Total", format="$%.2f")
-            },
-            key="edit_saved_line_items"
-        )
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            if st.button("💾 Save Line Item Changes", type="primary", width='stretch'):
-                try:
-                    # Compare original and edited dataframes
-                    original_ids = set(li_df["_id"].tolist())
-                    edited_ids = set(edited_li_df["_id"].tolist() if "_id" in edited_li_df.columns else [])
-                    
-                    # Handle deletions
-                    deleted_ids = original_ids - edited_ids
-                    for li_id in deleted_ids:
-                        if li_id:  # Not empty string
-                            delete_line_item(st.session_state.selected_invoice_id, li_id)
-                    
-                    # Handle updates and additions
-                    for idx, row in edited_li_df.iterrows():
-                        li_data = {
-                            "description": row["description"],
-                            "quantity": Decimal128(str(row["quantity"])),
-                            "unit": row["unit"],
-                            "unit_price": Decimal128(str(row["unit_price"])),
-                            "line_total": Decimal128(str(row["line_total"]))
-                        }
-                        
-                        if "_id" in row and row["_id"] and row["_id"] in original_ids:
-                            # Update existing
-                            update_line_item(st.session_state.selected_invoice_id, row["_id"], li_data)
-                        else:
-                            # Add new
-                            add_line_item(st.session_state.selected_invoice_id, li_data)
-                    
-                    st.success("✅ Line items updated successfully!")
-                    # Reload the invoice
-                    load_invoice_for_editing(st.session_state.selected_invoice_id)
-                    st.rerun()
-                    
-                except Exception as e:
-                    st.error(f"Error updating line items: {str(e)}")
-        
-        with col2:
-            if st.button("➕ Add New Line Item", width='stretch'):
-                try:
-                    new_item = {
-                        "description": "New Item",
-                        "quantity": Decimal128("1.0"),
-                        "unit": "EA",
-                        "unit_price": Decimal128("0.0"),
-                        "line_total": Decimal128("0.0")
-                    }
-                    result = add_line_item(st.session_state.selected_invoice_id, new_item)
-                    if result.get("success"):
-                        st.success("✅ New line item added!")
-                        load_invoice_for_editing(st.session_state.selected_invoice_id)
-                        st.rerun()
-                except Exception as e:
-                    st.error(f"Error adding line item: {str(e)}")
-    else:
-        st.warning("No line items found")
-        if st.button("➕ Add First Line Item"):
-            try:
-                new_item = {
-                    "description": "New Item",
-                    "quantity": Decimal128("1.0"),
-                    "unit": "EA",
-                    "unit_price": Decimal128("0.0"),
-                    "line_total": Decimal128("0.0")
-                }
-                result = add_line_item(st.session_state.selected_invoice_id, new_item)
-                if result.get("success"):
-                    st.success("✅ First line item added!")
-                    load_invoice_for_editing(st.session_state.selected_invoice_id)
-                    st.rerun()
-            except Exception as e:
-                st.error(f"Error adding line item: {str(e)}")
 
 
 def render_upload_section():
@@ -787,9 +658,36 @@ def render_upload_section():
         st.info(f"📁 {num_files} file(s) selected")
         
         # Process button
-        if st.button("Process Invoices", type="primary", width='stretch'):
+        if st.button("🚀 Process Invoices", type="primary", width='stretch'):
             # Check if demo mode is active
-            if True:
+            if demo_mode:
+                with st.spinner("Generating demo data..."):
+                    # Generate demo data based on number of files
+                    demo_data = generate_demo_data()
+                    
+                    # Use only first 3 patterns (success, success, partial) - exclude duplicate pattern
+                    demo_patterns = demo_data[:3]  # Exclude the duplicate demo
+                    
+                    # Repeat demo patterns to match file count
+                    processed_data = []
+                    for idx, uploaded_file in enumerate(uploaded_files):
+                        # Cycle through demo data patterns (only non-duplicate ones)
+                        demo_template = demo_patterns[idx % len(demo_patterns)].copy()
+                        demo_template["filename"] = uploaded_file.name
+                        demo_template["invoice_df"]["filename"] = [uploaded_file.name]
+                        # Generate unique invoice numbers to avoid false duplicates
+                        demo_template["invoice_df"]["invoice_number"] = [f"DEMO-{idx+1:04d}"]
+                        processed_data.append(demo_template)
+                    
+                    # Store in session state
+                    st.session_state.uploaded_files_data = processed_data
+                    st.session_state.processing_complete = True
+                    st.session_state.current_step = "review"
+                    save_session_to_db()
+                    
+                    st.success("✅ Demo data generated!")
+                    st.rerun()
+            else:
                 with st.spinner("Processing invoices..."):
                     # Create temporary directory
                     temp_dir = Path("data/temp_uploads")
@@ -801,10 +699,30 @@ def render_upload_section():
                     
                     processed_data = []
                     
+                    # Track invoice signatures within current batch to detect duplicates
+                    seen_invoices = set()
+                    
                     for idx, uploaded_file in enumerate(uploaded_files):
                         status_text.text(f"Processing {idx + 1}/{num_files}: {uploaded_file.name}")
                         
                         result = process_single_file(uploaded_file, temp_dir)
+                        
+                        # Check for duplicates WITHIN this batch (in addition to DB check)
+                        if (result.get("vendor_id") and 
+                            result.get("invoice_df") is not None and 
+                            not result["invoice_df"].empty and
+                            not result.get("is_duplicate")):  # Only if not already flagged as DB duplicate
+                            
+                            inv_num = str(result["invoice_df"].iloc[0].get("invoice_number", ""))
+                            signature = (str(result["vendor_id"]), inv_num)
+                            
+                            if signature in seen_invoices and inv_num:  # Only flag if invoice number exists
+                                result["is_duplicate"] = True
+                                result["status"] = "duplicate"
+                                result["message"] = f"Duplicate in batch: Invoice #{inv_num} already in this upload"
+                            elif inv_num:  # Only track if invoice number exists
+                                seen_invoices.add(signature)
+                        
                         processed_data.append(result)
                         
                         progress_bar.progress((idx + 1) / num_files)
@@ -821,8 +739,8 @@ def render_upload_section():
                     for file in temp_dir.glob("*"):
                         try:
                             file.unlink()
-                        except:
-                            pass
+                        except OSError as e:
+                            logger.warning(f"Could not delete temp file {file}: {e}")
                     
                     status_text.text("✅ Processing complete!")
                     progress_bar.empty()
@@ -988,7 +906,8 @@ def render_invoice_editor(invoice_data: Dict[str, Any], idx: int):
             with col2:
                 try:
                     inv_date = pd.to_datetime(invoice_df.iloc[0]["invoice_date"]).strftime("%Y-%m-%d")
-                except:
+                except (ValueError, KeyError, TypeError) as e:
+                    logger.debug(f"Could not format invoice date: {e}")
                     inv_date = "N/A"
                 st.metric("Date", inv_date)
             with col3:
@@ -1123,6 +1042,19 @@ def render_review_section():
 
 def render_save_section():
     """Render the save to database section."""
+    
+    # GUARD: Prevent re-save if already completed or no data
+    if st.session_state.save_complete or not st.session_state.uploaded_files_data:
+        st.info("✅ Save operation already completed. Redirecting to main menu...")
+        # Reset session state and redirect
+        st.session_state.uploaded_files_data = []
+        st.session_state.processing_complete = False
+        st.session_state.save_complete = False
+        st.session_state.current_step = "main"
+        st.session_state.edit_mode = {}
+        st.rerun()
+        return
+    
     st.title("💾 Saving Invoices to Database")
     
     progress_bar = st.progress(0)
@@ -1214,34 +1146,32 @@ def render_save_section():
     results_df = pd.DataFrame(results)
     st.dataframe(results_df, width='stretch', hide_index=True)
     
-    # Clean up session
+    # Clean up session data IMMEDIATELY after save to prevent re-save on page re-entry
     delete_temp_upload(st.session_state.session_id)
-    st.session_state.save_complete = True
+    
+    # Clear invoice data to prevent re-save if user navigates away and back
+    st.session_state.uploaded_files_data = []
+    st.session_state.processing_complete = False
+    st.session_state.save_complete = True  # Mark save as complete for this session
     
     # Action buttons
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
         if st.button("📤 Upload More Invoices", width='stretch', type="primary"):
-            # Reset session
-            st.session_state.uploaded_files_data = []
-            st.session_state.processing_complete = False
+            # Reset session for new uploads
             st.session_state.save_complete = False
             st.session_state.current_step = "main"
             st.session_state.edit_mode = {}
             st.rerun()
     
     with col2:
-        if st.button("📝 Edit Saved Invoices", width='stretch'):
-            st.session_state.uploaded_files_data = []
-            st.session_state.processing_complete = False
-            st.session_state.save_complete = False
-            st.session_state.current_step = "browse"
-            st.session_state.edit_mode = {}
-            st.rerun()
-    
-    with col3:
         if st.button("👁️ View Invoices Page", width='stretch'):
+            # Reset session before switching page to prevent re-save on return
+            st.session_state.save_complete = False
+            st.session_state.current_step = "main"
+            st.session_state.edit_mode = {}
             st.switch_page("pages/View_Invoices.py")
+
 
 
 # Main navigation logic
@@ -1252,16 +1182,17 @@ def main():
         render_main_menu()
     elif current_step == "upload":
         render_upload_section()
+    elif current_step == "manual":
+        render_manual_entry()
     elif current_step == "review":
         render_review_section()
     elif current_step == "saving":
         render_save_section()
-    elif current_step == "browse":
-        render_browse_invoices()
     else:
         # Default to main menu
         st.session_state.current_step = "main"
         render_main_menu()
+
 
 
 if __name__ == "__main__":

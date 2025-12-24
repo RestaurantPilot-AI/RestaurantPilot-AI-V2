@@ -28,12 +28,25 @@ if "selected_invoice_id" not in st.session_state:
 if "edit_invoice_mode" not in st.session_state:
     st.session_state.edit_invoice_mode = False
 
+# Track the line items dataframe key to prevent unwanted reruns
+if "line_items_edit_key" not in st.session_state:
+    st.session_state.line_items_edit_key = 0
 
-def fetch_invoices(filters: Dict[str, Any] | None = None) -> List[Dict[str, Any]]:
+if "current_edit_invoice_id" not in st.session_state:
+    st.session_state.current_edit_invoice_id = None
+
+# Track if we're adding a new line item (shows the input form)
+if "adding_new_line_item" not in st.session_state:
+    st.session_state.adding_new_line_item = False
+
+
+@st.cache_data(ttl=30)  # Cache for 30 seconds to prevent repeated queries
+def fetch_invoices(_filters_key: str = "", filters: Dict[str, Any] | None = None) -> List[Dict[str, Any]]:
     """
     Fetch invoices from database with optional filters.
     
     Args:
+        _filters_key: Cache key based on filters (for cache invalidation)
         filters: Dictionary of filter criteria
         
     Returns:
@@ -44,13 +57,18 @@ def fetch_invoices(filters: Dict[str, Any] | None = None) -> List[Dict[str, Any]
     try:
         invoices = list(db["invoices"].find(query).sort("invoice_date", -1))
         
-        # Enrich with vendor names
+        # Enrich with vendor names and line item counts
         for invoice in invoices:
             vendor_id = invoice.get("vendor_id")
             if vendor_id:
                 invoice["vendor_name"] = get_vendor_name_by_id(str(vendor_id)) or "Unknown"
             else:
                 invoice["vendor_name"] = "Unknown"
+            
+            # Count line items from the separate collection
+            invoice_id = str(invoice["_id"])
+            line_item_count = len(list(db["line_items"].find({"invoice_id": invoice_id})))
+            invoice["line_items"] = [{}] * line_item_count  # Placeholder list for count
         
         return invoices
     except Exception as e:
@@ -84,18 +102,28 @@ def convert_invoice_to_df(invoice: Dict[str, Any]) -> pd.DataFrame:
     }])
 
 
-def convert_line_items_to_df(line_items: List[Dict[str, Any]]) -> pd.DataFrame:
+def convert_line_items_to_df(line_items: List[Dict[str, Any]], include_id: bool = False) -> pd.DataFrame:
     """Convert line items to DataFrame for display."""
     if not line_items:
-        return pd.DataFrame(columns=["Description", "Quantity", "Unit", "Unit Price", "Line Total"])
+        cols = ["Description", "Quantity", "Unit", "Unit Price", "Line Total"]
+        if include_id:
+            cols = ["_id"] + cols
+        return pd.DataFrame(columns=cols)
     
-    return pd.DataFrame([{
-        "Description": item.get("description", ""),
-        "Quantity": item.get("quantity", 0),
-        "Unit": item.get("unit", ""),
-        "Unit Price": float(item.get("unit_price", 0)),
-        "Line Total": float(item.get("line_total", 0))
-    } for item in line_items])
+    data = []
+    for item in line_items:
+        row = {
+            "Description": item.get("description", ""),
+            "Quantity": item.get("quantity", 0),
+            "Unit": item.get("unit", ""),
+            "Unit Price": float(item.get("unit_price", 0)),
+            "Line Total": float(item.get("line_total", 0))
+        }
+        if include_id:
+            row["_id"] = str(item.get("_id", ""))
+        data.append(row)
+    
+    return pd.DataFrame(data)
 
 
 def render_filters():
@@ -316,14 +344,26 @@ def render_invoice_detail():
     
     if line_items:
         if st.session_state.edit_invoice_mode:
-            # Editable line items
-            line_items_df = convert_line_items_to_df(line_items)
+            # Reset edit key when switching to a different invoice
+            if st.session_state.current_edit_invoice_id != st.session_state.selected_invoice_id:
+                st.session_state.current_edit_invoice_id = st.session_state.selected_invoice_id
+                st.session_state.line_items_edit_key += 1
+            
+            # Editable line items - include _id for updates
+            line_items_df = convert_line_items_to_df(line_items, include_id=True)
+            
+            # Hide _id column from display but keep it for reference
+            display_df = line_items_df.drop(columns=["_id"])
+            
+            # Use stable key based on invoice_id to prevent state issues
+            # Removed num_rows="dynamic" to prevent FutureWarning and reload issues
+            editor_key = f"edit_line_items_{st.session_state.selected_invoice_id}_{st.session_state.line_items_edit_key}"
             
             edited_df = st.data_editor(
-                line_items_df,
-                num_rows="dynamic",
+                display_df,
+                num_rows="fixed",  # Use fixed rows to prevent reload on add/edit
                 width='stretch',
-                key="edit_line_items",
+                key=editor_key,
                 column_config={
                     "Description": st.column_config.TextColumn("Description", width="large"),
                     "Quantity": st.column_config.NumberColumn("Quantity", format="%.2f"),
@@ -340,6 +380,13 @@ def render_invoice_detail():
                     # Update each line item
                     success_count = 0
                     for idx, row in edited_df.iterrows():
+                        # Get the line item ID from the original dataframe
+                        if idx < len(line_items_df):
+                            line_item_id = line_items_df.iloc[idx]["_id"]
+                        else:
+                            # New row added - skip for now (use add_line_item instead)
+                            continue
+                        
                         update_data = {
                             "description": row["Description"],
                             "quantity": row["Quantity"],
@@ -348,36 +395,68 @@ def render_invoice_detail():
                             "line_total": row["Line Total"]
                         }
                         
-                        result = update_line_item(
-                            st.session_state.selected_invoice_id,
-                            idx,
-                            update_data
-                        )
+                        result = update_line_item(line_item_id, update_data)
                         
                         if result["success"]:
                             success_count += 1
                     
                     if success_count > 0:
                         st.success(f"✅ Updated {success_count} line item(s)")
+                        st.session_state.line_items_edit_key += 1
                         st.rerun()
             
             with col2:
                 if st.button("➕ Add New Line Item"):
-                    new_item = {
-                        "description": "New Item",
-                        "quantity": 1.0,
-                        "unit": "ea",
-                        "unit_price": 0.0,
-                        "line_total": 0.0
-                    }
-                    
-                    result = add_line_item(st.session_state.selected_invoice_id, new_item)
-                    
-                    if result["success"]:
-                        st.success("✅ Line item added")
+                    st.session_state.adding_new_line_item = True
+                    st.rerun()
+            
+            # Show the new line item form if adding
+            if st.session_state.adding_new_line_item:
+                st.markdown("---")
+                st.markdown("##### ➕ Add New Line Item")
+                
+                col_a, col_b = st.columns(2)
+                
+                with col_a:
+                    new_description = st.text_input("Description", value="", key="new_li_desc")
+                    new_quantity = st.number_input("Quantity", value=1.0, min_value=0.0, step=0.01, key="new_li_qty")
+                    new_unit = st.text_input("Unit", value="ea", key="new_li_unit")
+                
+                with col_b:
+                    new_unit_price = st.number_input("Unit Price ($)", value=0.0, min_value=0.0, step=0.01, format="%.2f", key="new_li_price")
+                    # Auto-calculate line total but allow override
+                    calculated_total = new_quantity * new_unit_price
+                    new_line_total = st.number_input("Line Total ($)", value=calculated_total, min_value=0.0, step=0.01, format="%.2f", key="new_li_total")
+                
+                btn_col1, btn_col2, _ = st.columns([1, 1, 2])
+                
+                with btn_col1:
+                    if st.button("💾 Save New Line Item", type="primary"):
+                        if not new_description.strip():
+                            st.error("❌ Description is required")
+                        else:
+                            new_item = {
+                                "description": new_description.strip(),
+                                "quantity": new_quantity,
+                                "unit": new_unit.strip(),
+                                "unit_price": new_unit_price,
+                                "line_total": new_line_total
+                            }
+                            
+                            result = add_line_item(st.session_state.selected_invoice_id, new_item)
+                            
+                            if result["success"]:
+                                st.success("✅ Line item added")
+                                st.session_state.adding_new_line_item = False
+                                st.session_state.line_items_edit_key += 1
+                                st.rerun()
+                            else:
+                                st.error(f"❌ {result.get('message', 'Failed to add line item')}")
+                
+                with btn_col2:
+                    if st.button("❌ Cancel"):
+                        st.session_state.adding_new_line_item = False
                         st.rerun()
-                    else:
-                        st.error(f"❌ {result['message']}")
         else:
             # View mode
             line_items_df = convert_line_items_to_df(line_items)
@@ -393,21 +472,55 @@ def render_invoice_detail():
         
         if st.session_state.edit_invoice_mode:
             if st.button("➕ Add First Line Item"):
-                new_item = {
-                    "description": "New Item",
-                    "quantity": 1.0,
-                    "unit": "ea",
-                    "unit_price": 0.0,
-                    "line_total": 0.0
-                }
+                st.session_state.adding_new_line_item = True
+                st.rerun()
+            
+            # Show the new line item form if adding (for empty invoice)
+            if st.session_state.adding_new_line_item:
+                st.markdown("---")
+                st.markdown("##### ➕ Add New Line Item")
                 
-                result = add_line_item(st.session_state.selected_invoice_id, new_item)
+                col_a, col_b = st.columns(2)
                 
-                if result["success"]:
-                    st.success("✅ Line item added")
-                    st.rerun()
-                else:
-                    st.error(f"❌ {result['message']}")
+                with col_a:
+                    new_description = st.text_input("Description", value="", key="new_li_desc_empty")
+                    new_quantity = st.number_input("Quantity", value=1.0, min_value=0.0, step=0.01, key="new_li_qty_empty")
+                    new_unit = st.text_input("Unit", value="ea", key="new_li_unit_empty")
+                
+                with col_b:
+                    new_unit_price = st.number_input("Unit Price ($)", value=0.0, min_value=0.0, step=0.01, format="%.2f", key="new_li_price_empty")
+                    calculated_total = new_quantity * new_unit_price
+                    new_line_total = st.number_input("Line Total ($)", value=calculated_total, min_value=0.0, step=0.01, format="%.2f", key="new_li_total_empty")
+                
+                btn_col1, btn_col2, _ = st.columns([1, 1, 2])
+                
+                with btn_col1:
+                    if st.button("💾 Save New Line Item", type="primary", key="save_first_li"):
+                        if not new_description.strip():
+                            st.error("❌ Description is required")
+                        else:
+                            new_item = {
+                                "description": new_description.strip(),
+                                "quantity": new_quantity,
+                                "unit": new_unit.strip(),
+                                "unit_price": new_unit_price,
+                                "line_total": new_line_total
+                            }
+                            
+                            result = add_line_item(st.session_state.selected_invoice_id, new_item)
+                            
+                            if result["success"]:
+                                st.success("✅ Line item added")
+                                st.session_state.adding_new_line_item = False
+                                st.session_state.line_items_edit_key += 1
+                                st.rerun()
+                            else:
+                                st.error(f"❌ {result.get('message', 'Failed to add line item')}")
+                
+                with btn_col2:
+                    if st.button("❌ Cancel", key="cancel_first_li"):
+                        st.session_state.adding_new_line_item = False
+                        st.rerun()
 
 
 def main():
@@ -420,8 +533,10 @@ def main():
     # Remove special filter keys that need Python-side filtering
     amount_range = filters.pop("_amount_range", None)
     
-    # Fetch invoices
-    invoices = fetch_invoices(filters)
+    # Fetch invoices with cache key based on filters
+    import json
+    filters_key = json.dumps(filters, sort_keys=True, default=str)
+    invoices = fetch_invoices(_filters_key=filters_key, filters=filters)
     
     # Apply amount range filter if specified
     if amount_range:

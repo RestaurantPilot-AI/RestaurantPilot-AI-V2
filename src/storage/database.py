@@ -27,7 +27,6 @@ COL_VENDOR_REGEXES = "vendor_regex_templates"
 
 # Buildsheet collections
 COL_BUILDSHEET_ITEMS = "buildsheet_items"
-COL_BUILDSHEET_REGEXES = "buildsheet_regex_templates"
 
 # ---------------------------------------------------------
 # 1. Internal CSV Helpers (Private)
@@ -406,30 +405,8 @@ def get_vendor_regex_patterns(vendor_id: str) -> List[str]:
             return []
     return []
 
-# --- Buildsheet Regex Templates ---
-
-def save_buildsheet_regex_template(restaurant_id: str, regex_list: List[str]) -> None:
-    """Save/update a restaurant-specific buildsheet regex template as an ordered list."""
-    db[COL_BUILDSHEET_REGEXES].update_one_no_id(
-        {"restaurant_id": str(restaurant_id)},
-        {"$set": {"regex_patterns": json.dumps(regex_list)}},
-        upsert=True
-    )
-
-
-def get_buildsheet_regex_patterns(restaurant_id: str) -> List[str]:
-    """Retrieve the ordered list of buildsheet regex patterns for a restaurant.
-
-    Returns a list of strings preserving positional indices; returns an empty
-    list if no template exists or if parsing fails.
-    """
-    doc = db[COL_BUILDSHEET_REGEXES].find_one({"restaurant_id": str(restaurant_id)})
-    if doc and "regex_patterns" in doc:
-        try:
-            return json.loads(doc["regex_patterns"])
-        except Exception:
-            return []
-    return []
+# Buildsheet regex templates removed — regex-based extraction has been deprecated and replaced
+# by direct LLM Phase 1 output parsing in `src.processing.buildsheet_ingestion`.
 
 # --- Vendor Methods ---
 def create_vendor(vendor_data: Dict[str, Any]) -> Optional[str]:

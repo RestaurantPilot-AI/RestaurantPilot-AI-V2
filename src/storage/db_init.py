@@ -143,14 +143,12 @@ def create_validation_rules(db):
         "menu_categories.csv": [
             "_id"
         ],
+        # Buildsheet
+        "buildsheet_items.csv": [
+            "_id", "restaurant_id", "name", "yield_quantity", "estimated_price", "ingredients"
+        ],
         "temp_uploads.csv": [
             "session_id", "created_at", "updated_at", "data"
-        ],
-        "buildsheet_items.csv": [
-            "restaurant_id", "name", "yield_quantity", "estimated_price", "ingredients"
-        ],
-        "buildsheet_regex_templates.csv": [
-            "restaurant_id", "regex_patterns"
         ]
     }
 
@@ -177,7 +175,7 @@ def create_validation_rules(db):
                         # File is empty, write headers
                         pass
         except Exception as e:
-             print(f"[ERROR] Update failed for {filename}: {e}")
+            print(f"[ERROR] Update failed for {filename}: {e}")
 
 def create_indexes(db):
     """
@@ -193,7 +191,7 @@ def create_indexes(db):
         "restaurants.csv", "vendors.csv", "vendor_regex_templates.csv",
         "invoices.csv", "line_items.csv", "item_lookup_map.csv", 
         "menu_items.csv", "menu_item_lookup_map.csv", "menu_categories.csv", 
-        "buildsheet_items.csv", "buildsheet_regex_templates.csv",
+        "buildsheet_items.csv",
         "temp_uploads.csv"
     ]
     

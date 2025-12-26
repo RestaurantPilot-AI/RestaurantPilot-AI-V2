@@ -25,6 +25,10 @@ CSV_FOLDER.mkdir(parents=True, exist_ok=True)
 COL_VENDORS = "vendors"
 COL_VENDOR_REGEXES = "vendor_regex_templates"
 
+# Buildsheet collections
+COL_BUILDSHEET_ITEMS = "buildsheet_items"
+COL_BUILDSHEET_REGEXES = "buildsheet_regex_templates"
+
 # ---------------------------------------------------------
 # 1. Internal CSV Helpers (Private)
 # ---------------------------------------------------------
@@ -402,6 +406,31 @@ def get_vendor_regex_patterns(vendor_id: str) -> List[str]:
             return []
     return []
 
+# --- Buildsheet Regex Templates ---
+
+def save_buildsheet_regex_template(restaurant_id: str, regex_list: List[str]) -> None:
+    """Save/update a restaurant-specific buildsheet regex template as an ordered list."""
+    db[COL_BUILDSHEET_REGEXES].update_one_no_id(
+        {"restaurant_id": str(restaurant_id)},
+        {"$set": {"regex_patterns": json.dumps(regex_list)}},
+        upsert=True
+    )
+
+
+def get_buildsheet_regex_patterns(restaurant_id: str) -> List[str]:
+    """Retrieve the ordered list of buildsheet regex patterns for a restaurant.
+
+    Returns a list of strings preserving positional indices; returns an empty
+    list if no template exists or if parsing fails.
+    """
+    doc = db[COL_BUILDSHEET_REGEXES].find_one({"restaurant_id": str(restaurant_id)})
+    if doc and "regex_patterns" in doc:
+        try:
+            return json.loads(doc["regex_patterns"])
+        except Exception:
+            return []
+    return []
+
 # --- Vendor Methods ---
 def create_vendor(vendor_data: Dict[str, Any]) -> Optional[str]:
     name = vendor_data.get("vendor_name")
@@ -648,6 +677,134 @@ def update_menu_item_by_id(menu_id: str, update_data: Dict) -> int:
     res = db[COL_MENU_ITEMS].update_one({"_id": str(menu_id)}, {"$set": update_data})
     return res.modified_count if hasattr(res, "modified_count") else 0
 
+# --- Buildsheet Items CRUD ---
+
+def save_buildsheet_item(item: Dict[str, Any]) -> Optional[str]:
+    """Insert a buildsheet item document. Serializes ingredients as JSON."""
+    if not item.get("restaurant_id") or not item.get("name"):
+        return None
+    doc = item.copy()
+    if "yield_quantity" in doc:
+        doc["yield_quantity"] = str(doc["yield_quantity"])
+    if "estimated_price" in doc:
+        doc["estimated_price"] = str(doc["estimated_price"])
+    if "ingredients" in doc:
+        doc["ingredients"] = json.dumps(doc["ingredients"])
+    res = db[COL_BUILDSHEET_ITEMS].insert_one(doc)
+    return str(res.inserted_id) if hasattr(res, "inserted_id") else None
+
+
+def get_buildsheet_items(restaurant_id: str = None) -> List[Dict[str, Any]]:
+    q = {}
+    if restaurant_id:
+        q["restaurant_id"] = str(restaurant_id)
+    items = list(db[COL_BUILDSHEET_ITEMS].find(q))
+    for it in items:
+        if "ingredients" in it:
+            try:
+                it["ingredients"] = json.loads(it["ingredients"])
+            except Exception:
+                it["ingredients"] = []
+    return items
+
+
+def get_buildsheet_item_by_id(item_id: str) -> Optional[Dict[str, Any]]:
+    doc = db[COL_BUILDSHEET_ITEMS].find_one({"_id": str(item_id)})
+    if doc and "ingredients" in doc:
+        try:
+            doc["ingredients"] = json.loads(doc["ingredients"])
+        except Exception:
+            doc["ingredients"] = []
+    return doc
+
+
+def update_buildsheet_item(item_id: str, update_data: Dict[str, Any]) -> int:
+    if "ingredients" in update_data:
+        update_data["ingredients"] = json.dumps(update_data["ingredients"])
+    if "yield_quantity" in update_data:
+        update_data["yield_quantity"] = str(update_data["yield_quantity"])
+    if "estimated_price" in update_data:
+        update_data["estimated_price"] = str(update_data["estimated_price"])
+    res = db[COL_BUILDSHEET_ITEMS].update_one({"_id": str(item_id)}, {"$set": update_data})
+    return res.modified_count if hasattr(res, "modified_count") else 0
+
+
+def delete_buildsheet_item(item_id: str) -> bool:
+    res = db[COL_BUILDSHEET_ITEMS].delete_one({"_id": str(item_id)})
+    return getattr(res, "deleted_count", 0) > 0
+
+
+def save_buildsheet_db(buildsheet_df: pd.DataFrame) -> Dict[str, Any]:
+    """Save a DataFrame of buildsheet items into the CSV-backed `buildsheet_items` table.
+
+    Expected columns (strict): `restaurant_id`, `name`, `yield_quantity`, `ingredients`.
+    - `ingredients` should be a list of dicts like [{"material_name":..., "measure_unit":..., "measure_quantity":...}, ...]
+
+    The function will:
+      - Validate input types and required columns
+      - Normalize types and serialize `ingredients` as JSON
+      - Skip inserting rows that already exist for the same (restaurant_id, name)
+
+    Returns:
+      {"inserted": <number_inserted>} or raises TypeError/ValueError on invalid input
+    """
+    if not isinstance(buildsheet_df, pd.DataFrame):
+        raise TypeError("buildsheet_df must be a pandas DataFrame")
+
+    if buildsheet_df.empty:
+        return {"inserted": 0}
+
+    required = {"restaurant_id", "name", "yield_quantity", "ingredients"}
+    if not required.issubset(set(buildsheet_df.columns)):
+        raise ValueError(f"buildsheet_df must contain columns: {sorted(list(required))}")
+
+    # Normalize and prepare records
+    records = []
+    for _, row in buildsheet_df.iterrows():
+        restaurant_id = str(row["restaurant_id"]).strip()
+        name = str(row["name"]).strip()
+
+        # Skip duplicates
+        existing = db[COL_BUILDSHEET_ITEMS].find_one({"restaurant_id": restaurant_id, "name": name})
+        if existing:
+            continue
+
+        yq = row.get("yield_quantity")
+        try:
+            yq_val = float(yq) if pd.notna(yq) else None
+        except Exception:
+            yq_val = None
+
+        ep = row.get("estimated_price") if "estimated_price" in row else None
+        try:
+            ep_val = str(float(ep)) if ep is not None and pd.notna(ep) else None
+        except Exception:
+            ep_val = None
+
+        ings = row.get("ingredients") or []
+        # Ensure ingredients is list-like
+        try:
+            ings_serialized = json.dumps(ings)
+        except Exception:
+            # Try best-effort: coerce to list of dicts
+            ings_serialized = json.dumps([])
+
+        doc = {
+            "restaurant_id": restaurant_id,
+            "name": name,
+            "yield_quantity": str(yq_val) if yq_val is not None else "",
+            "estimated_price": ep_val if ep_val is not None else "",
+            "ingredients": ings_serialized,
+        }
+        records.append(doc)
+
+    if not records:
+        return {"inserted": 0}
+
+    res = db[COL_BUILDSHEET_ITEMS].insert_many(records)
+    inserted = len(res.inserted_ids) if hasattr(res, "inserted_ids") else len(records)
+    return {"inserted": inserted}
+
 
 def save_menu_db(menu_df) -> Dict[str, Any]:
     """Save menu items into CSV-backed 'menu_items' table.
@@ -669,7 +826,6 @@ def save_menu_db(menu_df) -> Dict[str, Any]:
     """
     if not isinstance(menu_df, pd.DataFrame):
         raise TypeError("menu_df must be a pandas DataFrame")
-
     df = menu_df.copy()
     if df.empty:
         raise ValueError("menu_df is empty")
@@ -806,26 +962,6 @@ def get_invoice_line_items_joined(start_date=None, end_date=None, restaurant_ids
     
     return final.sort_values("invoice_date", ascending=False)
 
-def get_sales_data(start_date=None, end_date=None, restaurant_ids=None):
-    df = _read_table("sales")
-    if df.empty:
-        return pd.DataFrame(columns=["date", "location", "revenue", "covers"])
-    
-    df["date"] = pd.to_datetime(df["date"])
-    if start_date:
-        df = df[df["date"] >= start_date]
-    if end_date:
-        df = df[df["date"] <= end_date.replace(hour=23)]
-    
-    rest = _read_table("restaurants")
-    m = pd.merge(df, rest, left_on="restaurant_id", right_on="_id", how="left")
-    
-    final = pd.DataFrame()
-    final["date"] = m["date"]
-    final["location"] = m["location_name"]
-    final["revenue"] = m["revenue"].astype(float)
-    final["covers"] = m["covers"].astype(int)
-    return final.sort_values("date")
 
 def get_spending_by_period(start_date, end_date, restaurant_ids=None, group_by="day"):
     inv = _read_table("invoices")

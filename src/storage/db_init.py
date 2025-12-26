@@ -146,8 +146,11 @@ def create_validation_rules(db):
         "temp_uploads.csv": [
             "session_id", "created_at", "updated_at", "data"
         ],
-        "sales.csv": [
-            "_id", "date", "restaurant_id", "revenue", "covers", "created_at"
+        "buildsheet_items.csv": [
+            "restaurant_id", "name", "yield_quantity", "estimated_price", "ingredients"
+        ],
+        "buildsheet_regex_templates.csv": [
+            "restaurant_id", "regex_patterns"
         ]
     }
 
@@ -188,8 +191,10 @@ def create_indexes(db):
     
     required_files = [
         "restaurants.csv", "vendors.csv", "vendor_regex_templates.csv",
-        "invoices.csv", "sales.csv", "line_items.csv", 
-        "item_lookup_map.csv", "menu_items.csv", "menu_item_lookup_map.csv", "menu_categories.csv", "temp_uploads.csv"
+        "invoices.csv", "line_items.csv", "item_lookup_map.csv", 
+        "menu_items.csv", "menu_item_lookup_map.csv", "menu_categories.csv", 
+        "buildsheet_items.csv", "buildsheet_regex_templates.csv",
+        "temp_uploads.csv"
     ]
     
     missing_files = []

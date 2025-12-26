@@ -72,9 +72,16 @@ class OCRRouter:
     """
     
     def __init__(self):
-        """Initialize OCR engines (EasyOCR loads on startup)."""
-        self.easyocr_reader = self._initialize_easyocr()
+        """Initialize OCR engines lazily (EasyOCR loads on first use)."""
+        self._easyocr_reader = None  # Lazy initialization
         self.routing_stats = {'easyocr': 0}
+    
+    @property
+    def easyocr_reader(self):
+        """Lazy-load EasyOCR reader only when needed."""
+        if self._easyocr_reader is None:
+            self._easyocr_reader = self._initialize_easyocr()
+        return self._easyocr_reader
     
     def _initialize_easyocr(self):
         """

@@ -316,7 +316,7 @@ def extract_vendor_signals(text: str) -> Dict[str, Optional[str]]:
 # ----------------------------
 # LLM helpers (isolated)
 # ----------------------------
-def call_llm_api(prompt: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+def call_visual_llm_api(prompt: str, file_path: Optional[str] = None) -> Dict[str, Any]:
     """
     Calls Gemini API with optional multimodal file upload and automatic retry on Rate Limit (429) errors.
     If `file_path` is provided, the file will be uploaded and passed to the model alongside the prompt.
@@ -353,6 +353,46 @@ def call_llm_api(prompt: str, file_path: Optional[str] = None) -> Dict[str, Any]
                 response = model.generate_content([prompt, file_obj])
             else:
                 response = model.generate_content(prompt)
+
+            raw_text = response.text.strip() if response and getattr(response, "text", None) else ""
+            # Use existing robust parser
+            return parse_llm_json(raw_text)
+
+        except ResourceExhausted:
+            # This catches the 429 Quota Exceeded error
+            wait_time = base_wait * (attempt + 1)
+            print(f"\n[WARN] Gemini Quota Exceeded. Waiting {wait_time}s before retry ({attempt + 1}/{max_retries})...")
+            time.sleep(wait_time)
+
+        except ValueError as e:
+            # JSON parsing / content errors from the model
+            print(f"[ERROR] Gemini returned invalid JSON: {e}")
+            raise
+
+        except Exception as e:
+            # Other errors (auth, network) should crash immediately
+            print(f"[ERROR] Gemini API Failed: {e}")
+            raise
+
+    # If we run out of retries
+    raise RuntimeError("Gemini API Quota Exceeded after multiple retries. Please check your billing/limits.")
+
+def call_llm_api(prompt: str) -> Dict[str, Any]:
+    """
+    Calls Gemini API text llm and automatic retry on Rate Limit (429) errors.
+    Passes the prompt to text based llm.
+    Returns parsed JSON dictionary.
+    """
+    _setup_environment()
+    model = genai.GenerativeModel(MODEL_NAME)
+
+    max_retries = 3
+    base_wait = 30  # Start waiting 30 seconds
+
+    for attempt in range(max_retries):
+        try:
+
+            response = model.generate_content(prompt)
 
             raw_text = response.text.strip() if response and getattr(response, "text", None) else ""
             # Use existing robust parser
@@ -595,8 +635,8 @@ def llm_phase1_extract(text: str, file_path: str) -> Dict[str, Any]:
     
     prompt = make_phase1_prompt(text)
     
-    # FIX: call_llm_api now returns the parsed JSON dict directly
-    parsed = call_llm_api(prompt, file_path)
+    # call_visual_llm_api that is multimodal ll,
+    parsed = call_visual_llm_api(prompt, file_path)
 
     # 1) Try to extract JSON (Validation)
     # Note: We skip _safe_extract_json_from_llm because 'parsed' is already a dict
@@ -701,8 +741,8 @@ def llm_phase2_generate_regex(text: str, phase1_json: Dict[str, Any], file_path:
     print("\n[INFO] Starting Phase 2: Generating Regex Patterns...")
     prompt = make_phase2_prompt(text, phase1_json)
     
-    # FIX: call_llm_api now supports multimodal uploads via file_path
-    parsed = call_llm_api(prompt, file_path)
+    # call_llm_api passes the prompt to a text based llm
+    parsed = call_llm_api(prompt)
 
     # DEBUG: Print the raw output to see what the LLM actually gave us
     # print(f"[DEBUG] Phase 2 Raw LLM Output:\n{json.dumps(parsed, indent=2)}")

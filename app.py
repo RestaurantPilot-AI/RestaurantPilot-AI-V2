@@ -10,6 +10,7 @@ view_menu = st.Page("pages/View_Menu.py", icon='📋')
 
 # Buildsheet pages
 upload_buildsheet = st.Page("pages/Upload_Buildsheet.py", icon='📤')
+view_buildsheet = st.Page("pages/View_Buildsheet.py", icon='📤')
 
 # Analysis pages
 view_price_variations = st.Page("pages/View_Price_Variations.py", icon='📋') 
@@ -20,7 +21,7 @@ dashboard = st.Page("pages/Dashboard.py", icon='📋')
 # Group pages
 pg = st.navigation({
     "Upload": [upload, upload_menu, upload_buildsheet],
-    "View": [view_invoices, view_menu],
+    "View": [view_invoices, view_menu, view_buildsheet],
     "Analysis": [view_price_variations, dashboard], # Grouped analysis report
     "DB": [database_controls], 
 

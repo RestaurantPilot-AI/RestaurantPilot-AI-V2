@@ -64,6 +64,7 @@ INGREDIENT RULES:
 - If multiple unit/quantity columns exist:
   - Choose the most descriptive unit (e.g., '2 oz' over '3 mm').
   - Choose the column that contains values for ALL ingredients.
+  - If Unit is a range say 5-6 slices, pick the average floor, here 5.
 - Do not mix quantities from different columns.
 
 RULES:

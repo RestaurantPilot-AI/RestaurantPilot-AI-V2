@@ -87,7 +87,6 @@ def _apply_regex_patterns_to_text(extracted_text: str, regex_patterns: List[str]
         starts = [m.start() for m in start_re.finditer(text)]
 
         for s in starts:
-            print("Start and end found")
             end_match = end_re.search(text, pos=s + 1)
             if not end_match:
                 continue
@@ -203,119 +202,139 @@ def _apply_regex_patterns_to_text(extracted_text: str, regex_patterns: List[str]
 # import-time dependency on heavyweight LLM client modules during test runs.
 
 def _make_buildsheet_phase1_prompt(extracted_text: str) -> str:
-    return (
-        "You are a deterministic data extraction assistant.\n\n"
+    return f"""
+You are a deterministic data extraction assistant.
 
-        "INPUT FORMAT:\n"
-        "- You are given normalized text extracted from a spreadsheet.\n"
-        "- Cells are separated by the literal token <CS>.\n"
-        "- Rows are separated by the literal token <RS>.\n"
-        "- Menu items may span MULTIPLE rows.\n\n"
+INPUT FORMAT:
+- You are given normalized text extracted from a spreadsheet.
+- Cells are separated by the literal token <CS>.
+- Rows are separated by the literal token <RS>.
+- Menu items may span MULTIPLE rows.
 
-        "FIELD DEFINITIONS:\n"
-        "- name: Menu/buildsheet item name (include size or variant).\n"
-        "- yield_quantity: Total units or servings produced by the buildsheet.\n"
-        "- ingredients: Materials required to produce ONE yield batch.\n\n"
+FIELD DEFINITIONS:
+- name: Menu/buildsheet item name (include size or variant).
+- yield_quantity: Total units or servings produced by the buildsheet.
+- ingredients: Materials required to produce ONE yield batch.
 
-        "INGREDIENT RULES:\n"
-        "- If multiple unit/quantity columns exist:\n"
-        "  - Choose the most descriptive unit (e.g., '2 oz' over '3 mm').\n"
-        "  - Choose the column that contains values for ALL ingredients.\n"
-        "- Do not mix quantities from different columns.\n\n"
+INGREDIENT RULES:
+- If multiple unit/quantity columns exist:
+  - Choose the most descriptive unit (e.g., '2 oz' over '3 mm').
+  - Choose the column that contains values for ALL ingredients.
+- Do not mix quantities from different columns.
 
-        "RULES:\n"
-        "- Use ONLY information present in the source.\n"
-        "- Do NOT invent ingredients or quantities.\n"
-        "- If something is missing or unclear, use null.\n\n"
+RULES:
+- Use ONLY information present in the source.
+- Do NOT invent ingredients or quantities.
+- If something is missing or unclear, use null.
+- The solution MUST include BOTH menu-item blocks AND standalone rows that can be interpreted as sides or extras.
 
-        "OUTPUT FORMAT (JSON ONLY):\n"
-        "{\n"
-        "  \"buildsheet_items\": [\n"
-        "    {\n"
-        "      \"name\": \"string\",\n"
-        "      \"yield_quantity\": null | number,\n"
-        "      \"ingredients\": [\n"
-        "        {\n"
-        "          \"material_name\": \"string\",\n"
-        "          \"measure_unit\": \"string\" | null,\n"
-        "          \"measure_quantity\": null | number\n"
-        "        }\n"
-        "      ]\n"
-        "    }\n"
-        "  ]\n"
-        "}\n\n"
+OUTPUT FORMAT (JSON ONLY):
+{{
+  "buildsheet_items": [
+    {{
+      "name": "string",
+      "yield_quantity": null | number,
+      "ingredients": [
+        {{
+          "material_name": "string",
+          "measure_unit": "string" | null,
+          "measure_quantity": null | number
+        }}
+      ]
+    }}
+  ]
+}}
 
-        "SOURCE:\n"
-        f"{extracted_text}"
-    )
+SOURCE:
+{extracted_text}
+""".strip()
 
 
 
 def _make_buildsheet_phase2_prompt(extracted_text: str, phase1_output: Dict[str, Any]) -> str:
-    return (
-        "You are a deterministic REGEX GENERATOR for Python's built-in `re` module.\n\n"
+    return f"""
+You are a deterministic REGEX GENERATOR for Python's built-in `re` module.
 
-        "THIS IS CRITICAL:\n"
-        "- You MUST generate ONLY Python `re` compatible regex.\n"
-        "- Your regex will be EXECUTED directly in Python.\n"
-        "- Invalid regex will cause the system to FAIL.\n\n"
+THIS IS CRITICAL:
+- You MUST generate ONLY Python `re` compatible regex.
+- Your regex will be EXECUTED directly in Python.
+- Invalid regex will cause the system to FAIL.
 
-        "ABSOLUTE RESTRICTIONS (DO NOT VIOLATE):\n"
-        "- DO NOT use lookahead or lookbehind assertions of any kind.\n"
-        "  (No (?=...), (?!...), (?<=...), (?<!...))\n"
-        "- DO NOT use inline flags such as (?i), (?s), (?m).\n"
-        "- DO NOT use backreferences (\\1, \\2, etc.).\n"
-        "- DO NOT use named capture groups.\n"
-        "- DO NOT assume PCRE or JavaScript regex features.\n\n"
+ABSOLUTE RESTRICTIONS (DO NOT VIOLATE):
+- DO NOT use lookahead or lookbehind assertions of any kind.
+  (No (?=...), (?!...), (?<=...), (?<!...))
+- DO NOT use inline flags such as (?i), (?s), (?m).
+- DO NOT use backreferences (\\1, \\2, etc.).
+- DO NOT use named capture groups.
+- DO NOT assume PCRE or JavaScript regex features.
 
-        "ALLOWED REGEX FEATURES ONLY:\n"
-        "- Literal characters\n"
-        "- Character classes like [A-Za-z0-9 ]\n"
-        "- Quantifiers: *, +, ?, {m,n}\n"
-        "- Capturing groups: ( ... )\n"
-        "- Anchors: ^ and $\n"
-        "- Alternation: |\n\n"
+ALLOWED REGEX FEATURES ONLY:
+- Literal characters
+- Character classes like [A-Za-z0-9 ]
+- Quantifiers: *, +, ?, {{m,n}}
+- Capturing groups: ( ... )
+- Anchors: ^ and $
+- Alternation: |
 
-        "EXECUTION MODEL:\n"
-        "- item_start and item_end regex are applied to the FULL SOURCE TEXT.\n"
-        "- All other regexes are applied INSIDE EACH ITEM BLOCK.\n"
-        "- Regexes are used with Python flags re.IGNORECASE and re.DOTALL externally.\n"
-        "- Therefore you MUST NOT include flags in the pattern itself.\n\n"
+EXECUTION MODEL:
+- item_start and item_end regex are applied to the FULL SOURCE TEXT.
+- All other regexes are applied INSIDE EACH ITEM BLOCK.
+- Regexes are used with Python flags re.IGNORECASE and re.DOTALL externally.
+- Therefore you MUST NOT include flags in the pattern itself.
 
-        "TASK:\n"
-        "Return a JSON ARRAY of EXACTLY 10 STRINGS.\n"
-        "Each string must be a VALID Python regex or an empty string.\n"
-        "Index position is SEMANTICALLY SIGNIFICANT and MUST be preserved.\n\n"
+IMPORTANT STRUCTURAL FACT:
+The SOURCE TEXT contains TWO DIFFERENT FORMATS:
+1) STANDARD MENU ITEMS:
+   - Have a clear item header (menu item name)
+   - Followed by multiple ingredient rows
+   - Terminated by empty / separator rows
+2) STANDALONE / SIDE ROWS:
+   - Do NOT have a menu item header
+   - Each row is a self-contained item
+   - The ingredient name appears where an item name would normally appear
 
-        "INDEX MAP (FIXED — DO NOT CHANGE):\n"
-        "0: item_start  – regex that matches the START of one buildsheet item\n"
-        "1: item_end    – regex that matches the END of one buildsheet item\n"
-        "2: menu_item_name – regex that CAPTURES the item name in group (1)\n"
-        "3: ingredient_start – start of ingredient section (optional)\n"
-        "4: ingredient_end   – end of ingredient section (optional)\n"
-        "5: ingredient_name  – regex that CAPTURES ingredient name in group (1)\n"
-        "6: ingredient_unit  – regex that CAPTURES unit in group (1)\n"
-        "7: ingredient_quantity – regex that CAPTURES numeric quantity in group (1)\n"
-        "8: yield_quantity   – regex that CAPTURES numeric yield in group (1)\n"
-        "9: row_exclusion    – regex to EXCLUDE headers or noise rows\n\n"
+YOUR REGEX MUST BE ROBUST ENOUGH TO HANDLE BOTH FORMATS:
+- item_start / item_end should match STANDARD MENU ITEMS where possible
+- If item boundaries are not found, the fallback behavior treats EACH ROW as its own item
+- ingredient_name, quantity, and unit regexes MUST work for BOTH formats
+- Do NOT assume that ingredient rows always follow an item header
 
-        "CAPTURE RULES:\n"
-        "- If a value must be extracted, it MUST be in CAPTURE GROUP (1).\n"
-        "- Do NOT rely on group(0) unless unavoidable.\n\n"
+TASK:
+Return a JSON ARRAY of EXACTLY 10 STRINGS.
+Each string must be a VALID Python regex or an empty string.
+Index position is SEMANTICALLY SIGNIFICANT and MUST be preserved.
 
-        "EXPECTED STRUCTURED RESULT (GROUND TRUTH):\n"
-        f"{phase1_output}\n\n"
+INDEX MAP (FIXED — DO NOT CHANGE):
+0: item_start  – regex that matches the START of one buildsheet item
+1: item_end    – regex that matches the END of one buildsheet item
+2: menu_item_name – regex that CAPTURES the item name in group (1)
+3: ingredient_start – start of ingredient section (optional)
+4: ingredient_end   – end of ingredient section (optional)
+5: ingredient_name  – regex that CAPTURES ingredient name in group (1)
+6: ingredient_unit  – regex that CAPTURES unit in group (1)
+7: ingredient_quantity – regex that CAPTURES numeric quantity in group (1)
+8: yield_quantity   – regex that CAPTURES numeric yield in group (1)
+9: row_exclusion    – regex to EXCLUDE headers or noise rows
 
-        "SOURCE TEXT:\n"
-        f"{extracted_text}\n\n"
+CAPTURE RULES:
+- If a value must be extracted, it MUST be in CAPTURE GROUP (1).
+- Do NOT rely on group(0) unless unavoidable.
 
-        "OUTPUT FORMAT:\n"
-        "- Return ONLY a JSON array of 10 strings.\n"
-        "- No explanation. No markdown. No comments.\n"
-        "- Empty string \"\" is allowed where a pattern is not needed."
-        
-        "Make sure to check the output you give generates the ground truth provided"
-    )
+EXPECTED STRUCTURED RESULT (GROUND TRUTH):
+{phase1_output}
+
+SOURCE TEXT:
+{extracted_text}
+
+OUTPUT FORMAT:
+- Return ONLY a JSON array of 10 strings.
+- No explanation. No markdown. No comments.
+- Empty string "" is allowed where a pattern is not needed.
+
+FINAL CHECK:
+- The regex you generate MUST be able to produce the ground truth exactly.
+- The solution MUST work for BOTH menu-item blocks AND standalone rows that can be interpreted as sides or extras.
+""".strip()
 
 
 
@@ -341,7 +360,7 @@ def extract_buildsheet(restaurant_id: str, file_path: str) -> pd.DataFrame:
     # print(f"[INFO] extracted_df:\n {extracted_df}\n")
     # 2. Convert to text
     extracted_text = _df_to_text(extracted_df)
-    # print(f"[INFO] extracted_text:\n {extracted_text}")
+    # print(f"\n[INFO] extracted_text:\n {extracted_text}")
 
     # 3. Try regex path
     regex_list = get_buildsheet_regex_patterns(str(restaurant_id)) or []
@@ -385,7 +404,6 @@ def extract_buildsheet(restaurant_id: str, file_path: str) -> pd.DataFrame:
 
         # Re-run extraction using generated regex
         buildsheet_df = _apply_regex_patterns_to_text(extracted_text, regex_list)
-
     # 4. Enrich
     final_df = enrich_buildsheet_df(restaurant_id, buildsheet_df)
     return final_df

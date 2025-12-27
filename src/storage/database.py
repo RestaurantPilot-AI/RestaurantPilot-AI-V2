@@ -27,6 +27,7 @@ COL_VENDOR_REGEXES = "vendor_regex_templates"
 
 # Buildsheet collections
 COL_BUILDSHEET_ITEMS = "buildsheet_items"
+COL_COOKBOOK_ITEMS = "cookbook_items"
 
 # ---------------------------------------------------------
 # 1. Internal CSV Helpers (Private)
@@ -779,6 +780,130 @@ def save_buildsheet_db(buildsheet_df: pd.DataFrame) -> Dict[str, Any]:
         return {"inserted": 0}
 
     res = db[COL_BUILDSHEET_ITEMS].insert_many(records)
+    inserted = len(res.inserted_ids) if hasattr(res, "inserted_ids") else len(records)
+    return {"inserted": inserted}
+
+
+# --- Cookbook Items CRUD ---
+def save_cookbook_item(item: Dict[str, Any]) -> Optional[str]:
+    """Insert a cookbook item document. Serializes raw_materials as JSON."""
+    if not item.get("restaurant_id") or not item.get("name") or "raw_materials" not in item:
+        return None
+    doc = item.copy()
+    # Normalize fields
+    if "yield" in doc:
+        doc["yield"] = str(doc["yield"])
+    if "estimated_price" in doc:
+        doc["estimated_price"] = str(doc["estimated_price"])
+    if "raw_materials" in doc:
+        try:
+            doc["raw_materials"] = json.dumps(doc["raw_materials"])
+        except Exception:
+            doc["raw_materials"] = json.dumps([])
+    res = db[COL_COOKBOOK_ITEMS].insert_one(doc)
+    return str(res.inserted_id) if hasattr(res, "inserted_id") else None
+
+
+def get_cookbook_items(restaurant_id: str = None) -> List[Dict[str, Any]]:
+    q = {}
+    if restaurant_id:
+        q["restaurant_id"] = str(restaurant_id)
+    items = list(db[COL_COOKBOOK_ITEMS].find(q))
+    for it in items:
+        if "raw_materials" in it:
+            try:
+                it["raw_materials"] = json.loads(it["raw_materials"])
+            except Exception:
+                it["raw_materials"] = []
+    return items
+
+
+def get_cookbook_item_by_id(item_id: str) -> Optional[Dict[str, Any]]:
+    doc = db[COL_COOKBOOK_ITEMS].find_one({"_id": str(item_id)})
+    if doc and "raw_materials" in doc:
+        try:
+            doc["raw_materials"] = json.loads(doc["raw_materials"])
+        except Exception:
+            doc["raw_materials"] = []
+    return doc
+
+
+def update_cookbook_item(item_id: str, update_data: Dict[str, Any]) -> int:
+    if "raw_materials" in update_data:
+        try:
+            update_data["raw_materials"] = json.dumps(update_data["raw_materials"])
+        except Exception:
+            update_data["raw_materials"] = json.dumps([])
+    if "yield" in update_data:
+        update_data["yield"] = str(update_data["yield"])
+    if "estimated_price" in update_data:
+        update_data["estimated_price"] = str(update_data["estimated_price"])
+    res = db[COL_COOKBOOK_ITEMS].update_one({"_id": str(item_id)}, {"$set": update_data})
+    return res.modified_count if hasattr(res, "modified_count") else 0
+
+
+def delete_cookbook_item(item_id: str) -> bool:
+    res = db[COL_COOKBOOK_ITEMS].delete_one({"_id": str(item_id)})
+    return getattr(res, "deleted_count", 0) > 0
+
+
+def save_cookbook_db(cookbook_df) -> Dict[str, Any]:
+    """Save cookbook items into CSV-backed 'cookbook_items' table.
+
+    Usage:
+      - save_cookbook_db(cookbook_df)  # df contains restaurant_id, name, yield, raw_materials
+
+    Strict behaviour: expects columns `restaurant_id`, `name`, and `raw_materials`.
+    `raw_materials` should be a list of dicts like [{"material_name":..., "measure_unit":..., "measure_quantity":..., "is_raw_material": ...}, ...]
+    """
+    if not isinstance(cookbook_df, pd.DataFrame):
+        raise TypeError("cookbook_df must be a pandas DataFrame")
+    df = cookbook_df.copy()
+    if df.empty:
+        raise ValueError("cookbook_df is empty")
+
+    required = {"restaurant_id", "name", "raw_materials"}
+    if not required.issubset(set(df.columns)):
+        raise ValueError(f"cookbook_df must contain columns: {sorted(list(required))}")
+
+    records = []
+    for _, row in df.iterrows():
+        restaurant_id = str(row["restaurant_id"]).strip()
+        name = str(row["name"]).strip()
+
+        # Skip duplicates
+        existing = db[COL_COOKBOOK_ITEMS].find_one({"restaurant_id": restaurant_id, "name": name})
+        if existing:
+            continue
+
+        yv = row.get("yield") if "yield" in row else None
+        yv_val = str(yv) if pd.notna(yv) else ""
+
+        ep = row.get("estimated_price") if "estimated_price" in row else None
+        try:
+            ep_val = str(float(ep)) if ep is not None and pd.notna(ep) else ""
+        except Exception:
+            ep_val = ""
+
+        rms = row.get("raw_materials") or []
+        try:
+            rms_serialized = json.dumps(rms)
+        except Exception:
+            rms_serialized = json.dumps([])
+
+        doc = {
+            "restaurant_id": restaurant_id,
+            "name": name,
+            "yield": yv_val,
+            "estimated_price": ep_val,
+            "raw_materials": rms_serialized,
+        }
+        records.append(doc)
+
+    if not records:
+        return {"inserted": 0}
+
+    res = db[COL_COOKBOOK_ITEMS].insert_many(records)
     inserted = len(res.inserted_ids) if hasattr(res, "inserted_ids") else len(records)
     return {"inserted": inserted}
 

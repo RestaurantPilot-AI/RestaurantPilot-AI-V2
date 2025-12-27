@@ -147,6 +147,10 @@ def create_validation_rules(db):
         "buildsheet_items.csv": [
             "_id", "restaurant_id", "name", "yield_quantity", "estimated_price", "ingredients"
         ],
+        # Cookbook items (intermediate prepared ingredients / recipes)
+        "cookbook_items.csv": [
+            "_id", "restaurant_id", "name", "yield", "estimated_price", "raw_materials"
+        ],
         "temp_uploads.csv": [
             "session_id", "created_at", "updated_at", "data"
         ]
@@ -192,6 +196,7 @@ def create_indexes(db):
         "invoices.csv", "line_items.csv", "item_lookup_map.csv", 
         "menu_items.csv", "menu_item_lookup_map.csv", "menu_categories.csv", 
         "buildsheet_items.csv",
+        "cookbook_items.csv",
         "temp_uploads.csv"
     ]
     

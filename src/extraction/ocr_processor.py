@@ -126,7 +126,7 @@ class OCRRouter:
     
     def _run_easyocr(self, image_path):
         """
-        Route B: EasyOCR (Accurate, deep learning-based)
+        EasyOCR (Accurate, deep learning-based)
         
         More robust to:
         - Blurry images
@@ -196,6 +196,34 @@ def extract_text_from_ocr(image_path: str) -> Optional[Tuple[str, str, int, int,
         text_length = len(extracted_text)
         
         return (extracted_text, filename, text_length, page_count, extraction_timestamp)
+
+    except Exception as e:
+        print(f"ERROR: Unhandled exception in extract_text_from_ocr for {image_path}: {str(e)}")
+        return None
+
+def extract_only_text_from_ocr(image_path: str) -> str:
+    """
+    Extracts text from an image using the intelligent OCR router.
+    
+    Args:
+        image_path (str): The path to the image file.
+        
+    Returns:
+            Extracted text as a single string.
+            Returns an empty string if extraction fails..
+    """
+    try:
+
+        
+        extracted_text, route = ocr_router_instance.route_image(image_path)
+        
+        if route == "error":
+            print(f"ERROR: OCR processing failed for {image_path}. Details: {extracted_text}")
+            return None
+        
+        print(f"DEBUG: OCR Processor called for {image_path}. Route: {route}")
+        
+        return extracted_text
 
     except Exception as e:
         print(f"ERROR: Unhandled exception in extract_text_from_ocr for {image_path}: {str(e)}")

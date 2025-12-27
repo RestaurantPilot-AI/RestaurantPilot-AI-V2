@@ -44,3 +44,31 @@ def extract_text_from_pdf(file_path):
 
     # Return values in the exact order requested
     return extracted_text, filename, text_length, page_count, extraction_timestamp
+
+def extract_only_text_from_pdf(file_path: str) -> str:
+    """
+    Extract raw text from a PDF file.
+
+    Args:
+        file_path: Path to the PDF file.
+
+    Returns:
+        Extracted text as a single string.
+        Returns an empty string if extraction fails.
+    """
+    extracted_text = ""
+
+    try:
+        reader = PdfReader(file_path)
+
+        for page in reader.pages:
+            text = page.extract_text()
+            if text:
+                extracted_text += text + "\n"
+
+    except FileNotFoundError:
+        print(f"Error: The file '{file_path}' was not found.")
+    except Exception as e:
+        print(f"An error occurred while reading the PDF: {e}")
+
+    return extracted_text

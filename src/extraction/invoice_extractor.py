@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Tuple, Optional
-from src.extraction import extract_text_from_pdf, extract_text_from_ocr
+from src.extraction import extract_text_from_pdf, extract_only_text_from_pdf, extract_text_from_ocr, extract_only_text_from_ocr
 
 
 def process_invoice(file_path: str) -> Optional[Tuple[str, str, int, int, str]]:
@@ -26,3 +26,23 @@ def process_invoice(file_path: str) -> Optional[Tuple[str, str, int, int, str]]:
 
     # treat non-PDF as image → OCR
     return extract_text_from_ocr(file_path)
+
+def process_text(file_path: str) -> str:
+    """
+    Determine file type and extract raw text from the file.
+
+    Args:
+        file_path: Path to the input file (PDF or image).
+
+    Returns:
+        Extracted text as a single string.
+        Returns an empty string if extraction fails.
+    """
+    ext = Path(file_path).suffix.lower()
+
+    if ext == ".pdf":
+        return extract_only_text_from_pdf(file_path)
+
+    # treat non-PDF as image → OCR
+    return extract_only_text_from_ocr(file_path)
+
